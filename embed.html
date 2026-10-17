@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>PixOffice · 浏览器嵌入示例</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f8f9f5;color:#293635;font:14px 'Microsoft YaHei',sans-serif;padding:32px}main{max-width:1100px;margin:auto}h1{font-size:24px;margin:0 0 12px}p{color:#73817f;line-height:1.8}iframe{display:block;width:100%;height:min(70vh,700px);min-height:350px;border:1px solid #dfe4dd;border-radius:6px;margin:24px 0 16px}nav{display:flex;flex-wrap:wrap;gap:10px}button,a{font:inherit;color:inherit;padding:12px 18px;border:1px solid #dfe4dd;border-radius:4px;background:#fff;cursor:pointer;text-decoration:none}button:disabled{opacity:.5;cursor:wait}button:hover{background:#eaf0e7}button:focus-visible,a:focus-visible{outline:2px solid #d57645;outline-offset:3px}code{font-family:Consolas,monospace}#state{font-size:12px}@media(max-width:600px){body{padding:20px}h1{font-size:21px}iframe{height:60vh}}
+</style></head>
+<body><main><h1>把办公室，放进任何一个页面。</h1><p>下方是真实的 iframe。通过页面外部的按钮，控制里面的人物和镜头。</p><iframe id="office" src="./index.html?embed=1" title="可交互的像素 3D 办公室"></iframe><nav aria-label="宿主页面控制"><button data-command="wave" disabled>让小麦打个招呼</button><button data-command="celebrate" disabled>庆祝一下</button><button data-command="closeup" disabled>看看人物表情</button><button data-command="reset" disabled>回到办公室全景</button><a href="./">打开完整实验室</a></nav><p id="state" role="status">等待 3D 场景就绪…</p></main><script type="module">
+const frame = document.querySelector('#office');
+window.addEventListener('message', event => {
+  if (event.origin !== location.origin || event.source !== frame.contentWindow || event.data?.type !== 'pixoffice-voxel:ready') return;
+  document.querySelectorAll('button').forEach(button => button.disabled = false);
+  document.querySelector('#state').textContent = '办公室已连接，可以通过宿主页面控制。';
+});
+const commands = {wave:{person:0,action:'wave',expression:'happy'},celebrate:{person:0,action:'celebrate'},closeup:{person:0,camera:'person',expression:'surprise'},reset:{camera:'room',action:'idle',expression:'happy'}};
+document.querySelectorAll('[data-command]').forEach(button => button.addEventListener('click', () => {
+  frame.contentWindow.postMessage({type:'pixoffice-voxel:command',...commands[button.dataset.command]},location.origin);
+}));
+</script></body></html>

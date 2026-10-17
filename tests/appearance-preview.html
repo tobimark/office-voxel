@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>角色外形验收</title><link rel="icon" href="data:," /><style>
+*{box-sizing:border-box}body{margin:0;background:#f8f9f5;color:#293635;font-family:'Microsoft YaHei',sans-serif}header{height:88px;padding:20px 28px;border-bottom:1px solid #dfe4dd;display:flex;align-items:center;justify-content:space-between}h1{font-size:23px;margin:0}header p{font:12px Consolas,monospace;color:#73817f}.gallery{position:relative;width:1200px;height:1080px}canvas{display:block;width:100%;height:100%}.labels{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);pointer-events:none}.label{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding-bottom:14px;gap:5px;border:1px solid #f8f9f5}b{font-size:15px}span{font-size:11px;color:#73817f}
+</style></head>
+<body><header><h1>九位伙伴，各有模样。</h1><p>PIX OFFICE / CHARACTER LOOK DEVELOPMENT</p></header><div class="gallery"><canvas id="gallery"></canvas><div class="labels"></div></div><script type="module">
+import * as THREE from 'three';
+import { createCharacter } from '../src/character.js';
+import { teamOffice } from '../src/layouts.js';
+const renderer = new THREE.WebGLRenderer({canvas:document.querySelector('#gallery'),antialias:true});
+renderer.setPixelRatio(1);renderer.setSize(1200,1080);renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
+renderer.setScissorTest(true);
+const camera = new THREE.OrthographicCamera(-1.626,1.626,1.26,-1.26,.1,30);
+camera.position.set(2.1,1.85,6);camera.lookAt(0,1.16,0);
+const entries=teamOffice.actors.map(config=>{
+  const scene=new THREE.Scene();scene.background=new THREE.Color('#e5ece9');
+  scene.add(new THREE.HemisphereLight('#fff4dd','#90a2a6',2.5));
+  const sun=new THREE.DirectionalLight('#fff1dc',2.5);sun.position.set(-3,6,6);scene.add(sun);
+  const actor=createCharacter(scene,{...config,x:0,z:0});actor.ring.visible=false;actor.update(1,1,.85);
+  const label=document.createElement('div');label.className='label';
+  const name=document.createElement('b');name.textContent=`${config.name} · ${config.role}`;
+  const signature=document.createElement('span');signature.textContent=config.signature;label.append(name,signature);document.querySelector('.labels').append(label);
+  return {scene,actor};
+});
+function render(back=false){
+  renderer.setScissorTest(false);renderer.setClearColor('#e5ece9');renderer.clear();renderer.setScissorTest(true);
+  entries.forEach(({scene,actor},i)=>{
+    actor.root.rotation.y=back?Math.PI:0;
+    renderer.setViewport(i%3*400,(2-Math.floor(i/3))*360+50,400,310);
+    renderer.setScissor(i%3*400,(2-Math.floor(i/3))*360+50,400,310);
+    renderer.render(scene,camera);
+  });
+}
+render();
+window.appearancePreview={render,entries};
+</script></body></html>

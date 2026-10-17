@@ -1,0 +1,1225 @@
+{
+  "name": "pixoffice-voxel-characters",
+  "version": 1,
+  "generator": "scripts/export-characters.mjs",
+  "source": "src/character.js + src/appearance.js — procedural voxel characters, no external art",
+  "exportedAt": "2026-10-16T11:11:19.360Z",
+  "kinds": [
+    "portrait",
+    "sheet",
+    "model"
+  ],
+  "counts": {
+    "characters": 27,
+    "files": 81,
+    "bytes": 4258266
+  },
+  "characters": [
+    {
+      "id": "studio-00",
+      "scene": "studio",
+      "index": 0,
+      "name": "小麦",
+      "role": "设计师",
+      "signature": "",
+      "look": {
+        "name": "小麦",
+        "role": "设计师",
+        "shirt": "#d57645",
+        "trim": "#ecad75",
+        "pants": "#687b76",
+        "hair": "#654330",
+        "hairStyle": "bob"
+      },
+      "usedBy": [
+        "studio-00"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1262,
+          "sha256": "2c8a11d8627cf0e5aa70aced3241c1786f9951febea69711dacdcd0e11a99efc"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 118086,
+          "sha256": "fed34007ddca0abbe877554a712e1f73257f743ca06269fdec2108380efb52b5"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 15660,
+          "sha256": "c7c2fec438afc6621a6b8ae841b30a7dadaf0392eb607d39385f65a4de5983c6"
+        }
+      }
+    },
+    {
+      "id": "studio-01",
+      "scene": "studio",
+      "index": 1,
+      "name": "阿森",
+      "role": "开发者",
+      "signature": "",
+      "look": {
+        "name": "阿森",
+        "role": "开发者",
+        "shirt": "#79917a",
+        "trim": "#adba94",
+        "pants": "#526568",
+        "hair": "#343e39",
+        "hairStyle": "spiky",
+        "glasses": true
+      },
+      "usedBy": [
+        "studio-01"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1329,
+          "sha256": "e58d78ef49da4d758150475f607c4d24fb09d3c1ceeefa69a492678289077ce2"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 121201,
+          "sha256": "9546b84fcf19c2741a94f04c3c2b8af849f3e0932f51478ee4c7db1e43117647"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 15696,
+          "sha256": "4919f48fb76e687272bd07040240f0df78f5f06b091bc584b8d3cd7c1feeada6"
+        }
+      }
+    },
+    {
+      "id": "studio-02",
+      "scene": "studio",
+      "index": 2,
+      "name": "小蓝",
+      "role": "产品经理",
+      "signature": "",
+      "look": {
+        "name": "小蓝",
+        "role": "产品经理",
+        "shirt": "#708fa5",
+        "trim": "#abc2c9",
+        "pants": "#5b6276",
+        "hair": "#84553a",
+        "hairStyle": "bob"
+      },
+      "usedBy": [
+        "studio-02"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1258,
+          "sha256": "3d034b0f4b559edae5e71680886a2d0b2c805557f0607b10037ec82a6ff22a5e"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 118492,
+          "sha256": "645fa53ac60190802911bda40b45bd840341bd64eebe0b526cf01ec10347e922"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 15824,
+          "sha256": "ae1ea5bdca9a518cbd5686590dcca3a909953aa22eb46e5573e81fd833b5c554"
+        }
+      }
+    },
+    {
+      "id": "team-00",
+      "scene": "team",
+      "index": 0,
+      "name": "小麦",
+      "role": "设计师",
+      "signature": "斜刘海短发 · 发夹 · 橙色工装",
+      "look": {
+        "name": "小麦",
+        "role": "设计师",
+        "signature": "斜刘海短发 · 发夹 · 橙色工装",
+        "shirt": "#d57645",
+        "trim": "#f3d6a0",
+        "pants": "#687b76",
+        "hair": "#874e2e",
+        "shoes": "#f4ebd5",
+        "hairStyle": "asymmetric",
+        "outfit": "utility",
+        "accessory": "hairclip",
+        "eyes": "bright",
+        "freckles": true,
+        "height": 0.96,
+        "build": 0.94
+      },
+      "usedBy": [
+        "team-00",
+        "floor-00"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1327,
+          "sha256": "e644e48ed2a58e9db544a9ceedd73e8ceca2d13c5c2fba161ba825a71a0110f9"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 125169,
+          "sha256": "4ff7e2b73e2b9e46ed298171dadd5a3d740ef6c2f41cde62de33867fe365f0d1"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 21432,
+          "sha256": "b5ce0abfd52fb722b45748c68c9d3d01e792e6742dc991d11679265268104d49"
+        }
+      }
+    },
+    {
+      "id": "team-01",
+      "scene": "team",
+      "index": 1,
+      "name": "阿森",
+      "role": "开发者",
+      "signature": "蓬松卷发 · 大耳机 · 绿色卫衣",
+      "look": {
+        "name": "阿森",
+        "role": "开发者",
+        "signature": "蓬松卷发 · 大耳机 · 绿色卫衣",
+        "shirt": "#64896f",
+        "trim": "#bed0a6",
+        "pants": "#405667",
+        "hair": "#343831",
+        "skin": "#d3a17c",
+        "shoes": "#d9e4dc",
+        "hairStyle": "curly",
+        "outfit": "hoodie",
+        "accessory": "headphones",
+        "eyes": "relaxed",
+        "height": 1.04,
+        "build": 1.12
+      },
+      "usedBy": [
+        "team-01",
+        "floor-08"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1360,
+          "sha256": "c33cd4f36a72789f97ab4630b737a64932998d10ff3e1d8b8be71e01c0ee8b6f"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 151104,
+          "sha256": "cb8e0d70c30b3bf4dacac60133953a23852e06655225b002bc1884a4a4adc451"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 23384,
+          "sha256": "69084c8ead1409b35e8fd0ff2a6ea317404a34c62b89b84ce968c5bc315e5ad7"
+        }
+      }
+    },
+    {
+      "id": "team-02",
+      "scene": "team",
+      "index": 2,
+      "name": "小蓝",
+      "role": "产品经理",
+      "signature": "高马尾 · 蓝色西装 · 工作牌",
+      "look": {
+        "name": "小蓝",
+        "role": "产品经理",
+        "signature": "高马尾 · 蓝色西装 · 工作牌",
+        "shirt": "#637f9d",
+        "trim": "#e6e5d7",
+        "pants": "#445669",
+        "hair": "#69412f",
+        "shoes": "#394c57",
+        "hairStyle": "ponytail",
+        "outfit": "blazer",
+        "accessory": "badge",
+        "eyes": "almond",
+        "lashes": true,
+        "height": 1.07,
+        "build": 0.94
+      },
+      "usedBy": [
+        "team-02",
+        "floor-04"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1303,
+          "sha256": "75485d5c2a5793eb3887c29ee4734ec95b8a93eb4a28105cf954626a8fadf6b3"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 132490,
+          "sha256": "f8536f33d13d36b7e0054a43f3938dec70a2ef370e4c3a3b622d338309544b59"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 22784,
+          "sha256": "2bef28750a4ea85f4b807da713a08d8800e3507e90afff795425b27be84b1b60"
+        }
+      }
+    },
+    {
+      "id": "team-03",
+      "scene": "team",
+      "index": 3,
+      "name": "阿洛",
+      "role": "前端开发",
+      "signature": "鸭舌帽 · 棒球夹克 · 方框眼镜",
+      "look": {
+        "name": "阿洛",
+        "role": "前端开发",
+        "signature": "鸭舌帽 · 棒球夹克 · 方框眼镜",
+        "shirt": "#b7854e",
+        "trim": "#f2e5c9",
+        "pants": "#4c687c",
+        "hair": "#343944",
+        "skin": "#d9a17d",
+        "shoes": "#d3a96d",
+        "hairStyle": "undercut",
+        "outfit": "varsity",
+        "accessory": "cap",
+        "eyes": "narrow",
+        "glasses": "square",
+        "height": 1.02,
+        "build": 1.03
+      },
+      "usedBy": [
+        "team-03",
+        "floor-09"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1392,
+          "sha256": "1aae9043346b99e780cb52fd6c135b2295d0b6f98af10d10b738551638ef538c"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 144423,
+          "sha256": "dec284bbb8e71855faab430548ec0c99aaafc1e38bf68c1d427b79adf5687509"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 22936,
+          "sha256": "736678304499b2727779c64d75166b9dcf05668161f82c9b5e8eb2db7e9b8015"
+        }
+      }
+    },
+    {
+      "id": "team-04",
+      "scene": "team",
+      "index": 4,
+      "name": "小禾",
+      "role": "插画师",
+      "signature": "金色侧辫 · 贝雷帽 · 画画围裙",
+      "look": {
+        "name": "小禾",
+        "role": "插画师",
+        "signature": "金色侧辫 · 贝雷帽 · 画画围裙",
+        "shirt": "#e8dfbd",
+        "trim": "#b7c995",
+        "pants": "#827a66",
+        "hair": "#c6a055",
+        "shoes": "#926c52",
+        "hairStyle": "braid",
+        "outfit": "apron",
+        "accessory": "beret",
+        "eyes": "round",
+        "freckles": true,
+        "height": 0.93,
+        "build": 0.98
+      },
+      "usedBy": [
+        "team-04",
+        "floor-03"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1454,
+          "sha256": "73e3255d3bf2b6aba7acaace2e637fa5374ee2f48bfd257ef58b7584fd18bd17"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 140651,
+          "sha256": "6bb6a89112e79c2698446acf20f41dc7bad5ba8b98230952b67a389b9d1fcbe8"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 24684,
+          "sha256": "7d9d2fcd3daec8e6492cdc902410b85f060f65496dbe640163926e80b82f7b1a"
+        }
+      }
+    },
+    {
+      "id": "team-05",
+      "scene": "team",
+      "index": 5,
+      "name": "阿远",
+      "role": "后端开发",
+      "signature": "束起长辫 · 胡须 · 格纹衬衫",
+      "look": {
+        "name": "阿远",
+        "role": "后端开发",
+        "signature": "束起长辫 · 胡须 · 格纹衬衫",
+        "shirt": "#547e83",
+        "trim": "#bdcbb2",
+        "pants": "#465858",
+        "hair": "#3d3029",
+        "skin": "#b77f58",
+        "shoes": "#574334",
+        "hairStyle": "locs",
+        "outfit": "plaid",
+        "accessory": "watch",
+        "eyes": "narrow",
+        "beard": true,
+        "height": 1.09,
+        "build": 1.08
+      },
+      "usedBy": [
+        "team-05",
+        "floor-10"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1386,
+          "sha256": "760b05c32450cb9fb881bbd381f2ba03bba96d890e4202c2d913274eb6da3cbf"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 132859,
+          "sha256": "b5e4cc7c42a763dff0cb11e607efbe8cf465073c2504d3ae564b15116ca563f2"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 23872,
+          "sha256": "303614507a1ec26b4a557ee69c0469f8bc16de28491b1fd9c827148616aec3df"
+        }
+      }
+    },
+    {
+      "id": "team-06",
+      "scene": "team",
+      "index": 6,
+      "name": "小桃",
+      "role": "运营",
+      "signature": "粉色短发 · 蝴蝶结 · 奶白背带裤",
+      "look": {
+        "name": "小桃",
+        "role": "运营",
+        "signature": "粉色短发 · 蝴蝶结 · 奶白背带裤",
+        "shirt": "#c27e83",
+        "trim": "#f4e4c2",
+        "pants": "#e4d5b8",
+        "hair": "#bc7684",
+        "shoes": "#b66b72",
+        "hairStyle": "pixie",
+        "outfit": "overalls",
+        "accessory": "bow",
+        "eyes": "bright",
+        "lashes": true,
+        "beautyMark": true,
+        "height": 0.95,
+        "build": 0.96
+      },
+      "usedBy": [
+        "team-06",
+        "floor-16"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1372,
+          "sha256": "cec582af01ca6b8fa2680c127151f544bd842e39b5a3fe6bb4e69c876b8119d0"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 130507,
+          "sha256": "38dc281e6f3d4a66f25be077dfd10ed1753348b19f9178fb8855b7eb6add5a28"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 21612,
+          "sha256": "b0b12a6c4e8c79a48f5d09b09b515d45b26f91ed0d22ec75ee0d06668a0a19a8"
+        }
+      }
+    },
+    {
+      "id": "team-07",
+      "scene": "team",
+      "index": 7,
+      "name": "阿墨",
+      "role": "测试工程师",
+      "signature": "银灰侧分 · 黑框眼镜 · 紫色马甲",
+      "look": {
+        "name": "阿墨",
+        "role": "测试工程师",
+        "signature": "银灰侧分 · 黑框眼镜 · 紫色马甲",
+        "shirt": "#e0ddcd",
+        "trim": "#b3aac9",
+        "pants": "#4c5264",
+        "hair": "#c0c5c4",
+        "skin": "#d6a481",
+        "shoes": "#414953",
+        "hairStyle": "sidepart",
+        "outfit": "vest",
+        "accessory": "pen",
+        "eyes": "relaxed",
+        "glasses": "heavy",
+        "height": 1.01,
+        "build": 1.11
+      },
+      "usedBy": [
+        "team-07",
+        "floor-14"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1432,
+          "sha256": "eb389f5c4554b79ccace3d29752e2fae7cd2322f9935cc941801352be4b78047"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 137985,
+          "sha256": "9b391cb9714e384f9d67fc6d74691cf193525eac977c18e10e5e88bae3d64582"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 23996,
+          "sha256": "ec69443c2ab135ba851b8c427b5fefd1dffb2ec7b501182507647c74afd98b61"
+        }
+      }
+    },
+    {
+      "id": "team-08",
+      "scene": "team",
+      "index": 8,
+      "name": "小米",
+      "role": "项目经理",
+      "signature": "针织帽 · 圆框眼镜 · 长围巾",
+      "look": {
+        "name": "小米",
+        "role": "项目经理",
+        "signature": "针织帽 · 圆框眼镜 · 长围巾",
+        "shirt": "#bd9a56",
+        "trim": "#eee0b3",
+        "pants": "#637c78",
+        "hair": "#654c3a",
+        "shoes": "#6e5642",
+        "hairStyle": "shaggy",
+        "outfit": "cardigan",
+        "accessory": "beanie",
+        "eyes": "round",
+        "glasses": "round",
+        "height": 0.98,
+        "build": 1.02
+      },
+      "usedBy": [
+        "team-08",
+        "floor-05"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1413,
+          "sha256": "8afb7b3aea4cd832de3ed0916c6925c3aa0dce2144da5b07d78bcb83e2cf54be"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 145285,
+          "sha256": "17709b5d488fd6a8db7e7094acc6760c90a96dc0542eedd7d1e7a45d1f8c0ceb"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 27032,
+          "sha256": "ee1dd6472ace567169bc943cd6a6e0634d61ba9f0eaf431a373a83b7819bb17b"
+        }
+      }
+    },
+    {
+      "id": "floor-01",
+      "scene": "floor",
+      "index": 1,
+      "name": "小满",
+      "role": "交互设计",
+      "signature": "低发髻 · 灰蓝西装 · 腕表",
+      "look": {
+        "name": "小满",
+        "role": "交互设计",
+        "signature": "低发髻 · 灰蓝西装 · 腕表",
+        "shirt": "#7fa3a8",
+        "trim": "#e9dfc4",
+        "pants": "#4f6272",
+        "hair": "#3b3a44",
+        "shoes": "#3f4a54",
+        "hairStyle": "bun",
+        "outfit": "blazer",
+        "accessory": "watch",
+        "eyes": "almond",
+        "lashes": true,
+        "height": 0.99,
+        "build": 0.97
+      },
+      "usedBy": [
+        "floor-01"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1265,
+          "sha256": "c178a7245d360d94ff36058c12eb29fb98f0783b69ac3197576250be5cc9ba36"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 131913,
+          "sha256": "d1f03077f3b7199316705e556524444e6dfa2722aaa525d73fa4d2750cf4fef2"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 25312,
+          "sha256": "dea059e90cfb14b82c5b2972a0f990c0446fa0c4e70b42c4daeca247b29a7a35"
+        }
+      }
+    },
+    {
+      "id": "floor-02",
+      "scene": "floor",
+      "index": 2,
+      "name": "阿真",
+      "role": "视觉设计",
+      "signature": "短刺发 · 紫色马甲 · 粗框眼镜",
+      "look": {
+        "name": "阿真",
+        "role": "视觉设计",
+        "signature": "短刺发 · 紫色马甲 · 粗框眼镜",
+        "shirt": "#8f6f9e",
+        "trim": "#ded3ec",
+        "pants": "#4a4458",
+        "hair": "#2f3138",
+        "skin": "#d9a67f",
+        "shoes": "#33323c",
+        "hairStyle": "spiky",
+        "outfit": "vest",
+        "accessory": "pen",
+        "eyes": "narrow",
+        "glasses": "heavy",
+        "height": 1.03,
+        "build": 1.02
+      },
+      "usedBy": [
+        "floor-02"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1399,
+          "sha256": "b27159466ec53978759ee67ded822f732d9485cbd5124036f304240592ced2db"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 138157,
+          "sha256": "e58bc06c6af23e414e6af8d42720c0df3499e35a74997af9b9186d73705bba8a"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 22536,
+          "sha256": "aefae1111c530a48740ad96ca076974cb2895bfc6ffbdab7a700beb0dfc0e855"
+        }
+      }
+    },
+    {
+      "id": "floor-06",
+      "scene": "floor",
+      "index": 6,
+      "name": "小柚",
+      "role": "内容编辑",
+      "signature": "齐肩短发 · 米色开衫 · 蝴蝶结",
+      "look": {
+        "name": "小柚",
+        "role": "内容编辑",
+        "signature": "齐肩短发 · 米色开衫 · 蝴蝶结",
+        "shirt": "#c9a0a8",
+        "trim": "#f2e6c9",
+        "pants": "#5c6470",
+        "hair": "#4a3a2e",
+        "shoes": "#7b6455",
+        "hairStyle": "bob",
+        "outfit": "cardigan",
+        "accessory": "bow",
+        "eyes": "round",
+        "height": 0.97,
+        "build": 0.95
+      },
+      "usedBy": [
+        "floor-06"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1387,
+          "sha256": "d10c97eb4f52e8a794941a31b312a3bb2b0d5f0d1b71980080c6b6d83ad2a863"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 131482,
+          "sha256": "8c3991cba8774f269ef924eed981d1d3020167ce2dd806e5d4b9d1592dd1d107"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 24236,
+          "sha256": "ade573687dad20b21210660beed28568e1aa212254ef7d62693e307db0fb8c42"
+        }
+      }
+    },
+    {
+      "id": "floor-07",
+      "scene": "floor",
+      "index": 7,
+      "name": "小鹿",
+      "role": "客户成功",
+      "signature": "高马尾 · 米白棒球夹克 · 无配饰",
+      "look": {
+        "name": "小鹿",
+        "role": "客户成功",
+        "signature": "高马尾 · 米白棒球夹克 · 无配饰",
+        "shirt": "#e0c48f",
+        "trim": "#f0e5c9",
+        "pants": "#45536b",
+        "hair": "#2e2a26",
+        "shoes": "#e6ded0",
+        "hairStyle": "ponytail",
+        "outfit": "varsity",
+        "eyes": "bright",
+        "lashes": true,
+        "height": 0.98,
+        "build": 0.99
+      },
+      "usedBy": [
+        "floor-07"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1306,
+          "sha256": "aca8f12b525d898a5e02d8efa247227d45064433c26c91a301d94ad266544c5b"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 127481,
+          "sha256": "728e6279366daf1d16bdd8d5cf146db8fa5e599f0a541838c74e8afaddd9e9c8"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 17628,
+          "sha256": "d77934f111579836545709bbee20037413ea579c0ad44462823c4e630d119426"
+        }
+      }
+    },
+    {
+      "id": "floor-11",
+      "scene": "floor",
+      "index": 11,
+      "name": "阿宽",
+      "role": "运维工程师",
+      "signature": "侧削短发 · 格纹衬衫 · 腕表",
+      "look": {
+        "name": "阿宽",
+        "role": "运维工程师",
+        "signature": "侧削短发 · 格纹衬衫 · 腕表",
+        "shirt": "#6f8f7a",
+        "trim": "#c9d8bd",
+        "pants": "#3f4a52",
+        "hair": "#3a3330",
+        "skin": "#c08e68",
+        "shoes": "#4a4438",
+        "hairStyle": "undercut",
+        "outfit": "plaid",
+        "accessory": "watch",
+        "eyes": "narrow",
+        "beard": true,
+        "height": 1.05,
+        "build": 1.1
+      },
+      "usedBy": [
+        "floor-11"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1307,
+          "sha256": "f8a743dc9809c512b6d6eef5b3b79f67a5deed9e9de7c4b071921ca507719e97"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 126726,
+          "sha256": "d6827510d58c352b665f90049bfe802006636c11d6060038992ffd0b1797cb28"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 23360,
+          "sha256": "77144d0864dbb9789d7d93e76591a49fd4e2353e02a042a740fcd60c37ce11eb"
+        }
+      }
+    },
+    {
+      "id": "floor-12",
+      "scene": "floor",
+      "index": 12,
+      "name": "阿焱",
+      "role": "算法工程师",
+      "signature": "蓬松卷发 · 铁锈色格纹 · 大耳机",
+      "look": {
+        "name": "阿焱",
+        "role": "算法工程师",
+        "signature": "蓬松卷发 · 铁锈色格纹 · 大耳机",
+        "shirt": "#b5603f",
+        "trim": "#e6c9a8",
+        "pants": "#4b4a55",
+        "hair": "#2b2320",
+        "skin": "#c98f66",
+        "shoes": "#3c3a3f",
+        "hairStyle": "curly",
+        "outfit": "plaid",
+        "accessory": "headphones",
+        "eyes": "relaxed",
+        "height": 1.02,
+        "build": 1.05
+      },
+      "usedBy": [
+        "floor-12"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1384,
+          "sha256": "6ff8d8b861fa553f2884df0f2e91b50290f48a5c60f51d3cf5726c9572c3f664"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 144528,
+          "sha256": "7cc6cc828bffdb35fafdb4651393d25be4b14dbaff56406b7d24c575a8aeceb1"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 23036,
+          "sha256": "0d8376f48b485c8fc19dc50dc578f4acac796b20cd32ecb36fd75d4ac9e071d3"
+        }
+      }
+    },
+    {
+      "id": "floor-13",
+      "scene": "floor",
+      "index": 13,
+      "name": "阿泽",
+      "role": "数据分析师",
+      "signature": "深棕侧分 · 藏蓝西装 · 方框眼镜",
+      "look": {
+        "name": "阿泽",
+        "role": "数据分析师",
+        "signature": "深棕侧分 · 藏蓝西装 · 方框眼镜",
+        "shirt": "#5f7f9a",
+        "trim": "#eae2cf",
+        "pants": "#3f4a52",
+        "hair": "#46403a",
+        "shoes": "#39434d",
+        "hairStyle": "sidepart",
+        "outfit": "blazer",
+        "accessory": "watch",
+        "eyes": "relaxed",
+        "glasses": "square",
+        "height": 1,
+        "build": 0.96
+      },
+      "usedBy": [
+        "floor-13"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1364,
+          "sha256": "d7f43c7103749a47df52e62091e88dca5ad9e27c0c87f99dc4b8af2baf18eccc"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 136831,
+          "sha256": "6b9f753347885143f5407cd99eaaf50e71486498c2542dd4fb2880113f628f42"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 28092,
+          "sha256": "f267348b584dec2f347136d4a8b37f484c49695ad0e4eeb7b99dda11a37009f8"
+        }
+      }
+    },
+    {
+      "id": "floor-15",
+      "scene": "floor",
+      "index": 15,
+      "name": "阿澈",
+      "role": "解决方案",
+      "signature": "短碎发 · 灰蓝夹克 · 鸭舌帽",
+      "look": {
+        "name": "阿澈",
+        "role": "解决方案",
+        "signature": "短碎发 · 灰蓝夹克 · 鸭舌帽",
+        "shirt": "#7a8fa8",
+        "trim": "#e6e2d2",
+        "pants": "#4b5566",
+        "hair": "#2a2f38",
+        "shoes": "#cdd6dc",
+        "hairStyle": "pixie",
+        "outfit": "varsity",
+        "accessory": "cap",
+        "eyes": "almond",
+        "height": 1.01,
+        "build": 1
+      },
+      "usedBy": [
+        "floor-15"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1341,
+          "sha256": "b02fce9d8815a90589fccf6b9a26b266ab5465020085ab694a25062bc549d9d0"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 140058,
+          "sha256": "aee709e538d90f203db2652503e87966a4317f90f9d67d99f4881707dd81fc1f"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 20376,
+          "sha256": "2e80eff3bf93c110539633b6e7d3fd18a27cab2c1ae9fd551ca59c341f6b78c6"
+        }
+      }
+    },
+    {
+      "id": "floor-17",
+      "scene": "floor",
+      "index": 17,
+      "name": "小乔",
+      "role": "市场专员",
+      "signature": "侧编发 · 珊瑚色西装 · 发夹",
+      "look": {
+        "name": "小乔",
+        "role": "市场专员",
+        "signature": "侧编发 · 珊瑚色西装 · 发夹",
+        "shirt": "#d08a6a",
+        "trim": "#f6e0d2",
+        "pants": "#5a5568",
+        "hair": "#4c3326",
+        "shoes": "#8a6a58",
+        "hairStyle": "braid",
+        "outfit": "blazer",
+        "accessory": "hairclip",
+        "eyes": "bright",
+        "lashes": true,
+        "freckles": true,
+        "height": 0.96,
+        "build": 0.94
+      },
+      "usedBy": [
+        "floor-17"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1413,
+          "sha256": "4d1fbf794be97df639d1abc0f57775bcedda10bb3dee71887fde69fa01af4c59"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 131288,
+          "sha256": "b467ea76fff6a2bd92a35e1772b5c6dd109b537f9a8c277d250da44182cb5312"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 25972,
+          "sha256": "974ad88f7a45377e6fdd755a4b7f4b49e3fa8638cf8288013e4c64737be2f6d5"
+        }
+      }
+    },
+    {
+      "id": "floor-18",
+      "scene": "floor",
+      "index": 18,
+      "name": "阿栗",
+      "role": "商务拓展",
+      "signature": "束发辫 · 墨绿背带裤 · 腕表",
+      "look": {
+        "name": "阿栗",
+        "role": "商务拓展",
+        "signature": "束发辫 · 墨绿背带裤 · 腕表",
+        "shirt": "#7d9a86",
+        "trim": "#d8e3cc",
+        "pants": "#4d5a63",
+        "hair": "#33291f",
+        "skin": "#a9714c",
+        "shoes": "#4a4034",
+        "hairStyle": "locs",
+        "outfit": "overalls",
+        "accessory": "watch",
+        "eyes": "narrow",
+        "beard": true,
+        "height": 1.06,
+        "build": 1.09
+      },
+      "usedBy": [
+        "floor-18"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1373,
+          "sha256": "6f19d858d2412a037260555d5f4156dea859930e3205645ee3382f4cfea69745"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 142948,
+          "sha256": "9bc0ed6d082e27a6d53c0883b70212953747055a4eaee94c2775fd0e234601dc"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 22996,
+          "sha256": "3d8ff0757cea11b57d619982e1844dd5fdae49a0dcf459f100a18c74445e91e4"
+        }
+      }
+    },
+    {
+      "id": "floor-19",
+      "scene": "floor",
+      "index": 19,
+      "name": "阿棠",
+      "role": "招聘",
+      "signature": "短刺发 · 米白背带裤 · 蝴蝶结",
+      "look": {
+        "name": "阿棠",
+        "role": "招聘",
+        "signature": "短刺发 · 米白背带裤 · 蝴蝶结",
+        "shirt": "#e8dfbd",
+        "trim": "#cbd8b4",
+        "pants": "#8a7f66",
+        "hair": "#6b4a2f",
+        "shoes": "#92795e",
+        "hairStyle": "spiky",
+        "outfit": "overalls",
+        "accessory": "bow",
+        "eyes": "round",
+        "freckles": true,
+        "height": 0.95,
+        "build": 0.98
+      },
+      "usedBy": [
+        "floor-19"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1392,
+          "sha256": "530a5520c300a3c58a4ee1babd4a7ead6ab4285eb21d0947b83978c0a3d84875"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 131097,
+          "sha256": "999bf86e7d91e619c57182dadec3438d26330ff220407fae71eee62c15f1895b"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 21604,
+          "sha256": "273c83568dc5ec6b4fef2deafe37dec74d557767b1462a87791bc1c78f42bded"
+        }
+      }
+    },
+    {
+      "id": "floor-20",
+      "scene": "floor",
+      "index": 20,
+      "name": "小枫",
+      "role": "技术支持",
+      "signature": "侧削短发 · 灰绿卫衣 · 鸭舌帽",
+      "look": {
+        "name": "小枫",
+        "role": "技术支持",
+        "signature": "侧削短发 · 灰绿卫衣 · 鸭舌帽",
+        "shirt": "#6f7f8f",
+        "trim": "#c4d2c2",
+        "pants": "#3f4a52",
+        "hair": "#33383d",
+        "shoes": "#dde5e6",
+        "hairStyle": "undercut",
+        "outfit": "hoodie",
+        "accessory": "cap",
+        "eyes": "relaxed",
+        "glasses": "round",
+        "height": 1.04,
+        "build": 1.03
+      },
+      "usedBy": [
+        "floor-20"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1378,
+          "sha256": "042e3c4ba35afd612c18c5b0449c231482c8dafed88a793a537366043aa3edfa"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 146227,
+          "sha256": "c7f8c8a4c029e793a55d90be51829203c9c46a1743a622bcb849629d455b7eb8"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 24308,
+          "sha256": "8d2b267cf96440a09613e0843a81224165a3bcb381b2903ae28ff33d0a6e39aa"
+        }
+      }
+    },
+    {
+      "id": "floor-21",
+      "scene": "floor",
+      "index": 21,
+      "name": "小舟",
+      "role": "财务",
+      "signature": "齐肩短发 · 灰绿马甲 · 胸牌",
+      "look": {
+        "name": "小舟",
+        "role": "财务",
+        "signature": "齐肩短发 · 灰绿马甲 · 胸牌",
+        "shirt": "#8a9a7c",
+        "trim": "#e4e8d4",
+        "pants": "#46505a",
+        "hair": "#3f3a35",
+        "shoes": "#3f4740",
+        "hairStyle": "bob",
+        "outfit": "vest",
+        "accessory": "badge",
+        "eyes": "narrow",
+        "glasses": "square",
+        "height": 0.99,
+        "build": 1
+      },
+      "usedBy": [
+        "floor-21"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1341,
+          "sha256": "f377ec4b605e9c0fad0bda142a6abca623dc04cfb8eddd9cb59f5c287129e4b4"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 130099,
+          "sha256": "e13e570df35e4775ca818dedaad8e5fbbda761213f36ac4744648d5876f10da4"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 22620,
+          "sha256": "57dcf91dde91cc40eb546a0d62d9d6d288d819a8c14fe5313ded7d8e6a69e754"
+        }
+      }
+    },
+    {
+      "id": "floor-22",
+      "scene": "floor",
+      "index": 22,
+      "name": "阿岚",
+      "role": "法务",
+      "signature": "高马尾 · 藕荷开衫 · 方框眼镜",
+      "look": {
+        "name": "阿岚",
+        "role": "法务",
+        "signature": "高马尾 · 藕荷开衫 · 方框眼镜",
+        "shirt": "#9a8fa8",
+        "trim": "#efe6f2",
+        "pants": "#454b5c",
+        "hair": "#2d2a28",
+        "shoes": "#4a4a52",
+        "hairStyle": "ponytail",
+        "outfit": "cardigan",
+        "eyes": "almond",
+        "glasses": "square",
+        "lashes": true,
+        "height": 1.02,
+        "build": 0.98
+      },
+      "usedBy": [
+        "floor-22"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1401,
+          "sha256": "83c68307e2c7a9deafada0c88bc9e2c73e0f91f9081be8984dc6383f40957beb"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 131933,
+          "sha256": "ddcfb39e22c44cb35fa980910886043fb15762a0f043ab306a4e7d2bcb499055"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 22936,
+          "sha256": "b23b69e70738cb0cb0a16ad07f27ad118c39be0aaf254fa52afbfa818976cdcc"
+        }
+      }
+    },
+    {
+      "id": "floor-23",
+      "scene": "floor",
+      "index": 23,
+      "name": "小羽",
+      "role": "实习生",
+      "signature": "短碎发 · 橙棕工装 · 蝴蝶结",
+      "look": {
+        "name": "小羽",
+        "role": "实习生",
+        "signature": "短碎发 · 橙棕工装 · 蝴蝶结",
+        "shirt": "#d8a86a",
+        "trim": "#f4e2c4",
+        "pants": "#5f6b63",
+        "hair": "#514034",
+        "shoes": "#eadfc8",
+        "hairStyle": "pixie",
+        "outfit": "utility",
+        "accessory": "bow",
+        "eyes": "bright",
+        "freckles": true,
+        "height": 0.94,
+        "build": 0.92
+      },
+      "usedBy": [
+        "floor-23"
+      ],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1389,
+          "sha256": "030c9e73d0fd89f7ce1d5967aaf8aa61a60e9633641b78d21cabb3f920cbc480"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 127086,
+          "sha256": "add7bb0164b9fb32ec12345c548c523a5089c3e9e34084292cdfc15891716e2f"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 21508,
+          "sha256": "0131f0b6b79f64ab6c75dacf0b43c83f0cdd77e3b79de9955c126561f1124552"
+        }
+      }
+    }
+  ]
+}

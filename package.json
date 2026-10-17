@@ -1,0 +1,26 @@
+{
+  "name": "@pixoffice/example-office-voxel",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5196 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5197 --strictPort",
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "node scripts/browser-check.mjs",
+    "test:browser:engine": "node scripts/browser-engine-check.mjs",
+    "test:browser:team": "node scripts/browser-team-check.mjs",
+    "test:browser:appearance": "node scripts/browser-appearance-check.mjs",
+    "test:browser:tasks": "node scripts/browser-task-displays-check.mjs",
+    "test:browser:computers": "node scripts/browser-computer-focus-check.mjs",
+    "test:geometry:workstations": "node scripts/check-workstation-geometry.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2",
+    "vite": "8.3.4"
+  }
+}

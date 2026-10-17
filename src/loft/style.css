@@ -1,0 +1,19 @@
+/* Loft page tweaks only. The shared studio styling comes from ../style.css, which
+   is imported first in ./main.js; nothing here changes the other two pages. */
+.office-loft .office-switch a { padding: 8px 10px; }
+.office-loft .live-dot { background: var(--orange); }
+.office-loft .scene-caption { color: var(--green-dark); }
+
+/* The loft page carries a third navigation entry, so the topbar sheds its
+   non-essential decorations earlier than the original pages do. */
+@media (max-width: 1100px) {
+  .office-loft .lab-name { display: none; }
+  .office-loft .office-switch a { padding: 8px 8px; font-size: 10px; }
+}
+@media (max-width: 760px) {
+  .office-loft .office-switch a { padding: 8px 6px; font-size: 10px; }
+}
+@media (max-width: 420px) {
+  .office-loft .brand-divider { display: none; }
+  .office-loft .office-switch a { padding: 7px 4px; font-size: 9px; }
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#dce6e9" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%2379917a' d='M4 8h24v20H4z'/%3E%3Cpath fill='%23f3d8bb' d='M8 4h16v16H8z'/%3E%3Cpath fill='%23293635' d='M11 10h3v3h-3zm8 0h3v3h-3z'/%3E%3C/svg%3E" />
+    <title>PixOffice · 分间办公室</title>
+  </head>
+  <body class="office-nine office-suite" data-office="suite">
+    <div id="app">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="PixOffice 方块办公室"><span class="brand-blocks" aria-hidden="true"><i></i><i></i><i></i></span>PixOffice <span class="brand-divider"></span><span class="lab-name">空间实验室</span></a>
+        <nav class="office-switch" aria-label="选择办公室"><a href="./" title="三人办公室">三人</a><a href="./nine.html" title="九人办公室">九人</a><a href="./loft.html" title="长桌开间">长桌</a><a href="./suite.html" aria-current="page" title="分间办公室">分间</a></nav>
+        <span class="edition">VOXEL STUDY <b>004</b></span>
+        <button id="pause" class="quiet" aria-pressed="false">暂停动画</button>
+      </header>
+      <main>
+        <section class="stage" aria-label="交互式 3D 分间办公室">
+          <div class="scene-heading"><span class="eyebrow">THREE ROOMS. ONE CORRIDOR.</span><h1>隔墙开门，<br />各忙各的。</h1><p>三间办公室和一间会议室，串在一条走廊上。</p></div>
+          <div id="viewport" tabindex="0" aria-label="3D 场景。拖拽旋转，滚轮缩放，点击空地移动人物。方向键旋转视角，加减号缩放。"></div>
+          <div id="loading" role="status">正在搭建隔间办公室…</div>
+          <div id="bubble" class="bubble" hidden>嗨，欢迎来到我们的分间办公室！</div>
+          <div class="scene-bottom"><div class="scene-caption"><span class="live-dot"></span><span id="scene-state">走廊贯通 · 自由探索</span></div><div class="camera-tools" aria-label="镜头预设"><button data-camera="room" class="active" aria-pressed="true">全景</button><button data-camera="person" aria-pressed="false">人物特写</button><button data-camera="top" aria-pressed="false">俯视</button></div></div>
+          <div class="interaction-hint">拖拽旋转 <span>·</span> 滚轮缩放 <span>·</span> 点击空地走过去</div>
+          <div class="telemetry"><span id="fps">— FPS</span><span>WEBGL · 3D</span></div>
+        </section>
+        <aside class="inspector" aria-label="人物与场景控制">
+          <div class="inspector-intro"><span class="eyebrow">CHARACTER STUDIO</span><h2>九个人，四间房。</h2><p>选一位伙伴，看看 TA 在自己房间里做什么。</p></div>
+          <section class="control-section"><div class="section-label"><h3>各房间的伙伴</h3><span id="people-count">9 位</span></div><div class="people" aria-label="选择人物"></div><p id="character-detail" class="character-detail" aria-live="polite"></p></section>
+          <section class="control-section"><div class="section-label"><h3>试一个动作</h3><span id="action-label">自在站立</span></div><div class="action-grid"><button data-action="idle" class="active" aria-pressed="true"><span>·</span>站立呼吸</button><button data-action="wave" aria-pressed="false"><span>↗</span>挥手招呼</button><button data-action="work" aria-pressed="false"><span>⌨</span>坐下工作</button><button data-action="walk" aria-pressed="false"><span>↝</span>散步走走</button><button data-action="celebrate" aria-pressed="false"><span>↑</span>开心庆祝</button><button data-action="think" aria-pressed="false"><span>?</span>想点事情</button></div></section>
+          <section class="control-section"><div class="section-label"><h3>今天是什么心情？</h3><span>实时表情</span></div><div class="expressions"><button data-expression="happy" class="active" aria-pressed="true"><span class="face-glyph">◡</span>开心</button><button data-expression="focus" aria-pressed="false"><span class="face-glyph">—</span>专注</button><button data-expression="surprise" aria-pressed="false"><span class="face-glyph">o</span>惊讶</button><button data-expression="sleepy" aria-pressed="false"><span class="face-glyph">﹏</span>困倦</button></div></section>
+          <section class="motion-section"><div class="section-label"><label for="flexibility">动作灵活度</label><output id="flex-value">85%</output></div><input id="flexibility" type="range" min="0" max="100" value="85" /><div class="range-labels"><span>方块式摆动</span><span>全身自然联动</span></div><p class="detail-note">试着调低，再挥挥手。观察手肘、头部和身体的变化。</p></section>
+          <div class="inspector-footer"><span class="tiny-block"></span><p>一条走廊，四扇门。<br /><span>独立实验 · 不连接正式办公数据</span></p><button id="tweaks-toggle" aria-expanded="false" aria-controls="tweaks">调节</button></div>
+        </aside>
+      </main>
+      <footer class="footer"><span>PI X OFFICE <span class="footer-sep">/</span> 分间办公室 · 走廊与门</span><span id="status" role="status" aria-live="polite">选择一位伙伴，试试动作和表情。</span><span>EXPERIMENT / 2026</span></footer>
+      <section id="tweaks" class="tweaks" hidden aria-label="Tweaks 场景调节"><div class="section-label"><h3>Tweaks</h3><button id="tweaks-close" aria-label="关闭调节">×</button></div><label for="lighting">场景光线</label><select id="lighting"><option value="day">明亮日光</option><option value="golden">午后暖光</option><option value="night">下班时分</option></select><label class="check-label"><input type="checkbox" id="pixelated" />低分辨率像素画面</label><p>方块模型与像素材质始终保留。</p></section>
+    </div>
+    <script type="module" src="/src/suite/main.js"></script>
+  </body>
+</html>

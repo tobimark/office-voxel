@@ -1,0 +1,13 @@
+.artifacts/
+node_modules/
+dist/
+dist-*/
+
+*.log
+.env
+.env.*
+!.env.example
+coverage/
+playwright-report/
+test-results/
+

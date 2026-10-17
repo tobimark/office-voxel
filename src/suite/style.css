@@ -1,0 +1,18 @@
+/* Suite page tweaks only. The shared studio styling comes from ../style.css, which
+   is imported first in ./main.js; nothing here changes the other pages. */
+.office-suite .office-switch a { padding: 8px 9px; }
+.office-suite .live-dot { background: var(--green); }
+.office-suite .scene-caption { color: var(--green-dark); }
+
+/* Four navigation entries, so the topbar sheds its decorations earlier. */
+@media (max-width: 1100px) {
+  .office-suite .lab-name { display: none; }
+  .office-suite .office-switch a { padding: 8px 7px; font-size: 10px; }
+}
+@media (max-width: 760px) {
+  .office-suite .office-switch a { padding: 8px 5px; font-size: 10px; }
+}
+@media (max-width: 420px) {
+  .office-suite .brand-divider { display: none; }
+  .office-suite .office-switch a { padding: 7px 3px; font-size: 9px; }
+}
