@@ -1,0 +1,27 @@
+[
+  {
+    "id": "studio",
+    "count": 456,
+    "sha256": "895e69ce37911f06b8fc460a7e9b23e7273ba0ffcceae8e6088dfbc4ada21fff"
+  },
+  {
+    "id": "team",
+    "count": 1152,
+    "sha256": "1c08eca3e3b121898bfe2898e8f21c54140696745d7a1b578c253ac9c421732c"
+  },
+  {
+    "id": "loft",
+    "count": 1530,
+    "sha256": "bb729dc7e6dc85c45b3590cbb05b944aa99ef419ebea9ed293caef0baa050724"
+  },
+  {
+    "id": "suite",
+    "count": 1616,
+    "sha256": "e28eab9ee99f1a0cdbb024859c9c34bcee16c4ce2e195d40afec17bfd595ac04"
+  },
+  {
+    "id": "floor",
+    "count": 3439,
+    "sha256": "fc63f01a6536ae519529853b9fcbf33daddc8a876c91e7ee6e3c29cff61a4198"
+  }
+]

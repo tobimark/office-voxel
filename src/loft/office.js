@@ -1,3 +1,4 @@
+import { createMug as mug, createPlant, createChair, createMonitor, createDeskSlab, createKeyboard, seatPoint as at } from '../shared/furniture.js';
 // Loft office furniture. Every solid piece is placed inside one of the collision
 // boxes declared in ./layout.js, so the room the player walks around and the room
 // they can see always agree. Built only from the shared pixels in ../art.js.
@@ -82,27 +83,13 @@ export function createLoftOffice(scene, layout = loftOffice) {
   box(office, 0, 2.35, back + .20, 2.8, 1.3, .16, c.wood);
   registerDisplay(displays, 'topic', panel(office, 0, 2.35, back + .292, 2.62, 1.13, signMat), { id: 'mission', label: '任务主题' });
 
-  function mug(parent, x, y, z, color) {
-    box(parent, x, y + .09, z, .16, .18, .16, color);
-    box(parent, x, y + .185, z, .11, .01, .11, c.woodDark);
-    box(parent, x + .11, y + .09, z, .08, .09, .07, color);
-  }
-  function plant(x, z, scale = 1, y = 0) {
-    const g = group(office, x, y, z); g.scale.setScalar(scale);
-    box(g, 0, .19, 0, .42, .38, .42, '#e6d3b8');
-    box(g, 0, .4, 0, .48, .08, .48, c.white);
-    box(g, 0, .46, 0, .35, .05, .35, c.woodDark);
-    box(g, 0, .78, 0, .09, .65, .09, c.woodDark);
-    for (const [a, b, h, s] of [[-.22, 0, .9, .42], [.22, .06, 1.16, .46], [0, -.14, 1.42, .48], [-.12, .17, 1.23, .38], [.16, -.1, .77, .32]]) {
-      box(g, a, h, b, s, s * .8, s, h > 1.2 ? c.leafLight : c.leaf);
-    }
-  }
+  const plant = (x, z, scale = 1, y = 0) => createPlant(office, x, z, scale, y);
 
   // One shared table, one leg per seat pair, shared planters down the middle.
   // Everything on the table is measured from its surface so the top stays
   // height-matched to the typing pose in ./layout.js.
   const surface = table.surface, slab = table.thickness;
-  box(office, table.x, surface - slab / 2, table.z, table.w, slab, table.d, c.wood, 'wood');
+  createDeskSlab(office, { ...table, surface, thickness: slab });
   box(office, table.x, surface - slab - .09, table.z, table.w - .7, .07, .55, '#4a5a58');
   for (const x of [-9.2, -4.4, 0, 4.4, 9.2]) for (const z of [-.85, .85]) {
     box(office, x, (surface - slab) / 2, z, .12, surface - slab, .5, c.white);
@@ -120,36 +107,12 @@ export function createLoftOffice(scene, layout = loftOffice) {
     for (let i = 0; i < 2; i++) box(office, x, .3 + i * .34, side * 1.06, .3, .04, .04, c.woodDark);
   }
 
-  const axis = seat => ({ fx: Math.sin(seat.yaw), fz: Math.cos(seat.yaw), rx: Math.cos(seat.yaw), rz: -Math.sin(seat.yaw) });
-  const at = (seat, forward, side) => {
-    const { fx, fz, rx, rz } = axis(seat);
-    return { x: seat.x + fx * forward + rx * side, z: seat.z + fz * forward + rz * side };
+  const chair = seat => createChair(office, seat);
+  const monitor = seat => {
+    const p = at(seat, deskItems.monitor.forward);
+    screens.push(createMonitor(office, { ...p, yaw: seat.yaw + Math.PI, surface, faceOffset: deskItems.monitor.faceOffset, material: screenMat }).screen);
   };
-  function chair(seat) {
-    const g = group(office, seat.x, 0, seat.z); g.rotation.y = seat.yaw + Math.PI;
-    box(g, 0, .57, 0, .74, .16, .68, c.green);
-    box(g, 0, .94, .31, .74, .68, .14, c.green);
-    box(g, 0, .29, 0, .09, .45, .09, c.ink);
-    box(g, 0, .09, 0, .74, .08, .1, c.ink); box(g, 0, .09, 0, .1, .08, .66, c.ink);
-    for (const sx of [-.33, .33]) for (const sz of [-.26, .26]) box(g, sx, .065, sz, .12, .12, .12, c.ink);
-  }
-  function monitor(seat) {
-    const p = at(seat, deskItems.monitor.forward, 0);
-    const g = group(office, p.x, 0, p.z); g.rotation.y = seat.yaw + Math.PI;
-    box(g, 0, surface + .015, 0, .34, .03, .22, c.ink);
-    box(g, 0, surface + .195, -.09, .08, .32, .08, c.ink);
-    box(g, 0, surface + .485, -.04, 1, .6, .09, c.ink);
-    screens.push(panel(g, 0, surface + .485, deskItems.monitor.faceOffset, .92, .52, screenMat));
-  }
-  function keyboard(seat) {
-    const keys = deskItems.keyboard, p = at(seat, keys.forward, 0), { fx, fz, rx, rz } = axis(seat);
-    box(office, p.x, surface + keys.thickness / 2, p.z, .62, keys.thickness, keys.depth, '#e6e6d9');
-    for (let row = 0; row < 3; row++) for (let col = 0; col < 9; col++) {
-      const side = (col - 4) * .062, forward = (row - 1) * .068;
-      box(office, p.x + rx * side + fx * forward, surface + keys.thickness + keys.keyHeight / 2,
-        p.z + rz * side + fz * forward, .05, keys.keyHeight, .045, '#99a3a1');
-    }
-  }
+  const keyboard = seat => createKeyboard(office, seat, surface, deskItems.keyboard);
   loftSeats.forEach((seat, i) => {
     monitor(seat); keyboard(seat); chair(seat);
     const mouse = at(seat, deskItems.mouse.forward, deskItems.mouse.side);

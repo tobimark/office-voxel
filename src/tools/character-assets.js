@@ -7,6 +7,8 @@ import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js';
 import { createCharacter } from '../character.js';
 import { drawPortrait } from '../appearance.js';
 import { characterRoster } from '../shared/character-roster.js';
+import { acquireArtResources } from '../art.js';
+import { disposeSceneResources } from '../shared/scene-resources.js';
 
 const VIEW = { width: 341, height: 384, frame: { width: 1024, height: 768 } };
 const SHEET = { width: 1024, height: 1024, caption: 256 };
@@ -22,15 +24,14 @@ export const characterAssets = {
   // manifest.json, so `look` has to stay in.
   roster: roster.map(({ fingerprint, ...entry }) => entry),
   summary: roster.length,
-  async get(index) {
+  async get(index, kinds = ['portrait', 'sheet', 'model']) {
     const entry = roster[index];
     if (!entry) throw new Error(`no character at ${index}`);
-    return capture(entry);
+    return capture(entry, kinds);
   },
 };
 
-function buildCharacter(entry) {
-  const scene = new THREE.Scene();
+function buildCharacter(entry, scene) {
   scene.background = new THREE.Color('#e5ece9');
   scene.add(new THREE.HemisphereLight('#fff4dd', '#90a2a6', 2.5));
   const key = new THREE.DirectionalLight('#fff1dc', 2.4); key.position.set(-3, 6, 6); scene.add(key);
@@ -160,23 +161,25 @@ function composeSheet(entry, actor, scene) {
   return sheet.toDataURL('image/png');
 }
 
-async function capture(entry) {
-  const { scene, actor } = buildCharacter(entry);
+async function capture(entry, kinds) {
+  if (kinds.length === 1 && kinds[0] === 'portrait') return { id: entry.id, portrait: portraitDataUrl(entry.look) };
+  const release = acquireArtResources();
+  const scene = new THREE.Scene();
   try {
+    const { actor } = buildCharacter(entry, scene);
     await new Promise(resolve => renderer.compileAsync?.(scene, bodyCamera).then(resolve, resolve));
-    const model = await new GLTFExporter().parseAsync(actor.root, { binary: true, onlyVisible: true });
+    const model = kinds.includes('model') ? await new GLTFExporter().parseAsync(actor.root, { binary: true, onlyVisible: true }) : new ArrayBuffer(0);
     const bytes = new Uint8Array(model);
     let binary = '';
     for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
     return {
       id: entry.id,
-      portrait: portraitDataUrl(entry.look),
-      sheet: composeSheet(entry, actor, scene),
+      portrait: kinds.includes('portrait') ? portraitDataUrl(entry.look) : undefined,
+      sheet: kinds.includes('sheet') ? composeSheet(entry, actor, scene) : undefined,
       model: btoa(binary),
       modelBytes: bytes.length,
     };
   } finally {
-    actor.ring.geometry.dispose();
-    scene.remove(actor.root);
+    try { disposeSceneResources(scene); } finally { release(); }
   }
 }

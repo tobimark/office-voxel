@@ -9,6 +9,8 @@ export function resolveSceneLayout(layout) {
   if (!layout?.id || !Number.isInteger(layout.capacity) || layout.capacity < 1) fail('id/capacity');
   if (layout.actors?.length !== layout.capacity || layout.stationFor?.length !== layout.capacity) fail('actors/stationFor');
   if (!layout.actors.every(finitePoint)) fail('actor positions');
+  const instanceIds = layout.actors.map(actor => actor.instanceId).filter(id => id !== undefined);
+  if (instanceIds.some(id => typeof id !== 'string' || !id) || new Set(instanceIds).size !== instanceIds.length) fail('instance identities');
   if (!layout.seats?.length || layout.seats.length !== layout.stations?.length) fail('seats/stations');
   if (new Set(layout.stationFor).size !== layout.capacity || layout.stationFor.some(i => !Number.isInteger(i) || !layout.seats[i])) fail('seat assignment');
   if (!Number.isFinite(layout.width) || !Number.isFinite(layout.depth) || layout.width <= 0 || layout.depth <= 0) fail('dimensions');

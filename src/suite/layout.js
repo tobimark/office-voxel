@@ -1,8 +1,10 @@
+import { furnitureSpec } from '../shared/furniture-spec.js';
 // Suite office: one corridor, three glazed work rooms and a meeting room, each
 // closed by its own door. Walls, door openings, seats and furniture boxes are data
 // here so the renderer and the navigation tests share one source of truth. The nine
 // characters come from the original team layout; no original file is touched.
-import { teamOffice } from '../layouts.js';
+import { suiteCast } from '../characters/casts.js';
+import { instantiateCharacter } from '../characters/instances.js';
 import { monitorPlacement } from '../shared/workstation.js';
 
 export const approach = 1.05;                 // step-out distance behind a chair
@@ -118,7 +120,7 @@ export function suiteObstacles() {
     ...suiteLeaves,
     ...suiteSeats.flatMap(seat => [
       { x: seat.x, z: DESK_Z, w: 2.55, d: 1.28 },   // desk
-      { x: seat.x, z: SEAT_Z, w: .78, d: .78 },     // reserved chair
+      { x: seat.x, z: SEAT_Z, ...furnitureSpec.chair },     // reserved chair
     ]),
     ...suiteZones.map(({ x, z, w, d }) => ({ x, z, w, d })),
   ];
@@ -155,8 +157,8 @@ export const suiteOffice = {
     { x: 0, z: 1.7 }, { x: 0, z: -1.9 }, { x: 0, z: 1.7 },
     { x: 8.67, z: 1 }, { x: 8.67, z: -1.9 }, { x: 8.67, z: 1 },
   ],
-  actors: teamOffice.actors.map((person, index) => {
+  actors: suiteCast.map((reference, index) => {
     const spot = index === 0 ? standingSpot : suiteSeats[index];
-    return { ...person, x: spot.x, z: spot.z, phase: .2 + index * .73 };
+    return instantiateCharacter(reference, { x: spot.x, z: spot.z, phase: .2 + index * .73 });
   }),
 };

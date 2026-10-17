@@ -1,4 +1,6 @@
-# PixOffice · 方块办公室实验室
+# Office Voxel · 3D 办公室
+
+独立工程迁移基线与人物、家具、资源生命周期、事务导出的约定见 [素材管理](docs/material-management.md)。
 
 一个独立的浏览器 3D MVP，探索 **Minecraft 启发的方块空间 + 更灵活的人物关节与表情**。使用 Three.js / WebGL 2，全部模型与像素贴图由本示例生成，不依赖 Unity、Minecraft 素材或远程 CDN。不是 Minecraft 资源移植。
 
@@ -7,7 +9,7 @@
 在仓库根目录执行：
 
 ```powershell
-cd example/office-voxel
+cd D:\kunlunmeta\office-voxel
 npm ci --workspaces=false
 npm run dev --workspaces=false
 ```

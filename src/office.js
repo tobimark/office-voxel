@@ -1,3 +1,4 @@
+import { createMug as mug, createPlant, createChair, createMonitor, createDeskSlab } from './shared/furniture.js';
 import { box, group, panel, canvasMaterial, batchStaticBoxes, palette as c } from './art.js';
 import { smallOffice, workstationObstacles } from './layouts.js';
 import { registerDisplay, registerComputers } from './shared/display-surface.js';
@@ -49,31 +50,13 @@ export function createOffice(scene, layout = smallOffice) {
   box(office, signX, 2.35, back + .20, 2.8, 1.3, .16, c.wood);
   registerDisplay(displays, 'topic', panel(office, signX, 2.35, back + .292, 2.62, 1.13, sign), { id: 'mission', label: '任务主题' });
 
-  function plant(x, z, scale = 1, y = 0) {
-    const g = group(office, x, y, z); g.scale.setScalar(scale);
-    box(g, 0, .19, 0, .42, .38, .42, '#e6d3b8');
-    box(g, 0, .4, 0, .48, .08, .48, c.white);
-    box(g, 0, .46, 0, .35, .05, .35, c.woodDark);
-    box(g, 0, .78, 0, .09, .65, .09, c.woodDark);
-    for (const [a, b, h, s] of [[-.22, 0, .9, .42], [.22, .06, 1.16, .46], [0, -.14, 1.42, .48], [-.12, .17, 1.23, .38], [.16, -.1, .77, .32]]) {
-      box(g, a, h, b, s, s * .8, s, h > 1.2 ? c.leafLight : c.leaf);
-    }
-    if (!y) block(x, z, .6 * scale, .6 * scale);
-  }
-  function mug(parent, x, y, z, color) {
-    box(parent, x, y + .09, z, .16, .18, .16, color);
-    box(parent, x, y + .185, z, .11, .01, .11, c.woodDark);
-    box(parent, x + .11, y + .09, z, .08, .09, .07, color);
-  }
-  function chair(x, z) {
-    const g = group(office, x, 0, z);
-    box(g, 0, .57, 0, .74, .16, .68, c.green);
-    box(g, 0, .94, .31, .74, .68, .14, c.green);
-    box(g, 0, .29, 0, .09, .45, .09, c.ink);
-    box(g, 0, .09, 0, .74, .08, .1, c.ink); box(g, 0, .09, 0, .1, .08, .66, c.ink);
-    for (const x of [-.33, .33]) for (const z of [-.26, .26]) box(g, x, .065, z, .12, .12, .12, c.ink);
-    // Chairs are part of a workstation reserved zone during navigation.
-  }
+  const plant = (x, z, scale = 1, y = 0) => {
+    const built = createPlant(office, x, z, scale, y);
+    if (built.collision) obstacles.push(built.collision);
+    return built;
+  };
+
+  const chair = (x, z) => createChair(office, { x, z, yaw: Math.PI });
   const screenMat = canvasMaterial(64, 40, ctx => {
     ctx.fillStyle = '#293e40'; ctx.fillRect(0, 0, 64, 40);
     ctx.fillStyle = '#52666a'; ctx.fillRect(0, 0, 64, 5); ctx.fillRect(0, 7, 12, 33);
@@ -85,16 +68,13 @@ export function createOffice(scene, layout = smallOffice) {
   const stations = layout.stations;
   stations.forEach((p, i) => {
     const g = group(office, p.x, 0, p.z);
-    box(g, 0, 1.10, 0, 2.55, .15, 1.28, c.wood, 'wood');
+    createDeskSlab(g, { w: 2.55, d: 1.28, surface: 1.175, thickness: .15 });
     for (const x of [-1.05, 1.05]) {
       box(g, x, .54, 0, .11, 1.02, 1, c.white);
       box(g, x, .05, 0, .35, .09, 1.15, c.white);
     }
     const screenZ = 1.18 - monitorPlacement.screenDistance;
-    box(g, 0, 1.23, screenZ, .5, .07, .32, c.ink);
-    box(g, 0, 1.43, screenZ - .08, .09, .40, .09, c.ink);
-    box(g, 0, 1.70, screenZ - .06, 1.05, .65, .10, c.ink);
-    screens.push(panel(g, 0, 1.70, screenZ, .94, .53, screenMat));
+    screens.push(createMonitor(g, { z: screenZ, variant: 'studio', material: screenMat }).screen);
     box(g, -.05, 1.21, .30, .72, .045, .25, '#e6e6d9');
     for (let row = 0; row < 3; row++) for (let col = 0; col < 9; col++) box(g, -.35 + col * .073, 1.239, .22 + row * .07, .052, .013, .04, '#99a3a1');
     box(g, .6, 1.19, .25, .36, .02, .4, c.green);

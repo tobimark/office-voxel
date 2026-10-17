@@ -6,7 +6,30 @@ export const palette = {
   orange: '#d57645', blue: '#708fa5', floor: '#cfb18b', skin: '#edc19d',
 };
 const cache = new Map();
-const geometry = new THREE.BoxGeometry(1, 1, 1);
+let geometry;
+let leases = 0;
+const shared = new WeakSet(), owned = new Set();
+const own = resource => { shared.add(resource); owned.add(resource); return resource; };
+export const isSharedArtResource = resource => shared.has(resource);
+
+// Every live scene/export capture holds a lease. Cache entries are immutable;
+// scene-private faces, panels and task textures are never registered here.
+export function acquireArtResources() {
+  leases++;
+  let released = false;
+  return () => {
+    if (released) return;
+    released = true;
+    if (--leases) return;
+    const resources = [...owned];
+    owned.clear(); cache.clear(); geometry = undefined; seed = 19;
+    const errors = [];
+    for (const resource of resources) {
+      try { resource.dispose(); } catch (error) { errors.push(error); }
+    }
+    if (errors.length) throw new AggregateError(errors, 'Shared art cleanup failed');
+  };
+}
 let seed = 19;
 function random() { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
 
@@ -26,10 +49,11 @@ export function texture(color, kind = 'noise') {
 }
 export function material(color, kind = 'noise') {
   const key = `${color}:${kind}`;
-  if (!cache.has(key)) cache.set(key, new THREE.MeshStandardMaterial({ map: texture(color, kind), roughness: .9 }));
+  if (!cache.has(key)) cache.set(key, own(new THREE.MeshStandardMaterial({ map: own(texture(color, kind)), roughness: .9 })));
   return cache.get(key);
 }
 export function box(parent, x, y, z, w, h, d, color, kind = 'noise') {
+  geometry ??= own(new THREE.BoxGeometry(1, 1, 1));
   const mesh = new THREE.Mesh(geometry, color?.isMaterial ? color : material(color, kind));
   mesh.position.set(x, y, z); mesh.scale.set(w, h, d);
   mesh.castShadow = mesh.receiveShadow = true;

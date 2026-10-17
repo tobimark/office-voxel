@@ -1,3 +1,4 @@
+import { createMug as mug, createPlant, createChair, createMonitor, createDeskSlab } from '../shared/furniture.js';
 // Suite office furniture. Every solid piece — including each partition segment and
 // every open door leaf — sits inside one of the collision boxes declared in
 // ./layout.js, so what the player walks around is exactly what they can see. The
@@ -86,21 +87,7 @@ export function createSuiteOffice(scene, layout = suiteOffice) {
     ctx.fillStyle = '#c9a477'; ctx.fillRect(8, 21, 26, 3);
   }, true);
 
-  function mug(parent, x, y, z, color) {
-    box(parent, x, y + .09, z, .16, .18, .16, color);
-    box(parent, x, y + .185, z, .11, .01, .11, c.woodDark);
-    box(parent, x + .11, y + .09, z, .08, .09, .07, color);
-  }
-  function plant(x, z, scale = 1, y = 0) {
-    const g = group(office, x, y, z); g.scale.setScalar(scale);
-    box(g, 0, .19, 0, .42, .38, .42, '#e6d3b8');
-    box(g, 0, .4, 0, .48, .08, .48, c.white);
-    box(g, 0, .46, 0, .35, .05, .35, c.woodDark);
-    box(g, 0, .78, 0, .09, .65, .09, c.woodDark);
-    for (const [a, b, h, s] of [[-.22, 0, .9, .42], [.22, .06, 1.16, .46], [0, -.14, 1.42, .48], [-.12, .17, 1.23, .38], [.16, -.1, .77, .32]]) {
-      box(g, a, h, b, s, s * .8, s, h > 1.2 ? c.leafLight : c.leaf);
-    }
-  }
+  const plant = (x, z, scale = 1, y = 0) => createPlant(office, x, z, scale, y);
 
   // Windows: two per work room along the back wall, plus a hanging whiteboard run.
   for (const room of suiteRooms) {
@@ -191,29 +178,19 @@ export function createSuiteOffice(scene, layout = suiteOffice) {
     plant(spot.x, spot.z, .85);
   }
 
-  function chair(seat) {
-    const g = group(office, seat.x, 0, seat.z); g.rotation.y = seat.yaw + Math.PI;
-    box(g, 0, .57, 0, .74, .16, .68, c.green);
-    box(g, 0, .94, .31, .74, .68, .14, c.green);
-    box(g, 0, .29, 0, .09, .45, .09, c.ink);
-    box(g, 0, .09, 0, .74, .08, .1, c.ink); box(g, 0, .09, 0, .1, .08, .66, c.ink);
-    for (const sx of [-.33, .33]) for (const sz of [-.26, .26]) box(g, sx, .065, sz, .12, .12, .12, c.ink);
-  }
+  const chair = seat => createChair(office, seat);
   function workstation(seat) {
     const g = group(office, seat.x, 0, seat.z - 1.18);
     g.rotation.y = seat.yaw + Math.PI;   // local -z is the far edge of the desk
     const surface = deskSurface, slab = deskThickness;
     const local = forward => 1.18 - forward;   // seat-relative forward -> desk-local z
-    box(g, 0, surface - slab / 2, 0, 2.55, slab, 1.28, c.wood, 'wood');
+    createDeskSlab(g, { w: 2.55, d: 1.28, surface, thickness: slab });
     for (const x of [-1.05, 1.05]) {
       box(g, x, (surface - slab) / 2, 0, .11, surface - slab, 1, c.white);
       box(g, x, .05, 0, .35, .09, 1.15, c.white);
     }
     const monitor = local(deskItems.monitor.forward);
-    box(g, 0, surface + .015, monitor, .34, .03, .22, c.ink);
-    box(g, 0, surface + .195, monitor - .09, .08, .32, .08, c.ink);
-    box(g, 0, surface + .485, monitor - .04, 1.05, .6, .09, c.ink);
-    screens.push(panel(g, 0, surface + .485, monitor + deskItems.monitor.faceOffset, .94, .5, screenMat));
+    screens.push(createMonitor(g, { z: monitor, surface, faceOffset: deskItems.monitor.faceOffset, variant: 'suite', material: screenMat }).screen);
     const keys = deskItems.keyboard, keyboard = local(keys.forward);
     box(g, 0, surface + keys.thickness / 2, keyboard, .62, keys.thickness, keys.depth, '#e6e6d9');
     for (let row = 0; row < 3; row++) for (let col = 0; col < 9; col++) {

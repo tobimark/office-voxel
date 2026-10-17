@@ -1,9 +1,11 @@
+import { furnitureSpec } from '../shared/furniture-spec.js';
 // Loft studio: a long, shallow open studio where nine people sit in two banks
 // facing each other across one shared table. Seats, the table and every solid
 // furniture zone live here as plain data so the renderer and the navigation
 // tests share one source of truth. Only the nine characters' looks are read from
 // the original team layout; no original file is touched by this page.
-import { teamOffice } from '../layouts.js';
+import { loftCast } from '../characters/casts.js';
+import { instantiateCharacter } from '../characters/instances.js';
 import { monitorPlacement } from '../shared/workstation.js';
 
 // Seat distance from the table's centre line. The table is 2.2 deep, so a seat of
@@ -76,7 +78,7 @@ export const loftZones = [
 export function loftObstacles() {
   return [
     { x: loftTable.x, z: loftTable.z, w: loftTable.w, d: loftTable.d },
-    ...loftSeats.map(seat => ({ x: seat.x, z: seat.z, w: .78, d: .78 })),
+    ...loftSeats.map(seat => ({ x: seat.x, z: seat.z, ...furnitureSpec.chair })),
     ...loftZones.map(({ x, z, w, d }) => ({ x, z, w, d })),
   ];
 }
@@ -99,8 +101,8 @@ export const loftOffice = {
     { x: 8.6, z: -3.8 }, { x: -11.4, z: -3.8 }, { x: -11.4, z: 0 },
     { x: -10.6, z: 3.8 }, { x: 8.6, z: 3.8 }, { x: 10.5, z: 2.6 },
   ],
-  actors: teamOffice.actors.map((person, index) => {
+  actors: loftCast.map((reference, index) => {
     const spot = index === 0 ? standingSpot : loftSeats[index];
-    return { ...person, x: spot.x, z: spot.z, phase: .2 + index * .73 };
+    return instantiateCharacter(reference, { x: spot.x, z: spot.z, phase: .2 + index * .73 });
   }),
 };

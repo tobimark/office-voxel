@@ -70,6 +70,6 @@ export function createBindings(layout, displays) {
     const stationId = `${layout.id}:station:${layout.stationFor[index]}`;
     const display = displays.find(d => d.kind === 'computer' && d.stationId === stationId);
     if (!display) throw new Error(`Missing computer: ${stationId}`);
-    return { agentId: `${layout.id}:agent:${index}`, actorId: `${layout.id}:actor:${index}`, actorIndex: index, stationId, displayId: display.id, roomId: display.roomId, name: person.name };
+    return { agentId: person.agentId ?? `${layout.id}:agent:${index}`, actorId: person.instanceId ?? `${layout.id}:actor:${index}`, characterId: person.characterId, appearanceId: person.appearanceId, actorIndex: index, stationId, displayId: display.id, roomId: display.roomId, name: person.name };
   });
 }

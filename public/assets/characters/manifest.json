@@ -1,9 +1,9 @@
 {
   "name": "pixoffice-voxel-characters",
-  "version": 1,
+  "version": 2,
   "generator": "scripts/export-characters.mjs",
-  "source": "src/character.js + src/appearance.js — procedural voxel characters, no external art",
-  "exportedAt": "2026-10-16T11:11:19.360Z",
+  "source": "src/characters/catalog.js + src/character.js + src/appearance.js",
+  "exportedAt": "2026-10-17T12:06:53.961Z",
   "kinds": [
     "portrait",
     "sheet",
@@ -12,11 +12,12 @@
   "counts": {
     "characters": 27,
     "files": 81,
-    "bytes": 4258266
+    "bytes": 4262523
   },
   "characters": [
     {
       "id": "studio-00",
+      "characterId": "xiaomai",
       "scene": "studio",
       "index": 0,
       "name": "小麦",
@@ -33,6 +34,14 @@
       },
       "usedBy": [
         "studio-00"
+      ],
+      "usages": [
+        {
+          "sceneId": "studio",
+          "instanceId": "studio:actor:0",
+          "actorIndex": 0,
+          "stationId": "studio:station:1"
+        }
       ],
       "files": {
         "portrait": {
@@ -54,6 +63,7 @@
     },
     {
       "id": "studio-01",
+      "characterId": "asen",
       "scene": "studio",
       "index": 1,
       "name": "阿森",
@@ -72,6 +82,14 @@
       "usedBy": [
         "studio-01"
       ],
+      "usages": [
+        {
+          "sceneId": "studio",
+          "instanceId": "studio:actor:1",
+          "actorIndex": 1,
+          "stationId": "studio:station:0"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -80,18 +98,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 121201,
-          "sha256": "9546b84fcf19c2741a94f04c3c2b8af849f3e0932f51478ee4c7db1e43117647"
+          "bytes": 120951,
+          "sha256": "d09bccec64bf6451c973aaddd847f4baff52dca39ee28ab6ddbff5339ec1e508"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 15696,
-          "sha256": "4919f48fb76e687272bd07040240f0df78f5f06b091bc584b8d3cd7c1feeada6"
+          "bytes": 15688,
+          "sha256": "3b574f170d8ff4d50b023cefb87273c301fdb399ddd68c354d333a6ce0dc7bb7"
         }
       }
     },
     {
       "id": "studio-02",
+      "characterId": "xiaolan",
       "scene": "studio",
       "index": 2,
       "name": "小蓝",
@@ -109,6 +128,14 @@
       "usedBy": [
         "studio-02"
       ],
+      "usages": [
+        {
+          "sceneId": "studio",
+          "instanceId": "studio:actor:2",
+          "actorIndex": 2,
+          "stationId": "studio:station:2"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -117,18 +144,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 118492,
-          "sha256": "645fa53ac60190802911bda40b45bd840341bd64eebe0b526cf01ec10347e922"
+          "bytes": 118921,
+          "sha256": "a51f9c005a118f6297c4b72f6fb174989153ca440efbb06b75145b9d4e871509"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 15824,
-          "sha256": "ae1ea5bdca9a518cbd5686590dcca3a909953aa22eb46e5573e81fd833b5c554"
+          "bytes": 15756,
+          "sha256": "2981c88dc86eff27363dcd138a971ddc4b64d940377fb685a4eff11734ba8b89"
         }
       }
     },
     {
       "id": "team-00",
+      "characterId": "xiaomai",
       "scene": "team",
       "index": 0,
       "name": "小麦",
@@ -153,7 +181,35 @@
       },
       "usedBy": [
         "team-00",
+        "loft-00",
+        "suite-00",
         "floor-00"
+      ],
+      "usages": [
+        {
+          "sceneId": "team",
+          "instanceId": "team:actor:0",
+          "actorIndex": 0,
+          "stationId": "team:station:0"
+        },
+        {
+          "sceneId": "loft",
+          "instanceId": "loft:actor:0",
+          "actorIndex": 0,
+          "stationId": "loft:station:0"
+        },
+        {
+          "sceneId": "suite",
+          "instanceId": "suite:actor:0",
+          "actorIndex": 0,
+          "stationId": "suite:station:0"
+        },
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:0",
+          "actorIndex": 0,
+          "stationId": "floor:station:0"
+        }
       ],
       "files": {
         "portrait": {
@@ -163,18 +219,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 125169,
-          "sha256": "4ff7e2b73e2b9e46ed298171dadd5a3d740ef6c2f41cde62de33867fe365f0d1"
+          "bytes": 126343,
+          "sha256": "eaaa774c9ea5334b6a8f2796a9d07217eb6434da764cd7923680af5a663fc322"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 21432,
-          "sha256": "b5ce0abfd52fb722b45748c68c9d3d01e792e6742dc991d11679265268104d49"
+          "bytes": 21260,
+          "sha256": "df46048e31297174241b2c60fbb86e7eb8a19aec1669710f8e2be35882053bc1"
         }
       }
     },
     {
       "id": "team-01",
+      "characterId": "asen",
       "scene": "team",
       "index": 1,
       "name": "阿森",
@@ -199,7 +256,35 @@
       },
       "usedBy": [
         "team-01",
+        "loft-01",
+        "suite-01",
         "floor-08"
+      ],
+      "usages": [
+        {
+          "sceneId": "team",
+          "instanceId": "team:actor:1",
+          "actorIndex": 1,
+          "stationId": "team:station:1"
+        },
+        {
+          "sceneId": "loft",
+          "instanceId": "loft:actor:1",
+          "actorIndex": 1,
+          "stationId": "loft:station:1"
+        },
+        {
+          "sceneId": "suite",
+          "instanceId": "suite:actor:1",
+          "actorIndex": 1,
+          "stationId": "suite:station:1"
+        },
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:8",
+          "actorIndex": 8,
+          "stationId": "floor:station:8"
+        }
       ],
       "files": {
         "portrait": {
@@ -209,18 +294,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 151104,
-          "sha256": "cb8e0d70c30b3bf4dacac60133953a23852e06655225b002bc1884a4a4adc451"
+          "bytes": 153133,
+          "sha256": "946eb2f901bcd0d5ccbdfff8f7c9f421f984268b8a9f56dfac7aaca0e388db99"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 23384,
-          "sha256": "69084c8ead1409b35e8fd0ff2a6ea317404a34c62b89b84ce968c5bc315e5ad7"
+          "bytes": 23172,
+          "sha256": "9bec6958313ca908a28dbbef634709342dd8d012b57892415559dab431604db3"
         }
       }
     },
     {
       "id": "team-02",
+      "characterId": "xiaolan",
       "scene": "team",
       "index": 2,
       "name": "小蓝",
@@ -245,7 +331,35 @@
       },
       "usedBy": [
         "team-02",
+        "loft-02",
+        "suite-02",
         "floor-04"
+      ],
+      "usages": [
+        {
+          "sceneId": "team",
+          "instanceId": "team:actor:2",
+          "actorIndex": 2,
+          "stationId": "team:station:2"
+        },
+        {
+          "sceneId": "loft",
+          "instanceId": "loft:actor:2",
+          "actorIndex": 2,
+          "stationId": "loft:station:2"
+        },
+        {
+          "sceneId": "suite",
+          "instanceId": "suite:actor:2",
+          "actorIndex": 2,
+          "stationId": "suite:station:2"
+        },
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:4",
+          "actorIndex": 4,
+          "stationId": "floor:station:4"
+        }
       ],
       "files": {
         "portrait": {
@@ -255,18 +369,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 132490,
-          "sha256": "f8536f33d13d36b7e0054a43f3938dec70a2ef370e4c3a3b622d338309544b59"
+          "bytes": 134109,
+          "sha256": "7a3516cb83a9a16d22880b8e0ef817c36be957d4a431a8058b622fbd9901a4b7"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 22784,
-          "sha256": "2bef28750a4ea85f4b807da713a08d8800e3507e90afff795425b27be84b1b60"
+          "bytes": 22652,
+          "sha256": "60b01220e0a623de9fb7f146da2550a748e12ffa8c32bf1004520092b013c871"
         }
       }
     },
     {
       "id": "team-03",
+      "characterId": "aluo",
       "scene": "team",
       "index": 3,
       "name": "阿洛",
@@ -292,7 +407,35 @@
       },
       "usedBy": [
         "team-03",
+        "loft-03",
+        "suite-03",
         "floor-09"
+      ],
+      "usages": [
+        {
+          "sceneId": "team",
+          "instanceId": "team:actor:3",
+          "actorIndex": 3,
+          "stationId": "team:station:3"
+        },
+        {
+          "sceneId": "loft",
+          "instanceId": "loft:actor:3",
+          "actorIndex": 3,
+          "stationId": "loft:station:3"
+        },
+        {
+          "sceneId": "suite",
+          "instanceId": "suite:actor:3",
+          "actorIndex": 3,
+          "stationId": "suite:station:3"
+        },
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:9",
+          "actorIndex": 9,
+          "stationId": "floor:station:9"
+        }
       ],
       "files": {
         "portrait": {
@@ -302,18 +445,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 144423,
-          "sha256": "dec284bbb8e71855faab430548ec0c99aaafc1e38bf68c1d427b79adf5687509"
+          "bytes": 145266,
+          "sha256": "6efa4469ed4b8aa9dc8f52ad0f47d92831e73521d45c9a4594d761585e866487"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 22936,
-          "sha256": "736678304499b2727779c64d75166b9dcf05668161f82c9b5e8eb2db7e9b8015"
+          "bytes": 22852,
+          "sha256": "6a5b186b8a92b6656c4f82130599ce6fbf9ef2f2cb851f8ad5885c4ea8192f5e"
         }
       }
     },
     {
       "id": "team-04",
+      "characterId": "xiaohe",
       "scene": "team",
       "index": 4,
       "name": "小禾",
@@ -338,7 +482,35 @@
       },
       "usedBy": [
         "team-04",
+        "loft-04",
+        "suite-04",
         "floor-03"
+      ],
+      "usages": [
+        {
+          "sceneId": "team",
+          "instanceId": "team:actor:4",
+          "actorIndex": 4,
+          "stationId": "team:station:4"
+        },
+        {
+          "sceneId": "loft",
+          "instanceId": "loft:actor:4",
+          "actorIndex": 4,
+          "stationId": "loft:station:4"
+        },
+        {
+          "sceneId": "suite",
+          "instanceId": "suite:actor:4",
+          "actorIndex": 4,
+          "stationId": "suite:station:4"
+        },
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:3",
+          "actorIndex": 3,
+          "stationId": "floor:station:3"
+        }
       ],
       "files": {
         "portrait": {
@@ -348,18 +520,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 140651,
-          "sha256": "6bb6a89112e79c2698446acf20f41dc7bad5ba8b98230952b67a389b9d1fcbe8"
+          "bytes": 140639,
+          "sha256": "5e9035553071a125a865fc8f6aacc834363b8fdf33ed2670874126900ec9fbbe"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 24684,
-          "sha256": "7d9d2fcd3daec8e6492cdc902410b85f060f65496dbe640163926e80b82f7b1a"
+          "bytes": 24516,
+          "sha256": "4b9c84819bcdc1dcc85182309710c89e6804b1df2258850bc1ce5ce8d4029b68"
         }
       }
     },
     {
       "id": "team-05",
+      "characterId": "ayuan",
       "scene": "team",
       "index": 5,
       "name": "阿远",
@@ -385,7 +558,35 @@
       },
       "usedBy": [
         "team-05",
+        "loft-05",
+        "suite-05",
         "floor-10"
+      ],
+      "usages": [
+        {
+          "sceneId": "team",
+          "instanceId": "team:actor:5",
+          "actorIndex": 5,
+          "stationId": "team:station:5"
+        },
+        {
+          "sceneId": "loft",
+          "instanceId": "loft:actor:5",
+          "actorIndex": 5,
+          "stationId": "loft:station:5"
+        },
+        {
+          "sceneId": "suite",
+          "instanceId": "suite:actor:5",
+          "actorIndex": 5,
+          "stationId": "suite:station:5"
+        },
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:10",
+          "actorIndex": 10,
+          "stationId": "floor:station:10"
+        }
       ],
       "files": {
         "portrait": {
@@ -395,18 +596,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 132859,
-          "sha256": "b5e4cc7c42a763dff0cb11e607efbe8cf465073c2504d3ae564b15116ca563f2"
+          "bytes": 134000,
+          "sha256": "13fc161f0eaadd74ca68f82e022d3e87ff5359dfcd19e89059fc9f777570e784"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 23872,
-          "sha256": "303614507a1ec26b4a557ee69c0469f8bc16de28491b1fd9c827148616aec3df"
+          "bytes": 23724,
+          "sha256": "87505f004746b531719bcc955af37c10677b0db9bf79aae735e94fce0668cf77"
         }
       }
     },
     {
       "id": "team-06",
+      "characterId": "xiaotao",
       "scene": "team",
       "index": 6,
       "name": "小桃",
@@ -432,7 +634,35 @@
       },
       "usedBy": [
         "team-06",
+        "loft-06",
+        "suite-06",
         "floor-16"
+      ],
+      "usages": [
+        {
+          "sceneId": "team",
+          "instanceId": "team:actor:6",
+          "actorIndex": 6,
+          "stationId": "team:station:6"
+        },
+        {
+          "sceneId": "loft",
+          "instanceId": "loft:actor:6",
+          "actorIndex": 6,
+          "stationId": "loft:station:6"
+        },
+        {
+          "sceneId": "suite",
+          "instanceId": "suite:actor:6",
+          "actorIndex": 6,
+          "stationId": "suite:station:6"
+        },
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:16",
+          "actorIndex": 16,
+          "stationId": "floor:station:16"
+        }
       ],
       "files": {
         "portrait": {
@@ -442,18 +672,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 130507,
-          "sha256": "38dc281e6f3d4a66f25be077dfd10ed1753348b19f9178fb8855b7eb6add5a28"
+          "bytes": 131420,
+          "sha256": "ee8d0369faf676afb7aa246e27715285e1c02e6cc25b475f34f62fb9f881be19"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 21612,
-          "sha256": "b0b12a6c4e8c79a48f5d09b09b515d45b26f91ed0d22ec75ee0d06668a0a19a8"
+          "bytes": 21540,
+          "sha256": "3142a2041a0f19cb2be58a80f8942dc83a4914d29e2afce0f37342e4b5b2ed35"
         }
       }
     },
     {
       "id": "team-07",
+      "characterId": "amo",
       "scene": "team",
       "index": 7,
       "name": "阿墨",
@@ -479,7 +710,35 @@
       },
       "usedBy": [
         "team-07",
+        "loft-07",
+        "suite-07",
         "floor-14"
+      ],
+      "usages": [
+        {
+          "sceneId": "team",
+          "instanceId": "team:actor:7",
+          "actorIndex": 7,
+          "stationId": "team:station:7"
+        },
+        {
+          "sceneId": "loft",
+          "instanceId": "loft:actor:7",
+          "actorIndex": 7,
+          "stationId": "loft:station:7"
+        },
+        {
+          "sceneId": "suite",
+          "instanceId": "suite:actor:7",
+          "actorIndex": 7,
+          "stationId": "suite:station:7"
+        },
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:14",
+          "actorIndex": 14,
+          "stationId": "floor:station:14"
+        }
       ],
       "files": {
         "portrait": {
@@ -489,18 +748,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 137985,
-          "sha256": "9b391cb9714e384f9d67fc6d74691cf193525eac977c18e10e5e88bae3d64582"
+          "bytes": 138666,
+          "sha256": "9333d961998336b616f32b54c67131d6abdc663a86bcf5d0efc4f612882c4958"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 23996,
-          "sha256": "ec69443c2ab135ba851b8c427b5fefd1dffb2ec7b501182507647c74afd98b61"
+          "bytes": 24024,
+          "sha256": "0de9c79b741cdd4705fa4d7d9849ad4ce9c35d2b4ec04d30faa7f90edabdca60"
         }
       }
     },
     {
       "id": "team-08",
+      "characterId": "xiaomi",
       "scene": "team",
       "index": 8,
       "name": "小米",
@@ -525,7 +785,35 @@
       },
       "usedBy": [
         "team-08",
+        "loft-08",
+        "suite-08",
         "floor-05"
+      ],
+      "usages": [
+        {
+          "sceneId": "team",
+          "instanceId": "team:actor:8",
+          "actorIndex": 8,
+          "stationId": "team:station:8"
+        },
+        {
+          "sceneId": "loft",
+          "instanceId": "loft:actor:8",
+          "actorIndex": 8,
+          "stationId": "loft:station:8"
+        },
+        {
+          "sceneId": "suite",
+          "instanceId": "suite:actor:8",
+          "actorIndex": 8,
+          "stationId": "suite:station:8"
+        },
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:5",
+          "actorIndex": 5,
+          "stationId": "floor:station:5"
+        }
       ],
       "files": {
         "portrait": {
@@ -535,18 +823,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 145285,
-          "sha256": "17709b5d488fd6a8db7e7094acc6760c90a96dc0542eedd7d1e7a45d1f8c0ceb"
+          "bytes": 146256,
+          "sha256": "544ee2710463f87ba4aaa36c7e112a2bfe096a4630bea538f4d2d9e47410b10c"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 27032,
-          "sha256": "ee1dd6472ace567169bc943cd6a6e0634d61ba9f0eaf431a373a83b7819bb17b"
+          "bytes": 26868,
+          "sha256": "fb81ee46d517fda7d40bca01082313505ad3ce4a1dfdc45811beda62552dc6dd"
         }
       }
     },
     {
       "id": "floor-01",
+      "characterId": "xiaoman",
       "scene": "floor",
       "index": 1,
       "name": "小满",
@@ -572,6 +861,14 @@
       "usedBy": [
         "floor-01"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:1",
+          "actorIndex": 1,
+          "stationId": "floor:station:1"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -580,18 +877,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 131913,
-          "sha256": "d1f03077f3b7199316705e556524444e6dfa2722aaa525d73fa4d2750cf4fef2"
+          "bytes": 132136,
+          "sha256": "6af8958871aed364db7c223bd92733ba6bb98c95921dcd6fb072b12945235c3b"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 25312,
-          "sha256": "dea059e90cfb14b82c5b2972a0f990c0446fa0c4e70b42c4daeca247b29a7a35"
+          "bytes": 25280,
+          "sha256": "fc6f196aa4a502f849028059ebc4025cb9ce02c2d93b9bdd34d55dbfe5ea87bf"
         }
       }
     },
     {
       "id": "floor-02",
+      "characterId": "azhen",
       "scene": "floor",
       "index": 2,
       "name": "阿真",
@@ -618,6 +916,14 @@
       "usedBy": [
         "floor-02"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:2",
+          "actorIndex": 2,
+          "stationId": "floor:station:2"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -626,18 +932,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 138157,
-          "sha256": "e58bc06c6af23e414e6af8d42720c0df3499e35a74997af9b9186d73705bba8a"
+          "bytes": 138486,
+          "sha256": "b9e435e66c14f6262a4ec9bb0e98e0af8e5aabd383a65f12daf6cbdc265a5544"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 22536,
-          "sha256": "aefae1111c530a48740ad96ca076974cb2895bfc6ffbdab7a700beb0dfc0e855"
+          "bytes": 22496,
+          "sha256": "5a4047b4b213d08c3de299b6caf388fd5437257adeec6c87fb9b774078c1865f"
         }
       }
     },
     {
       "id": "floor-06",
+      "characterId": "xiaoyou",
       "scene": "floor",
       "index": 6,
       "name": "小柚",
@@ -662,6 +969,14 @@
       "usedBy": [
         "floor-06"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:6",
+          "actorIndex": 6,
+          "stationId": "floor:station:6"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -670,18 +985,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 131482,
-          "sha256": "8c3991cba8774f269ef924eed981d1d3020167ce2dd806e5d4b9d1592dd1d107"
+          "bytes": 130421,
+          "sha256": "3000cf45ba1224691274c4adf6192f43fc92b8cbc3b9651065eb5b240b564420"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 24236,
-          "sha256": "ade573687dad20b21210660beed28568e1aa212254ef7d62693e307db0fb8c42"
+          "bytes": 24080,
+          "sha256": "d967d0b88bf12413f4a158decd8af2ed6cc8fe1880ae6563cec4897614a5d4b0"
         }
       }
     },
     {
       "id": "floor-07",
+      "characterId": "xiaolu",
       "scene": "floor",
       "index": 7,
       "name": "小鹿",
@@ -706,6 +1022,14 @@
       "usedBy": [
         "floor-07"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:7",
+          "actorIndex": 7,
+          "stationId": "floor:station:7"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -714,18 +1038,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 127481,
-          "sha256": "728e6279366daf1d16bdd8d5cf146db8fa5e599f0a541838c74e8afaddd9e9c8"
+          "bytes": 128144,
+          "sha256": "76177117c2e41ce0528d0eabc62aa521c995b5fd6d0e4c939d8a0e36714c33be"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 17628,
-          "sha256": "d77934f111579836545709bbee20037413ea579c0ad44462823c4e630d119426"
+          "bytes": 17524,
+          "sha256": "4011e3eb3194e2b08f721d0174dd68480500abd0c143a33d3f0289c463137f7d"
         }
       }
     },
     {
       "id": "floor-11",
+      "characterId": "akuan",
       "scene": "floor",
       "index": 11,
       "name": "阿宽",
@@ -752,6 +1077,14 @@
       "usedBy": [
         "floor-11"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:11",
+          "actorIndex": 11,
+          "stationId": "floor:station:11"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -760,18 +1093,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 126726,
-          "sha256": "d6827510d58c352b665f90049bfe802006636c11d6060038992ffd0b1797cb28"
+          "bytes": 126272,
+          "sha256": "6bae60adbfe64f3347fd30404bd969af69ded54eb52146fd5634949e269e6e4b"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 23360,
-          "sha256": "77144d0864dbb9789d7d93e76591a49fd4e2353e02a042a740fcd60c37ce11eb"
+          "bytes": 23352,
+          "sha256": "5ddaa5d4c0ecf2bd414de7fa956a20032dba18c42e74c5117245b5483919cb43"
         }
       }
     },
     {
       "id": "floor-12",
+      "characterId": "ayan",
       "scene": "floor",
       "index": 12,
       "name": "阿焱",
@@ -797,6 +1131,14 @@
       "usedBy": [
         "floor-12"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:12",
+          "actorIndex": 12,
+          "stationId": "floor:station:12"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -805,18 +1147,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 144528,
-          "sha256": "7cc6cc828bffdb35fafdb4651393d25be4b14dbaff56406b7d24c575a8aeceb1"
+          "bytes": 144011,
+          "sha256": "5df4741631e3d4dd38a03af6e6d453359d92797eddb0d2d448324617a2a13586"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 23036,
-          "sha256": "0d8376f48b485c8fc19dc50dc578f4acac796b20cd32ecb36fd75d4ac9e071d3"
+          "bytes": 22940,
+          "sha256": "b898ee83daaf7e22affdd5edbaf34968ec0729adbb0e4489a1da76fb1b63ed42"
         }
       }
     },
     {
       "id": "floor-13",
+      "characterId": "aze",
       "scene": "floor",
       "index": 13,
       "name": "阿泽",
@@ -842,6 +1185,14 @@
       "usedBy": [
         "floor-13"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:13",
+          "actorIndex": 13,
+          "stationId": "floor:station:13"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -850,18 +1201,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 136831,
-          "sha256": "6b9f753347885143f5407cd99eaaf50e71486498c2542dd4fb2880113f628f42"
+          "bytes": 136969,
+          "sha256": "99de2a46c6072d9dbdb1d37625614a2c895bcfd03cfb601b1cdb916f79440b5d"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 28092,
-          "sha256": "f267348b584dec2f347136d4a8b37f484c49695ad0e4eeb7b99dda11a37009f8"
+          "bytes": 28108,
+          "sha256": "8e424de6313bb0e8a6954d7707875365492bc7e2640342ad260071fc566761dd"
         }
       }
     },
     {
       "id": "floor-15",
+      "characterId": "ache",
       "scene": "floor",
       "index": 15,
       "name": "阿澈",
@@ -886,6 +1238,14 @@
       "usedBy": [
         "floor-15"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:15",
+          "actorIndex": 15,
+          "stationId": "floor:station:15"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -894,18 +1254,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 140058,
-          "sha256": "aee709e538d90f203db2652503e87966a4317f90f9d67d99f4881707dd81fc1f"
+          "bytes": 140599,
+          "sha256": "365f9ad791a706014a39b79042197cfbb894aadf243a5d44d9bd4a6486b706a5"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 20376,
-          "sha256": "2e80eff3bf93c110539633b6e7d3fd18a27cab2c1ae9fd551ca59c341f6b78c6"
+          "bytes": 20368,
+          "sha256": "bdabc51eac81eec285898aa7f4cdeb318f38307870ed856cad2db14ae725372e"
         }
       }
     },
     {
       "id": "floor-17",
+      "characterId": "xiaoqiao",
       "scene": "floor",
       "index": 17,
       "name": "小乔",
@@ -932,6 +1293,14 @@
       "usedBy": [
         "floor-17"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:17",
+          "actorIndex": 17,
+          "stationId": "floor:station:17"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -940,18 +1309,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 131288,
-          "sha256": "b467ea76fff6a2bd92a35e1772b5c6dd109b537f9a8c277d250da44182cb5312"
+          "bytes": 131011,
+          "sha256": "7c03d1d0350ee5e2fa8a88d724b2fc94f80c558cb837af23f4e750566c770987"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 25972,
-          "sha256": "974ad88f7a45377e6fdd755a4b7f4b49e3fa8638cf8288013e4c64737be2f6d5"
+          "bytes": 25888,
+          "sha256": "0618c10c258fc85735b0c641c5a65f49f89272f839e6c3afcb7ed3e62887897e"
         }
       }
     },
     {
       "id": "floor-18",
+      "characterId": "ali",
       "scene": "floor",
       "index": 18,
       "name": "阿栗",
@@ -978,6 +1348,14 @@
       "usedBy": [
         "floor-18"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:18",
+          "actorIndex": 18,
+          "stationId": "floor:station:18"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -986,18 +1364,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 142948,
-          "sha256": "9bc0ed6d082e27a6d53c0883b70212953747055a4eaee94c2775fd0e234601dc"
+          "bytes": 142444,
+          "sha256": "7fbee65c222dfdfefec7722952b4bf3ebc706eeb4d54f35b890f36edac9e7f45"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 22996,
-          "sha256": "3d8ff0757cea11b57d619982e1844dd5fdae49a0dcf459f100a18c74445e91e4"
+          "bytes": 22888,
+          "sha256": "6537232921ea5c07a1d1c469eb01c36d6f2fcb4402fb812c610181c7b151f553"
         }
       }
     },
     {
       "id": "floor-19",
+      "characterId": "atang",
       "scene": "floor",
       "index": 19,
       "name": "阿棠",
@@ -1023,6 +1402,14 @@
       "usedBy": [
         "floor-19"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:19",
+          "actorIndex": 19,
+          "stationId": "floor:station:19"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -1031,18 +1418,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 131097,
-          "sha256": "999bf86e7d91e619c57182dadec3438d26330ff220407fae71eee62c15f1895b"
+          "bytes": 130872,
+          "sha256": "4e16ced379ef8a515cd2630fbddf96aec128ab471cd58a72efe40eeb332c3775"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 21604,
-          "sha256": "273c83568dc5ec6b4fef2deafe37dec74d557767b1462a87791bc1c78f42bded"
+          "bytes": 21492,
+          "sha256": "e68792db01d90835d275b482fa09c56726cc1fc94de0818ace94584db41df8e3"
         }
       }
     },
     {
       "id": "floor-20",
+      "characterId": "xiaofeng",
       "scene": "floor",
       "index": 20,
       "name": "小枫",
@@ -1068,6 +1456,14 @@
       "usedBy": [
         "floor-20"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:20",
+          "actorIndex": 20,
+          "stationId": "floor:station:20"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -1076,18 +1472,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 146227,
-          "sha256": "c7f8c8a4c029e793a55d90be51829203c9c46a1743a622bcb849629d455b7eb8"
+          "bytes": 145234,
+          "sha256": "6258f6070f82a8828a6c47734bcb354f705dacb3fccc0f239934dfe05c5db4c4"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 24308,
-          "sha256": "8d2b267cf96440a09613e0843a81224165a3bcb381b2903ae28ff33d0a6e39aa"
+          "bytes": 24240,
+          "sha256": "24861ea03ff829f981328c0df9627ed37145b31901ca76f5628396c89aab5c05"
         }
       }
     },
     {
       "id": "floor-21",
+      "characterId": "xiaozhou",
       "scene": "floor",
       "index": 21,
       "name": "小舟",
@@ -1113,6 +1510,14 @@
       "usedBy": [
         "floor-21"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:21",
+          "actorIndex": 21,
+          "stationId": "floor:station:21"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -1121,18 +1526,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 130099,
-          "sha256": "e13e570df35e4775ca818dedaad8e5fbbda761213f36ac4744648d5876f10da4"
+          "bytes": 129893,
+          "sha256": "19b8d233b7f99d762e235c0da49385a466388701f14e9744fdc9444bb1d12fa5"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 22620,
-          "sha256": "57dcf91dde91cc40eb546a0d62d9d6d288d819a8c14fe5313ded7d8e6a69e754"
+          "bytes": 22556,
+          "sha256": "ed11c93a723159784a7530a5f4394531958a46e3c74591ba1101b9800342ec60"
         }
       }
     },
     {
       "id": "floor-22",
+      "characterId": "alan",
       "scene": "floor",
       "index": 22,
       "name": "阿岚",
@@ -1158,6 +1564,14 @@
       "usedBy": [
         "floor-22"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:22",
+          "actorIndex": 22,
+          "stationId": "floor:station:22"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -1166,18 +1580,19 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 131933,
-          "sha256": "ddcfb39e22c44cb35fa980910886043fb15762a0f043ab306a4e7d2bcb499055"
+          "bytes": 131727,
+          "sha256": "348a8fa336f1280cd18fccc1f9de0394c1a66542484a057910bb96fc55654b27"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 22936,
-          "sha256": "b23b69e70738cb0cb0a16ad07f27ad118c39be0aaf254fa52afbfa818976cdcc"
+          "bytes": 22696,
+          "sha256": "a3e8eac87f6ab81c9debc3704001de163568c2999ef9c6d24cc3c26fe5d0ea9c"
         }
       }
     },
     {
       "id": "floor-23",
+      "characterId": "xiaoyu",
       "scene": "floor",
       "index": 23,
       "name": "小羽",
@@ -1203,6 +1618,14 @@
       "usedBy": [
         "floor-23"
       ],
+      "usages": [
+        {
+          "sceneId": "floor",
+          "instanceId": "floor:actor:23",
+          "actorIndex": 23,
+          "stationId": "floor:station:23"
+        }
+      ],
       "files": {
         "portrait": {
           "file": "portrait.png",
@@ -1211,13 +1634,13 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 127086,
-          "sha256": "add7bb0164b9fb32ec12345c548c523a5089c3e9e34084292cdfc15891716e2f"
+          "bytes": 126862,
+          "sha256": "66aed8b20e5200a4dc46622710f0188098160cd23d948330affc744b35dabc22"
         },
         "model": {
           "file": "model.glb",
-          "bytes": 21508,
-          "sha256": "0131f0b6b79f64ab6c75dacf0b43c83f0cdd77e3b79de9955c126561f1124552"
+          "bytes": 21304,
+          "sha256": "ab74d96cf0e0df9ef9de9d5dfd2fbc5add1aa5f73ac3b91363f0f36cba1cff26"
         }
       }
     }

@@ -1,5 +1,5 @@
 {
-  "name": "@pixoffice/example-office-voxel",
+  "name": "office-voxel",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -14,7 +14,13 @@
     "test:browser:appearance": "node scripts/browser-appearance-check.mjs",
     "test:browser:tasks": "node scripts/browser-task-displays-check.mjs",
     "test:browser:computers": "node scripts/browser-computer-focus-check.mjs",
-    "test:geometry:workstations": "node scripts/check-workstation-geometry.mjs"
+    "test:geometry:workstations": "node scripts/check-workstation-geometry.mjs",
+    "build:loft": "vite build --config vite.loft.config.js",
+    "build:suite": "vite build --config vite.suite.config.js",
+    "build:floor": "vite build --config vite.floor.config.js",
+    "export:characters": "node scripts/export-characters.mjs",
+    "test:browser:furniture": "node scripts/browser-furniture-check.mjs",
+    "test:browser:resources": "node scripts/browser-resource-check.mjs"
   },
   "dependencies": {
     "three": "0.180.0"

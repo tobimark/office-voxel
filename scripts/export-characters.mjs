@@ -1,131 +1,39 @@
-// Write every character asset to public/assets/characters/.
-//
-//   node scripts/export-characters.mjs                        # portrait + sheet + model
-//   node scripts/export-characters.mjs --only=portrait,sheet  # skip the .glb files
-//
-// A dev server must already be running (npm run dev --workspaces=false): the export
-// drives tools/character-assets.html in headless Chromium, so the assets are produced
-// by the same character.js / appearance.js code the pages use.
+// Requires a local Vite server. Full export replaces the validated set; partial
+// --only / --ids export preserves all unselected files and their hashes.
 import { chromium } from '@playwright/test';
-import { mkdir, rm, writeFile } from 'node:fs/promises';
-import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { characterRoster } from '../src/shared/character-roster.js';
+import { ASSET_KINDS, exportCharacterAssets } from './lib/character-export.mjs';
 
-const VALID = ['portrait', 'sheet', 'model'];
-const outRoot = fileURLToPath(new URL('../public/assets/characters/', import.meta.url));
-const relativeRoot = 'public/assets/characters';
-const base = process.env.DEMO_URL || 'http://127.0.0.1:5196/';
-const requested = (process.argv.find(arg => arg.startsWith('--only='))?.slice('--only='.length) || VALID.join(','))
-  .split(',').map(kind => kind.trim()).filter(Boolean);
-if (!requested.length || requested.some(kind => !VALID.includes(kind))) {
-  throw new Error(`--only accepts a subset of ${VALID.join(',')}`);
-}
-const kinds = VALID.filter(kind => requested.includes(kind));
-
-const sha256 = buffer => createHash('sha256').update(buffer).digest('hex');
-const fromDataUrl = url => Buffer.from(url.slice(url.indexOf(',') + 1), 'base64');
-const expected = characterRoster();
-
-await rm(outRoot, { recursive: true, force: true });
-await mkdir(outRoot, { recursive: true });
-
-const browser = await chromium.launch({ headless: true, args: ['--enable-webgl', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+const args=process.argv.slice(2);
+if(args.some(arg=>!arg.startsWith('--only=')&&!arg.startsWith('--ids='))) throw new Error('Usage: export-characters.mjs [--only=portrait,sheet,model] [--ids=team-00,...]');
+const option=(name,fallback)=>args.find(a=>a.startsWith(`--${name}=`))?.slice(name.length+3).split(',').map(v=>v.trim()).filter(Boolean) ?? fallback;
+const roster=characterRoster(), kinds=option('only',ASSET_KINDS), ids=option('ids',roster.map(e=>e.id));
+if(!kinds.length || kinds.some(k=>!ASSET_KINDS.includes(k)) || !ids.length || ids.some(id=>!roster.some(e=>e.id===id))) throw new Error('Invalid --only or --ids selection');
+const outRoot=fileURLToPath(new URL('../public/assets/characters/',import.meta.url));
+const base=process.env.DEMO_URL||'http://127.0.0.1:5196/';
+const browser=await chromium.launch({headless:true,args:['--enable-webgl','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 try {
-  const page = await browser.newPage({ viewport: { width: 1280, height: 1200 }, deviceScaleFactor: 1 });
-  const errors = [];
-  page.on('pageerror', error => errors.push(error.message));
-  page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
-  await page.goto(`${base}tools/character-assets.html`);
-  await page.waitForFunction(() => window.characterAssets, null, { timeout: 60000 });
-  const roster = await page.evaluate(() => window.characterAssets.roster);
-  if (roster.length !== expected.length) {
-    throw new Error(`the tool found ${roster.length} characters but the roster has ${expected.length}`);
-  }
-  const characters = [];
-  let totalBytes = 0, totalFiles = 0;
-  for (let index = 0; index < roster.length; index++) {
-    const entry = roster[index], source = expected[index];
-    if (entry.id !== source.id || JSON.stringify(entry.look) !== JSON.stringify(source.look)) {
-      throw new Error(`character ${entry.id} in the page does not match the roster (${source.id})`);
-    }
-    const assets = await page.evaluate(i => window.characterAssets.get(i), index);
-    const buffers = {
-      portrait: fromDataUrl(assets.portrait),
-      sheet: fromDataUrl(assets.sheet),
-      model: Buffer.from(assets.model, 'base64'),
-    };
-    const dir = `${outRoot}${entry.id}/`;
-    await mkdir(dir, { recursive: true });
-    const files = {};
-    for (const kind of kinds) {
-      const file = kind === 'model' ? 'model.glb' : `${kind}.png`;
-      await writeFile(`${dir}${file}`, buffers[kind]);
-      files[kind] = { file, bytes: buffers[kind].length, sha256: sha256(buffers[kind]) };
-      totalBytes += buffers[kind].length; totalFiles += 1;
-    }
-    characters.push({ ...entry, files });
-    console.log(`  ${entry.id.padEnd(10)} ${entry.name} · ${entry.role}  ${Object.values(files).map(file => `${(file.bytes / 1024).toFixed(1)}kB`).join(' + ')}`);
-  }
-  if (errors.length) throw new Error(`page errors while exporting: ${errors.join(' | ')}`);
-  const manifest = {
-    name: 'pixoffice-voxel-characters',
-    version: 1,
-    generator: 'scripts/export-characters.mjs',
-    source: 'src/character.js + src/appearance.js — procedural voxel characters, no external art',
-    exportedAt: new Date().toISOString(),
-    kinds,
-    counts: { characters: characters.length, files: totalFiles, bytes: totalBytes },
-    characters,
-  };
-  await writeFile(`${outRoot}manifest.json`, `${JSON.stringify(manifest, null, 2)}\n`);
-  await writeFile(`${outRoot}README.md`, readme(manifest, totalFiles, totalBytes));
-  console.log(`\n${characters.length} characters, ${totalFiles} files, ${(totalBytes / 1024 / 1024).toFixed(2)} MB -> ${relativeRoot}/`);
-  console.log('manifest.json written; run `node --experimental-test-isolation=none --test tests/character-assets.test.mjs` to verify.');
-} finally {
-  await browser.close();
-}
+  const page=await browser.newPage({viewport:{width:1280,height:1200},deviceScaleFactor:1});
+  const errors=[];
+  page.on('pageerror',e=>errors.push(e.message));
+  page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+  await page.goto(new URL('tools/character-assets.html',base).href);
+  await page.waitForFunction(()=>window.characterAssets,null,{timeout:60000});
+  const actual=await page.evaluate(()=>window.characterAssets.roster);
+  const expected=roster.map(({fingerprint,...e})=>e);
+  if(JSON.stringify(actual)!==JSON.stringify(expected)) throw new Error('Browser character catalog differs from Node catalog');
+  const manifest=await exportCharacterAssets({outRoot,roster,kinds,ids,readme:assetReadme,async produce(entry,selected){
+    const index=roster.findIndex(e=>e.id===entry.id);
+    const assets=await page.evaluate(({index,kinds})=>window.characterAssets.get(index,kinds),{index,kinds:selected});
+    if(assets.id!==entry.id)throw new Error('Exported character ID mismatch');
+    if(errors.length)throw new Error(errors.join(' | '));
+    console.log(`${entry.id} ${entry.name}: ${selected.join(', ')}`);
+    return Object.fromEntries(selected.map(kind=>[kind,Buffer.from(kind==='model'?assets.model:assets[kind].split(',')[1],'base64')]));
+  }});
+  console.log(`Published ${manifest.counts.characters} characters / ${manifest.counts.files} files (${(manifest.counts.bytes/1024/1024).toFixed(2)} MB)`);
+} finally {await browser.close();}
 
-function readme(manifest, files, bytes) {
-  return `# 人物资产（Character assets）
-
-本目录由 \`node scripts/export-characters.mjs\` 自动生成，请勿手工修改。
-资产来自示例本身的程序化人物代码（\`src/character.js\` + \`src/appearance.js\`），
-不包含任何 Unity / Minecraft 素材。
-
-- 角色数：${manifest.counts.characters}
-- 文件数：${files}，合计 ${(bytes / 1024 / 1024).toFixed(2)} MB
-- 生成时间：${manifest.exportedAt}
-- 生成内容：${manifest.kinds.join(' / ')}
-
-## 目录结构
-
-\`\`\`
-public/assets/characters/
-  manifest.json              全部角色的清单：外观字段、用途、文件与 sha256
-  README.md                  本文件
-  <id>/portrait.png          侧栏头像，36 × 40 像素图的 4 倍放大（144 × 160，最近邻）
-  <id>/sheet.png             对照图：正面 / 侧面 / 背面 / 头部特写 + 四种表情纹理 + 外观说明
-  <id>/model.glb             glTF 2.0 二进制模型（含像素材质与表情贴图）
-\`\`\`
-
-\`id\` 形如 \`floor-07\`：\`studio\`（三人页 3 套）、\`team\`（九人页 9 套）、\`floor\`（大平层新增的 15 套）。
-同一个外观被多个场景复用时只导出一份，\`manifest.json\` 的 \`usedBy\` 记录它出现在哪些座位上。
-
-## 重新生成
-
-\`\`\`powershell
-npm run dev --workspaces=false            # 需要开发服务在跑
-node scripts/export-characters.mjs
-node scripts/export-characters.mjs --only=portrait,sheet   # 只要图片，不导模型
-\`\`\`
-
-## 使用方式
-
-- 开发服务下可直接访问：\`http://127.0.0.1:5196/public/assets/characters/<id>/portrait.png\`
-- 页面运行时仍然**程序化生成**人物（不读取这些文件），所以本目录是导出产物、不是运行时依赖。
-- 若希望构建产物带上这些资产，在你自己的 Vite 配置里加一行 \`publicDir: 'public'\`
-  （示例原有的 \`vite.config.js\` 是 \`publicDir: false\`，本目录未改动它）。
-- 校验资产是否与代码一致：\`node --experimental-test-isolation=none --test tests/character-assets.test.mjs\`
-`;
+export function assetReadme(manifest) {
+  return `# 人物导出产物\n\n由 scripts/export-characters.mjs 生成；manifest.json 记录稳定外观 ID、人物身份和五布局使用关系。\n\n${manifest.counts.characters} 个外观 / ${manifest.counts.files} 个 PNG/GLB 文件。\n\n- portrait.png：144 × 160 像素头像。\n- sheet.png：1024 × 1024 正侧背视图与表情。\n- model.glb：内嵌材质与脸部纹理的静态 glTF 2.0 快照，不包含 JavaScript 动态行为。\n- 运行时由代码生成人物，不读取本目录；Vite publicDir 为 false。\n- --only=portrait,sheet 或 --ids=team-00：局部更新，保留其他文件；首次请完整导出。\n- 临时目录生成、格式/大小/哈希校验成功后替换；失败保留旧目录。\n\n详见 docs/character-assets.md。\n`;
 }

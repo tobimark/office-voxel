@@ -4,6 +4,8 @@ import { createCharacter } from '../character.js';
 import { findPath } from '../navigation.js';
 import { createLifetime } from './lifetime.js';
 import { resolveSceneLayout, validateOffice } from './scene-contract.js';
+import { acquireArtResources } from '../art.js';
+import { disposeSceneResources } from './scene-resources.js';
 
 export const ACTIONS = { idle: '自在站立', wave: '挥手招呼', work: '坐下工作', walk: '散步走走', celebrate: '开心庆祝', think: '想点事情' };
 export const EXPRESSIONS = { happy: '开心', focus: '专注', surprise: '惊讶', sleepy: '困倦' };
@@ -43,6 +45,7 @@ export function createScene({ viewport, layout: definition, createOffice, labels
   let taskDisplays, api, frameId, bubbleText = '', destroyed = false;
   lifetime.add(() => { destroyed = true; cancelAnimationFrame(frameId); listeners.clear(); });
   try {
+    lifetime.add(acquireArtResources());
     const scene = new THREE.Scene();
     lifetime.add(() => disposeSceneResources(scene));
     scene.background = new THREE.Color('#dce6e9');
@@ -265,7 +268,8 @@ export function createScene({ viewport, layout: definition, createOffice, labels
       },
       select, action: act, expression: setExpression, camera: setCamera, pause: setPaused,
       getState: () => ({ scene: layout.id, capacity: layout.capacity, selected, paused, disposed: lifetime.disposed, pixelated, flexibility: flex, camera: cameraMode, lighting: currentLighting,
-        actors: actors.map(a => ({ name: a.config.name, action: a.action, expression: a.expression, yaw: a.root.rotation.y,
+        actors: actors.map(a => ({ instanceId: a.config.instanceId, characterId: a.config.characterId, appearanceId: a.config.appearanceId,
+          name: a.config.name, action: a.action, expression: a.expression, yaw: a.root.rotation.y,
           position: { x: a.root.position.x, z: a.root.position.z }, remainingSteps: a.path.length })),
         render: { calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, textures: renderer.info.memory.textures },
       }),
@@ -326,19 +330,4 @@ export function createScene({ viewport, layout: definition, createOffice, labels
     try { lifetime.dispose(); } catch (cleanupError) { throw new AggregateError([error, cleanupError], 'Scene initialization failed'); }
     throw error;
   }
-}
-
-function disposeSceneResources(scene) {
-  const geometries = new Set(), materials = new Set(), textures = new Set();
-  scene.traverse(object => {
-    if (object.isInstancedMesh) object.dispose();
-    if (object.geometry) geometries.add(object.geometry);
-    object.shadow?.map?.dispose();
-    for (const material of Array.isArray(object.material) ? object.material : object.material ? [object.material] : []) {
-      materials.add(material);
-      for (const value of Object.values(material)) if (value?.isTexture) textures.add(value);
-    }
-  });
-  geometries.forEach(g => g.dispose()); textures.forEach(t => t.dispose()); materials.forEach(m => m.dispose());
-  scene.clear();
 }

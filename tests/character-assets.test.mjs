@@ -27,7 +27,13 @@ test('the manifest lists every distinct character look in the example', async ()
   // The nine team looks are reused verbatim on the big floor plate.
   const shared = data.characters.filter(entry => entry.usedBy.length > 1);
   assert.equal(shared.length, 9);
-  for (const entry of shared) assert.deepEqual(entry.usedBy, [`team-${String(entry.index).padStart(2, '0')}`, `floor-${String(entry.usedBy[1].slice(-2))}`].slice(0, 2));
+  for (const entry of shared) {
+    const slot = String(entry.index).padStart(2, '0');
+    assert.deepEqual(entry.usedBy.slice(0, 3), [`team-${slot}`, `loft-${slot}`, `suite-${slot}`]);
+    assert.match(entry.usedBy[3], /^floor-\d\d$/);
+  }
+  assert.equal(data.characters.flatMap(entry => entry.usages).length, 54);
+  for (const [index, entry] of data.characters.entries()) assert.deepEqual(entry.usages, roster[index].usages);
 });
 
 test('every asset is on disk, hashed, and of the declared format', async () => {

@@ -1,3 +1,4 @@
+import { createMug as mug, createPlant, createChair, createMonitor, createDeskSlab, createKeyboard, seatPoint as at } from '../shared/furniture.js';
 // Big floor plate furniture. Six glazed team rooms (each with a four-person facing
 // table), a corridor with a meeting room closing one end and the break area at the
 // other. Every solid piece sits inside a collision box declared in ./layout.js,
@@ -90,21 +91,7 @@ export function createFloorOffice(scene, layout = floorOffice) {
   }, true);
   const glassMat = new THREE.MeshStandardMaterial({ color: '#cfe3e6', transparent: true, opacity: .3, roughness: .3 });
 
-  function mug(parent, x, y, z, color) {
-    box(parent, x, y + .09, z, .16, .18, .16, color);
-    box(parent, x, y + .185, z, .11, .01, .11, c.woodDark);
-    box(parent, x + .11, y + .09, z, .08, .09, .07, color);
-  }
-  function plant(x, z, scale = 1, y = 0) {
-    const g = group(office, x, y, z); g.scale.setScalar(scale);
-    box(g, 0, .19, 0, .42, .38, .42, '#e6d3b8');
-    box(g, 0, .4, 0, .48, .08, .48, c.white);
-    box(g, 0, .46, 0, .35, .05, .35, c.woodDark);
-    box(g, 0, .78, 0, .09, .65, .09, c.woodDark);
-    for (const [a, b, h, s] of [[-.22, 0, .9, .42], [.22, .06, 1.16, .46], [0, -.14, 1.42, .48], [-.12, .17, 1.23, .38], [.16, -.1, .77, .32]]) {
-      box(g, a, h, b, s, s * .8, s, h > 1.2 ? c.leafLight : c.leaf);
-    }
-  }
+  const plant = (x, z, scale = 1, y = 0) => createPlant(office, x, z, scale, y);
   function stool(id) {
     const s = ZONE[id], g = group(office, s.x, 0, s.z);
     box(g, 0, .63, 0, s.w, .07, s.w, c.wood, 'wood');
@@ -181,33 +168,11 @@ export function createFloorOffice(scene, layout = floorOffice) {
   panel(office, meetingRoom.inner[1] + .13, 1.62, meetingRoom.door.z + 1.05, .95, .3, plateMat(meetingRoom)).rotation.y = Math.PI / 2;
 
   // Room interiors: one shared table for four, storage, a nook, a board, a plant.
-  const axis = seat => ({ fx: Math.sin(seat.yaw), fz: Math.cos(seat.yaw), rx: Math.cos(seat.yaw), rz: -Math.sin(seat.yaw) });
-  const at = (seat, forward, side) => {
-    const { fx, fz, rx, rz } = axis(seat);
-    return { x: seat.x + fx * forward + rx * side, z: seat.z + fz * forward + rz * side };
-  };
-  function chair(seat) {
-    const g = group(office, seat.x, 0, seat.z); g.rotation.y = seat.yaw + Math.PI;
-    box(g, 0, .57, 0, .74, .16, .68, c.green);
-    box(g, 0, .94, .31, .74, .68, .14, c.green);
-    box(g, 0, .29, 0, .09, .45, .09, c.ink);
-    box(g, 0, .09, 0, .74, .08, .1, c.ink); box(g, 0, .09, 0, .1, .08, .66, c.ink);
-    for (const sx of [-.33, .33]) for (const sz of [-.26, .26]) box(g, sx, .065, sz, .12, .12, .12, c.ink);
-  }
+  const chair = seat => createChair(office, seat);
   function seatItems(seat, index) {
     const monitor = at(seat, deskItems.monitor.forward, 0);
-    const g = group(office, monitor.x, 0, monitor.z); g.rotation.y = seat.yaw + Math.PI;
-    box(g, 0, tableSurface + .015, 0, .34, .03, .22, c.ink);
-    box(g, 0, tableSurface + .195, -.09, .08, .32, .08, c.ink);
-    box(g, 0, tableSurface + .485, -.04, 1, .6, .09, c.ink);
-    screens.push(panel(g, 0, tableSurface + .485, deskItems.monitor.faceOffset, .92, .52, screenMat));
-    const keys = deskItems.keyboard, keyboard = at(seat, keys.forward, 0), { fx, fz, rx, rz } = axis(seat);
-    box(office, keyboard.x, tableSurface + keys.thickness / 2, keyboard.z, .62, keys.thickness, keys.depth, '#e6e6d9');
-    for (let row = 0; row < 3; row++) for (let col = 0; col < 9; col++) {
-      const side = (col - 4) * .062, forward = (row - 1) * .068;
-      box(office, keyboard.x + rx * side + fx * forward, tableSurface + keys.thickness + keys.keyHeight / 2,
-        keyboard.z + rz * side + fz * forward, .05, keys.keyHeight, .045, '#99a3a1');
-    }
+    screens.push(createMonitor(office, { ...monitor, yaw: seat.yaw + Math.PI, surface: tableSurface, faceOffset: deskItems.monitor.faceOffset, material: screenMat }).screen);
+    createKeyboard(office, seat, tableSurface, deskItems.keyboard);
     const mouse = at(seat, deskItems.mouse.forward, deskItems.mouse.side);
     box(office, mouse.x, tableSurface + .015, mouse.z, .12, .03, .18, c.ink);
     const book = at(seat, deskItems.notebook.forward, deskItems.notebook.side);
@@ -219,7 +184,7 @@ export function createFloorOffice(scene, layout = floorOffice) {
   }
   function sharedTable(room) {
     const t = ZONE[`${room.id}-table`];
-    box(office, t.x, tableSurface - tableThickness / 2, t.z, t.w, tableThickness, t.d, c.wood, 'wood');
+    createDeskSlab(office, { ...t, surface: tableSurface, thickness: tableThickness });
     box(office, t.x, tableSurface - tableThickness - .09, t.z, t.w - .7, .07, .55, '#4a5a58');
     for (const x of [t.x - 2.1, t.x, t.x + 2.1]) for (const z of [t.z - .85, t.z + .85]) {
       box(office, x, (tableSurface - tableThickness) / 2, z, .12, tableSurface - tableThickness, .5, c.white);

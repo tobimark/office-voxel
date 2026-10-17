@@ -37,6 +37,7 @@ test('oriented seats preserve every layout exit and its route to the walking loo
 test('invalid assignments, coordinates and explicit exits fail before mounting', () => {
   for (const patch of [
     { capacity: 0 }, { stationFor: [0, 0, 2] }, { stationFor: [0, 1, 99] },
+    { actors: smallOffice.actors.map(actor => ({ ...actor, instanceId: 'duplicate' })) },
     { seats: smallOffice.seats.map((seat, i) => i ? seat : { ...seat, yaw: NaN }) },
     { seats: smallOffice.seats.map((seat, i) => i ? seat : { ...seat, exit: { x: 0, z: Infinity } }) },
     { camera: { ...smallOffice.camera, minHeight: 0 } },

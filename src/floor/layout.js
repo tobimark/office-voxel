@@ -1,9 +1,11 @@
+import { furnitureSpec } from '../shared/furniture-spec.js';
 // Big floor plate: 24 people in six glazed team rooms off one long corridor, with a
 // meeting room closing the west end and the break area at the east end. Every room
 // holds a four-person facing table, so each room is self-contained and every room
 // is entered through its own door. Geometry, walls, doors, seats and furniture
 // boxes live here as data, shared by the renderer and the navigation tests.
-import { teamOffice } from '../layouts.js';
+import { floorCast } from '../characters/casts.js';
+import { instantiateCharacter } from '../characters/instances.js';
 import { monitorPlacement } from '../shared/workstation.js';
 
 export const approach = 1.05;
@@ -153,7 +155,7 @@ export function floorObstacles() {
   return [
     ...floorWalls,
     ...floorLeaves,
-    ...floorSeats.map(seat => ({ x: seat.x, z: seat.z, w: .78, d: .78 })),   // reserved chairs
+    ...floorSeats.map(seat => ({ x: seat.x, z: seat.z, ...furnitureSpec.chair })),   // reserved chairs
     ...floorZones.map(({ x, z, w, d }) => ({ x, z, w, d })),
   ];
 }
@@ -165,49 +167,16 @@ export function seatExit(seat) {
   return seatForward(seat, -approach);
 }
 
-// The nine originals keep their exact looks; the other fifteen are assembled from
-// the same pixel parts (hair style, outfit, accessory) with new palettes.
-const legacy = Object.fromEntries(teamOffice.actors.map(person => [person.name, person]));
-const newcomer = (name, role, signature, look) => ({ name, role, signature, ...look });
-const fresh = [
-  newcomer('小满', '交互设计', '低发髻 · 灰蓝西装 · 腕表', { shirt: '#7fa3a8', trim: '#e9dfc4', pants: '#4f6272', hair: '#3b3a44', hairStyle: 'bun', outfit: 'blazer', accessory: 'watch', eyes: 'almond', lashes: true, height: .99, build: .97, shoes: '#3f4a54' }),
-  newcomer('阿真', '视觉设计', '短刺发 · 紫色马甲 · 粗框眼镜', { shirt: '#8f6f9e', trim: '#ded3ec', pants: '#4a4458', hair: '#2f3138', hairStyle: 'spiky', outfit: 'vest', accessory: 'pen', eyes: 'narrow', glasses: 'heavy', height: 1.03, build: 1.02, shoes: '#33323c', skin: '#d9a67f' }),
-  newcomer('小柚', '内容编辑', '齐肩短发 · 米色开衫 · 蝴蝶结', { shirt: '#c9a0a8', trim: '#f2e6c9', pants: '#5c6470', hair: '#4a3a2e', hairStyle: 'bob', outfit: 'cardigan', accessory: 'bow', eyes: 'round', height: .97, build: .95, shoes: '#7b6455' }),
-  newcomer('小鹿', '客户成功', '高马尾 · 米白棒球夹克 · 无配饰', { shirt: '#e0c48f', trim: '#f0e5c9', pants: '#45536b', hair: '#2e2a26', hairStyle: 'ponytail', outfit: 'varsity', eyes: 'bright', lashes: true, height: .98, build: .99, shoes: '#e6ded0' }),
-  newcomer('阿宽', '运维工程师', '侧削短发 · 格纹衬衫 · 腕表', { shirt: '#6f8f7a', trim: '#c9d8bd', pants: '#3f4a52', hair: '#3a3330', hairStyle: 'undercut', outfit: 'plaid', accessory: 'watch', eyes: 'narrow', beard: true, height: 1.05, build: 1.1, shoes: '#4a4438', skin: '#c08e68' }),
-  newcomer('阿焱', '算法工程师', '蓬松卷发 · 铁锈色格纹 · 大耳机', { shirt: '#b5603f', trim: '#e6c9a8', pants: '#4b4a55', hair: '#2b2320', hairStyle: 'curly', outfit: 'plaid', accessory: 'headphones', eyes: 'relaxed', height: 1.02, build: 1.05, shoes: '#3c3a3f', skin: '#c98f66' }),
-  newcomer('阿泽', '数据分析师', '深棕侧分 · 藏蓝西装 · 方框眼镜', { shirt: '#5f7f9a', trim: '#eae2cf', pants: '#3f4a52', hair: '#46403a', hairStyle: 'sidepart', outfit: 'blazer', accessory: 'watch', eyes: 'relaxed', glasses: 'square', height: 1, build: .96, shoes: '#39434d' }),
-  newcomer('阿澈', '解决方案', '短碎发 · 灰蓝夹克 · 鸭舌帽', { shirt: '#7a8fa8', trim: '#e6e2d2', pants: '#4b5566', hair: '#2a2f38', hairStyle: 'pixie', outfit: 'varsity', accessory: 'cap', eyes: 'almond', height: 1.01, build: 1, shoes: '#cdd6dc' }),
-  newcomer('小乔', '市场专员', '侧编发 · 珊瑚色西装 · 发夹', { shirt: '#d08a6a', trim: '#f6e0d2', pants: '#5a5568', hair: '#4c3326', hairStyle: 'braid', outfit: 'blazer', accessory: 'hairclip', eyes: 'bright', lashes: true, freckles: true, height: .96, build: .94, shoes: '#8a6a58' }),
-  newcomer('阿栗', '商务拓展', '束发辫 · 墨绿背带裤 · 腕表', { shirt: '#7d9a86', trim: '#d8e3cc', pants: '#4d5a63', hair: '#33291f', hairStyle: 'locs', outfit: 'overalls', accessory: 'watch', eyes: 'narrow', beard: true, height: 1.06, build: 1.09, shoes: '#4a4034', skin: '#a9714c' }),
-  newcomer('阿棠', '招聘', '短刺发 · 米白背带裤 · 蝴蝶结', { shirt: '#e8dfbd', trim: '#cbd8b4', pants: '#8a7f66', hair: '#6b4a2f', hairStyle: 'spiky', outfit: 'overalls', accessory: 'bow', eyes: 'round', freckles: true, height: .95, build: .98, shoes: '#92795e' }),
-  newcomer('小枫', '技术支持', '侧削短发 · 灰绿卫衣 · 鸭舌帽', { shirt: '#6f7f8f', trim: '#c4d2c2', pants: '#3f4a52', hair: '#33383d', hairStyle: 'undercut', outfit: 'hoodie', accessory: 'cap', eyes: 'relaxed', glasses: 'round', height: 1.04, build: 1.03, shoes: '#dde5e6' }),
-  newcomer('小舟', '财务', '齐肩短发 · 灰绿马甲 · 胸牌', { shirt: '#8a9a7c', trim: '#e4e8d4', pants: '#46505a', hair: '#3f3a35', hairStyle: 'bob', outfit: 'vest', accessory: 'badge', eyes: 'narrow', glasses: 'square', height: .99, build: 1, shoes: '#3f4740' }),
-  newcomer('阿岚', '法务', '高马尾 · 藕荷开衫 · 方框眼镜', { shirt: '#9a8fa8', trim: '#efe6f2', pants: '#454b5c', hair: '#2d2a28', hairStyle: 'ponytail', outfit: 'cardigan', eyes: 'almond', lashes: true, glasses: 'square', height: 1.02, build: .98, shoes: '#4a4a52' }),
-  newcomer('小羽', '实习生', '短碎发 · 橙棕工装 · 蝴蝶结', { shirt: '#d8a86a', trim: '#f4e2c4', pants: '#5f6b63', hair: '#514034', hairStyle: 'pixie', outfit: 'utility', accessory: 'bow', eyes: 'bright', freckles: true, height: .94, build: .92, shoes: '#eadfc8' }),
-];
-const freshByName = Object.fromEntries(fresh.map(person => [person.name, person]));
-
-// Seat order is room order: four people per room, grouped by craft.
-const roster = [
-  '小麦', '小满', '阿真', '小禾',       // A1 设计间
-  '小蓝', '小米', '小柚', '小鹿',       // A2 产品间
-  '阿森', '阿洛', '阿远', '阿宽',       // A3 研发间
-  '阿焱', '阿泽', '阿墨', '阿澈',       // B1 算法间
-  '小桃', '小乔', '阿栗', '阿棠',       // B2 运营间
-  '小枫', '小舟', '阿岚', '小羽',       // B3 职能间
-];
 const roomOrder = ['design', 'product', 'dev', 'algo', 'ops', 'staff'];
 // The first character waits on foot inside the first room; the other twenty-three
 // start at their desks.
 const standingSpot = { x: -13.6, z: -4.2 };
-const actors = roster.map((name, index) => {
+const actors = floorCast.map((reference, index) => {
   const room = floorRooms.find(item => item.id === roomOrder[Math.floor(index / 4)]);
   const seat = seats[index];
-  const person = legacy[name] || freshByName[name];
-  if (!room || !seat || !person) throw new Error(`no seat or look for ${name}`);
+  if (!room || !seat) throw new Error(`no seat for ${reference.instanceId}`);
   const spot = index === 0 ? standingSpot : seat;
-  return { ...person, name, x: spot.x, z: spot.z, phase: .2 + index * .61 };
+  return instantiateCharacter(reference, { x: spot.x, z: spot.z, phase: .2 + index * .61 });
 });
 
 export const floorOffice = {
