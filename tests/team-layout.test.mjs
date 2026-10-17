@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { smallOffice, teamOffice, workstationObstacles } from '../src/layouts.js';
-import { findPath, isWalkable } from '../src/navigation.js';
+import { smallOffice, teamOffice, workstationObstacles } from '../src/layouts/index.js';
+import { findPath, isWalkable } from '../src/engine/navigation.js';
 
 test('each office has a unique workstation for every character', () => {
   for (const layout of [smallOffice, teamOffice]) {

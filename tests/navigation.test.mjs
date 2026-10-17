@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { findPath, isWalkable, STEP } from '../src/navigation.js';
+import { findPath, isWalkable, STEP } from '../src/engine/navigation.js';
 
 test('route goes around a desk with clearance for the body', () => {
   const obstacles = [{ x: 0, z: 0, w: 2, d: 2 }];

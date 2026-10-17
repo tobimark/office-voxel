@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import {
   suiteOffice, suiteRooms, meetingRoom, suiteSeats, suiteWalls, suiteLeaves, suiteZones, suiteObstacles,
   seatExit, deskItems, deskSurface,
-} from '../src/suite/layout.js';
-import { findPath, isWalkable } from '../src/navigation.js';
+} from '../src/layouts/suite.js';
+import { findPath, isWalkable } from '../src/engine/navigation.js';
 
 test('the suite seats nine people in three rooms of three, each facing its own desk', () => {
   const layout = suiteOffice;
@@ -98,7 +98,7 @@ test('every piece of furniture stays on the floor plate and off the seats', () =
 });
 
 test('typing hands rest on the keys instead of sinking into the desk top', () => {
-  // Seated "work" hand box, derived from src/character.js: hips lift to 0.59 in
+  // Seated "work" hand box, derived from src/assets/characters/model.js: hips lift to 0.59 in
   // world space, +0.16 forward shift, shoulder -1.48 rad, elbow -0.50, torso lean
   // 0.13, upper arm 0.27, forearm 0.24, hand box 0.19 x 0.09 x 0.22.
   const handOf = ({ height = 1, build = 1 }) => {

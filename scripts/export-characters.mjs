@@ -2,7 +2,7 @@
 // --only / --ids export preserves all unselected files and their hashes.
 import { chromium } from '@playwright/test';
 import { fileURLToPath } from 'node:url';
-import { characterRoster } from '../src/shared/character-roster.js';
+import { characterRoster } from '../src/tools/character-roster.js';
 import { ASSET_KINDS, exportCharacterAssets } from './lib/character-export.mjs';
 
 const args=process.argv.slice(2);

@@ -5,7 +5,7 @@ import { chromium } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
-import { floorSeats, floorRooms } from '../src/floor/layout.js';
+import { floorSeats, floorRooms } from '../src/layouts/floor.js';
 
 const output = process.env.FLOOR_ARTIFACTS || fileURLToPath(new URL('../.artifacts/', import.meta.url));
 await mkdir(output, { recursive: true });

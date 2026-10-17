@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { characterRoster, rosterSummary } from '../src/shared/character-roster.js';
+import { characterRoster, rosterSummary } from '../src/tools/character-roster.js';
 
 // The exported assets are committed alongside the code, so these checks run without
 // a browser: they re-derive the roster from the layouts and compare it with what is

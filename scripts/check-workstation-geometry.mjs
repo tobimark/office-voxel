@@ -15,14 +15,13 @@ try {
   for (const name of ['studio', 'team', 'loft', 'floor', 'suite']) {
     const result = await page.evaluate(async name => {
       const THREE = await import('/node_modules/three/build/three.module.js');
-      const { createCharacter } = await import('/src/character.js');
-      const { monitorPlacement, workstationSeat } = await import('/src/shared/workstation.js');
-      const base = ['studio', 'team'].includes(name);
-      const layouts = await import(base ? '/src/layouts.js' : `/src/${name}/layout.js`);
-      const builder = await import(base ? '/src/office.js' : `/src/${name}/office.js`);
-      const layout = layouts[base ? name === 'studio' ? 'smallOffice' : 'teamOffice' : `${name}Office`];
+      const { createCharacter } = await import('/src/assets/characters/model.js');
+      const { monitorPlacement, workstationSeat } = await import('/src/world/workstation.js');
+      const { getLayout } = await import('/src/layouts/registry.js');
+      const { assembleOffice } = await import('/src/world/assemble-office.js');
+      const layout = getLayout(name);
       const scene = new THREE.Scene();
-      const furniture = builder[base ? 'createOffice' : `create${name[0].toUpperCase()}${name.slice(1)}Office`](scene, layout);
+      const furniture = assembleOffice(scene, layout);
       const actors = layout.actors.map((config, index) => {
         const actor = createCharacter(scene, config), seat = workstationSeat(layout, layout.stationFor[index]);
         actor.root.position.set(seat.x, 0, seat.z); actor.root.rotation.y = seat.yaw; actor.targetYaw = seat.yaw; actor.action = 'work';

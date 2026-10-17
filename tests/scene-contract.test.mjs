@@ -1,12 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveSceneLayout } from '../src/shared/scene-contract.js';
-import { createLifetime } from '../src/shared/lifetime.js';
-import { smallOffice, teamOffice, workstationObstacles } from '../src/layouts.js';
-import { loftOffice, seatExit as loftExit, loftObstacles } from '../src/loft/layout.js';
-import { suiteOffice, seatExit as suiteExit, suiteObstacles } from '../src/suite/layout.js';
-import { floorOffice, seatExit as floorExit, floorObstacles } from '../src/floor/layout.js';
-import { findPath } from '../src/navigation.js';
+import { resolveSceneLayout } from '../src/world/scene-contract.js';
+import { createLifetime } from '../src/engine/lifetime.js';
+import { smallOffice, teamOffice, workstationObstacles } from '../src/layouts/index.js';
+import { loftOffice, seatExit as loftExit, loftObstacles } from '../src/layouts/loft.js';
+import { suiteOffice, seatExit as suiteExit, suiteObstacles } from '../src/layouts/suite.js';
+import { floorOffice, seatExit as floorExit, floorObstacles } from '../src/layouts/floor.js';
+import { findPath } from '../src/engine/navigation.js';
 
 test('studio/team desk anchors resolve to the original actor seats and safe exits', () => {
   for (const definition of [smallOffice, teamOffice]) {

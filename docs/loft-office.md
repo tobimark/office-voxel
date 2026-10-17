@@ -46,11 +46,11 @@ npm run dev --workspaces=false
 
 | 文件 | 用途 |
 | --- | --- |
-| `loft.html` | 页面骨架，与 `nine.html` 同结构，注入 `/src/loft/main.js` |
-| `src/loft/layout.js` | 座位、长桌、家具碰撞盒、镜头、巡游点位等纯数据 |
-| `src/loft/office.js` | 长桌开间家具与房间渲染，复用 `src/art.js` 图元 |
-| `src/loft/main.js` | 布局、家具构建器和文案配置，通过 `shared/scene-page.js` 接入统一引擎 |
-| `src/loft/style.css` | 仅本页的样式微调（三入口导航在窄屏下的收窄） |
+| `loft.html` | 页面骨架，与 `nine.html` 同结构，注入 `/src/app/main.js` |
+| `src/layouts/loft.js` | 座位、长桌、家具碰撞盒、镜头、巡游点位等纯数据 |
+| `src/assets/environments/long-studio.js` | 长桌开间家具与房间渲染，复用 `src/assets/materials/art.js` 图元 |
+| `src/app/main.js` | 布局、家具构建器和文案配置，通过 `app/scene-page.js` 接入统一引擎 |
+| `src/app/styles/loft.css` | 仅本页的样式微调（三入口导航在窄屏下的收窄） |
 | `vite.loft.config.js` | 可选的独立构建配置，只打包 `loft.html` |
 | `tests/loft-layout.test.mjs` | 座位/朝向/步出点/环线寻路的自动化检查 |
 | `scripts/browser-loft-check.mjs` | 浏览器端交互检查 |

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { loftOffice, loftSeats, loftTable, loftZones, loftObstacles, seatExit, seatForward, bankOffset, deskItems } from '../src/loft/layout.js';
-import { findPath, isWalkable } from '../src/navigation.js';
+import { loftOffice, loftSeats, loftTable, loftZones, loftObstacles, seatExit, seatForward, bankOffset, deskItems } from '../src/layouts/loft.js';
+import { findPath, isWalkable } from '../src/engine/navigation.js';
 
 test('the loft seats nine people in two banks facing one shared table', () => {
   const layout = loftOffice;
@@ -64,7 +64,7 @@ test('the loft walking loop closes around both ends of the long table', () => {
 });
 
 test('typing hands rest on the keys instead of sinking into the table top', () => {
-  // Seated "work" hand box, derived from src/character.js: hips lift to 0.59 in
+  // Seated "work" hand box, derived from src/assets/characters/model.js: hips lift to 0.59 in
   // world space, +0.16 forward shift, shoulder -1.48 rad, elbow -0.50, torso lean
   // 0.13, upper arm 0.27, forearm 0.24, hand box 0.19 x 0.09 x 0.22.
   const handOf = ({ height = 1, build = 1 }) => {

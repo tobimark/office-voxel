@@ -108,7 +108,7 @@ export async function exportCharacterAssets({ outRoot, roster, kinds = ASSET_KIN
     }
     const allFiles=characters.flatMap(e=>Object.values(e.files));
     const manifest={name:'pixoffice-voxel-characters',version:2,generator:'scripts/export-characters.mjs',
-      source:'src/characters/catalog.js + src/character.js + src/appearance.js',
+      source:'src/assets/characters/catalog.js + src/assets/characters/model.js + src/assets/characters/appearance.js',
       exportedAt:new Date().toISOString(), kinds:ASSET_KINDS.filter(k=>characters.some(e=>e.files[k])),
       counts:{characters:characters.length,files:allFiles.length,bytes:allFiles.reduce((n,f)=>n+f.bytes,0)}, characters};
     await fs.writeFile(path.join(stage,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');

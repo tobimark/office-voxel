@@ -20,7 +20,8 @@
     "build:floor": "vite build --config vite.floor.config.js",
     "export:characters": "node scripts/export-characters.mjs",
     "test:browser:furniture": "node scripts/browser-furniture-check.mjs",
-    "test:browser:resources": "node scripts/browser-resource-check.mjs"
+    "test:browser:resources": "node scripts/browser-resource-check.mjs",
+    "test:browser:composition": "node scripts/browser-composition-check.mjs"
   },
   "dependencies": {
     "three": "0.180.0"

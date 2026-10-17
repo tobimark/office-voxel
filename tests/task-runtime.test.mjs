@@ -1,14 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createTaskRuntime, createBindings } from '../src/shared/task-runtime.js';
-import { createMockTaskSource } from '../src/shared/mock-task-source.js';
-import { smallOffice, teamOffice } from '../src/layouts.js';
-import { floorOffice } from '../src/floor/layout.js';
-import { loftOffice } from '../src/loft/layout.js';
-import { suiteOffice } from '../src/suite/layout.js';
-import { boardPages, wrapText } from '../src/shared/task-display-renderers.js';
+import { createTaskRuntime, createBindings } from '../src/integrations/tasks/task-runtime.js';
+import { createMockTaskSource } from '../src/integrations/tasks/mock-task-source.js';
+import { smallOffice, teamOffice } from '../src/layouts/index.js';
+import { floorOffice } from '../src/layouts/floor.js';
+import { loftOffice } from '../src/layouts/loft.js';
+import { suiteOffice } from '../src/layouts/suite.js';
+import { boardPages, wrapText } from '../src/integrations/tasks/task-display-renderers.js';
 import * as THREE from 'three';
-import { displayCameraPose } from '../src/shared/display-focus.js';
+import { displayCameraPose } from '../src/engine/display-focus.js';
 
 function fixture(layout = smallOffice) {
   const displays = layout.stations.map((_, i) => ({ id: `display-${i}`, kind: 'computer', stationId: `${layout.id}:station:${i}`, roomId: layout.stations[i].room }));

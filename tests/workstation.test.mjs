@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { monitorPlacement, workstationSeat } from '../src/shared/workstation.js';
-import { smallOffice, teamOffice } from '../src/layouts.js';
-import { loftOffice, deskItems as loftItems, loftPlanterX } from '../src/loft/layout.js';
-import { floorOffice, deskItems as floorItems, floorPlanterOffsets } from '../src/floor/layout.js';
-import { suiteOffice, deskItems as suiteItems } from '../src/suite/layout.js';
+import { monitorPlacement, workstationSeat } from '../src/world/workstation.js';
+import { smallOffice, teamOffice } from '../src/layouts/index.js';
+import { loftOffice, deskItems as loftItems, loftPlanterX } from '../src/layouts/loft.js';
+import { floorOffice, deskItems as floorItems, floorPlanterOffsets } from '../src/layouts/floor.js';
+import { suiteOffice, deskItems as suiteItems } from '../src/layouts/suite.js';
 
 test('every scene uses one seat-relative screen specification without changing keyboard reach', () => {
   for (const items of [loftItems, floorItems, suiteItems]) {

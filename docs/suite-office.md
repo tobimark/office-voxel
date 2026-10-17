@@ -43,7 +43,7 @@ npm run dev --workspaces=false
 ## 墙与门是怎么做的
 
 - 隔墙按**运行段**生成：实心下段、玻璃上段、上下横档、两端立柱；门洞位置单独加门套（两侧立柱 + 门楣 + 门楣上方固定玻璃），再放一扇**开启状态的玻璃门扇**（带木框和把手）与地面门槛。
-- 每个墙段、每扇门扇都在 `src/suite/layout.js` 里对应一个碰撞盒，渲染与寻路共用同一份数据。
+- 每个墙段、每扇门扇都在 `src/layouts/suite.js` 里对应一个碰撞盒，渲染与寻路共用同一份数据。
 - 门洞净宽 1.2 m（会议室 1.4 m），大于人物直径 0.64 m，网格寻路能穿过；`tests/suite-layout.test.mjs` 会断言：墙中心不可通行、门洞中心可通行、且**从房间走到走廊的路径必须经过门洞坐标**（走墙会被判失败）。
 - 一个踩过的坑：会议室的门原本向内开，门扇和长桌一起把房间东侧过道彻底封死，寻路直接失败。现在这扇门改为**向走廊外开**，测试里保留了「会议室整间可达」这条用例。
 
@@ -55,11 +55,11 @@ npm run dev --workspaces=false
 
 | 文件 | 用途 |
 | --- | --- |
-| `suite.html` | 页面骨架，注入 `/src/suite/main.js` |
-| `src/suite/layout.js` | 房间、门洞、墙段、座位、家具碰撞盒、镜头、巡游路线（纯数据） |
-| `src/suite/office.js` | 隔墙/门扇/门窗/工位/会议室/走廊/茶水休息区渲染，复用 `src/art.js` |
-| `src/suite/main.js` | 布局、家具构建器和文案配置，通过 `shared/scene-page.js` 接入统一引擎 |
-| `src/suite/style.css` | 仅本页的样式微调（四入口导航在窄屏下的收窄） |
+| `suite.html` | 页面骨架，注入 `/src/app/main.js` |
+| `src/layouts/suite.js` | 房间、门洞、墙段、座位、家具碰撞盒、镜头、巡游路线（纯数据） |
+| `src/assets/environments/glazed-rooms.js` | 隔墙/门扇/门窗/工位/会议室/走廊/茶水休息区渲染，复用 `src/assets/materials/art.js` |
+| `src/app/main.js` | 布局、家具构建器和文案配置，通过 `app/scene-page.js` 接入统一引擎 |
+| `src/app/styles/suite.css` | 仅本页的样式微调（四入口导航在窄屏下的收窄） |
 | `vite.suite.config.js` | 可选的独立构建配置，只打包 `suite.html` |
 | `tests/suite-layout.test.mjs` | 房间/门/寻路/姿势的自动化检查 |
 | `scripts/browser-suite-check.mjs` | 浏览器端交互检查 |

@@ -9,19 +9,19 @@ page.on('console', message => { if (['error', 'warning'].includes(message.type()
 const url = process.env.DEMO_URL || 'http://127.0.0.1:5196/';
 try {
   for (const [path, module, layoutModule, layoutName, builderName] of [
-    ['', '/src/office.js', '/src/layouts.js', 'smallOffice', 'createOffice'],
-    ['nine.html', '/src/office.js', '/src/layouts.js', 'teamOffice', 'createOffice'],
-    ['loft.html', '/src/loft/office.js', '/src/loft/layout.js', 'loftOffice', 'createLoftOffice'],
-    ['suite.html', '/src/suite/office.js', '/src/suite/layout.js', 'suiteOffice', 'createSuiteOffice'],
-    ['floor.html', '/src/floor/office.js', '/src/floor/layout.js', 'floorOffice', 'createFloorOffice'],
+    ['', '/src/world/assemble-office.js', '/src/layouts/index.js', 'smallOffice', 'assembleOffice'],
+    ['nine.html', '/src/world/assemble-office.js', '/src/layouts/index.js', 'teamOffice', 'assembleOffice'],
+    ['loft.html', '/src/world/assemble-office.js', '/src/layouts/loft.js', 'loftOffice', 'assembleOffice'],
+    ['suite.html', '/src/world/assemble-office.js', '/src/layouts/suite.js', 'suiteOffice', 'assembleOffice'],
+    ['floor.html', '/src/world/assemble-office.js', '/src/layouts/floor.js', 'floorOffice', 'assembleOffice'],
   ]) {
     await page.goto(new URL(path, url).href);
     await page.waitForFunction(() => window.PixOfficeVoxel?.tasks.getState().fontReady);
     const result = await page.evaluate(async ({ module, layoutModule, layoutName, builderName }) => {
-      const { createScene } = await import('/src/shared/scene.js');
-      const { bootScene } = await import('/src/shared/scene-page.js');
-      const { resolveSceneLayout } = await import('/src/shared/scene-contract.js');
-      const { createTaskDisplays } = await import('/src/shared/task-displays.js');
+      const { createScene } = await import('/src/engine/scene.js');
+      const { bootScene } = await import('/src/app/scene-page.js');
+      const { resolveSceneLayout } = await import('/src/world/scene-contract.js');
+      const { createTaskDisplays } = await import('/src/integrations/tasks/task-displays.js');
       const layout = (await import(layoutModule))[layoutName];
       const createOffice = (await import(module))[builderName];
       const root = document.querySelector('#app'), viewport = root.querySelector('#viewport');
@@ -91,7 +91,7 @@ try {
     assert.equal(result.selects, 1, `${layoutName}: avatar must dispatch once`);
     await page.waitForFunction(() => window.PixOfficeVoxel.tasks.getState().fontReady);
     const definition = await page.evaluate(async ({ layoutModule, layoutName }) => {
-      const { resolveSceneLayout } = await import('/src/shared/scene-contract.js');
+      const { resolveSceneLayout } = await import('/src/world/scene-contract.js');
       const layout = resolveSceneLayout((await import(layoutModule))[layoutName]);
       window.PixOfficeVoxel.tasks.pause(true);
       window.PixOfficeVoxel.tasks.focus('mission'); // closes the avatar menu

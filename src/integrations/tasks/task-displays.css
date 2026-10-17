@@ -1,0 +1,23 @@
+@font-face{font-family:'Office Pixel';src:url('../../assets/fonts/fusion-pixel-12px-zh_hans.woff2') format('woff2');font-weight:400;font-style:normal;font-display:block}
+.task-toolbar,.display-reader,.agent-menu{font:12px/1.6 'Office Pixel',monospace;font-synthesis:none;letter-spacing:0}
+.task-toolbar{position:absolute;z-index:6;left:16px;right:16px;top:16px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;background:var(--paper);border:1px solid var(--line);padding:10px 12px;box-shadow:3px 3px 0 #29363518;max-width:750px}
+.task-toolbar .task-brand{display:flex;align-items:center;gap:8px;color:var(--green-dark);margin-right:4px;white-space:nowrap}
+.task-brand i{display:block;width:7px;height:7px;background:var(--orange)}
+.task-toolbar button,.display-reader button,.agent-menu button{border:1px solid var(--line);background:var(--paper);padding:6px 10px;min-height:32px;border-radius:0;font:inherit}
+.task-toolbar button:hover,.display-reader button:hover,.agent-menu button:hover{background:var(--wash);border-color:var(--green)}
+.task-toolbar button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.task-toolbar .task-playback{display:flex;align-items:center;gap:6px;margin-left:auto}
+.task-toolbar output{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums;min-width:40px}
+.task-toolbar .task-font-status{flex-basis:100%;color:var(--orange-dark)}
+.stage:has(.task-toolbar) .scene-heading{top:124px}
+.display-reader{position:absolute;z-index:6;bottom:88px;left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100% - 32px);background:var(--paper);border:1px solid var(--line);box-shadow:3px 3px 0 #29363518;padding:8px 12px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.display-reader label{display:flex;gap:8px;align-items:center}
+.display-reader select{font:inherit;max-width:160px;border:1px solid var(--line);background:var(--paper);padding:5px}
+.display-reader output{min-width:65px;text-align:center;color:var(--muted)}
+.agent-menu{position:fixed;z-index:30;background:var(--paper);border:1px solid var(--green);box-shadow:4px 4px 0 #29363522;padding:12px;width:224px;max-width:calc(100vw - 24px)}
+.agent-menu b{font:inherit;color:var(--ink)}.agent-menu p{margin:4px 0 12px;color:var(--muted)}.agent-menu button{width:100%;text-align:left;background:var(--wash);min-height:44px}
+.display-active .interaction-hint,.display-active .telemetry{display:none}
+.embed .task-toolbar,.embed .display-reader{display:flex}
+.task-people{position:absolute;top:calc(100% + 8px);left:0;right:0;display:flex;gap:8px;overflow-x:auto;background:var(--paper);border:1px solid var(--line);padding:8px;max-height:110px}
+.task-people button{flex:0 0 64px;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:80px}.task-people .avatar{flex-shrink:0;width:36px;height:36px;margin:0;transform:none}.task-people .avatar.portrait{object-fit:contain}
+@media(max-width:760px){.task-toolbar{left:10px;right:10px;top:10px;padding:8px;gap:6px;justify-content:center}.task-toolbar .task-brand{width:100%;justify-content:center}.task-toolbar .task-playback{margin-left:0}.task-toolbar button{min-height:36px;padding:5px 8px}.display-reader{bottom:76px;padding:6px;gap:5px}.display-reader button{min-height:36px}.stage:has(.task-toolbar) .scene-heading{top:180px}.display-reader select{max-width:130px}}

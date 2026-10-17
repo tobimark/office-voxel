@@ -5,8 +5,8 @@
 </style></head>
 <body><header><h1>九位伙伴，各有模样。</h1><p>PIX OFFICE / CHARACTER LOOK DEVELOPMENT</p></header><div class="gallery"><canvas id="gallery"></canvas><div class="labels"></div></div><script type="module">
 import * as THREE from 'three';
-import { createCharacter } from '../src/character.js';
-import { teamOffice } from '../src/layouts.js';
+import { createCharacter } from '../src/assets/characters/model.js';
+import { teamOffice } from '../src/layouts/index.js';
 const renderer = new THREE.WebGLRenderer({canvas:document.querySelector('#gallery'),antialias:true});
 renderer.setPixelRatio(1);renderer.setSize(1200,1080);renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
 renderer.setScissorTest(true);

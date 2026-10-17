@@ -48,7 +48,7 @@ npm run dev --workspaces=false
 
 ## 架构：入场逻辑抽成了公共引擎
 
-大平层的 [src/floor/main.js](../src/floor/main.js) 通过 `scene-page.js` 将布局、家具构建器和文案交给
+大平层的 [src/app/main.js](../src/app/main.js) 通过 `scene-page.js` 将布局、家具构建器和文案交给
 共享场景引擎。目前三人、九人、长桌、套间、大平层都已完成同样的迁移。渲染、镜头、拾取和坐姿由 `scene.js` 负责，
 控制面板和嵌入协议由页面适配层负责。新增布局和主动销毁接口见 [共享场景引擎](shared-scene-engine.md)。
 
@@ -56,12 +56,12 @@ npm run dev --workspaces=false
 
 | 文件 | 用途 |
 | --- | --- |
-| `floor.html` | 页面骨架，注入 `/src/floor/main.js` |
-| `src/shared/scene.js` | 五种布局共用的场景引擎；其他布局同样依赖，不能作为大平层专用文件删除 |
-| `src/floor/layout.js` | 大平层尺寸、6 间房、门、24 席、24 人外观、家具碰撞盒、镜头、巡游路线 |
-| `src/floor/office.js` | 地面/外墙/隔墙与门扇/采光窗/6 间房家具/会议室/走廊/茶水区渲染 |
-| `src/floor/main.js` | 20 行配置入口 |
-| `src/floor/style.css` | 本页样式微调（五入口导航、24 人名单更紧凑） |
+| `floor.html` | 页面骨架，注入 `/src/app/main.js` |
+| `src/engine/scene.js` | 五种布局共用的场景引擎；其他布局同样依赖，不能作为大平层专用文件删除 |
+| `src/layouts/floor.js` | 大平层尺寸、6 间房、门、24 席、24 人外观、家具碰撞盒、镜头、巡游路线 |
+| `src/assets/environments/corridor-campus.js` | 地面/外墙/隔墙与门扇/采光窗/6 间房家具/会议室/走廊/茶水区渲染 |
+| `src/app/main.js` | 20 行配置入口 |
+| `src/app/styles/floor.css` | 本页样式微调（五入口导航、24 人名单更紧凑） |
 | `vite.floor.config.js` | 可选的独立构建配置，只打包 `floor.html` |
 | `tests/floor-layout.test.mjs` | 布局/门/寻路/姿势的自动化检查 |
 | `scripts/browser-floor-check.mjs` | 浏览器端交互检查 |
@@ -80,7 +80,7 @@ node scripts/browser-floor-check.mjs                              # 需先保持
 **每间房只能从自己的门离开**（路径必须经过门洞坐标）、会议室两侧过道互相可达、走廊环线（含进入三间房）、
 家具不越界不压座位、以及 24 个座位的敲键盘姿势契约。
 
-`scripts/browser-floor-check.mjs` 直接引用 `src/floor/layout.js` 的座位数据做断言（不写死坐标）：场景 id 与 24 席、
+`scripts/browser-floor-check.mjs` 直接引用 `src/layouts/floor.js` 的座位数据做断言（不写死坐标）：场景 id 与 24 席、
 24 个唯一角色与 24 张头像、23 人已在各自房间面向桌子、站在房间里的小麦**走门回座**、24 个入口互不串扰、
 24 人各自走门回到自己座位、房间里的人**走门出到走廊**、三种镜头、走廊特写、手机与平板无横向溢出、`?embed=1`、
 原三人页与原九人页仍可用、控制台无错误/警告，并对比绘制开销。

@@ -1,9 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
-import { acquireArtResources, box, batchStaticBoxes } from '../src/art.js';
-import { disposeSceneResources } from '../src/shared/scene-resources.js';
-import { createChair, createMonitor, createPlant } from '../src/shared/furniture.js';
+import { acquireArtResources, box, batchStaticBoxes } from '../src/assets/materials/art.js';
+import { disposeSceneResources } from '../src/engine/resources.js';
+import { createChair, createMonitor, createPlant } from '../src/assets/furniture/primitives.js';
 // Texture construction needs only these Canvas2D operations; no WebGL in Node.
 globalThis.document = { createElement: () => ({ getContext: () => ({ fillRect() {} }) }) };
 const counts = resource => { let n = 0; resource.addEventListener('dispose', () => n++); return () => n; };

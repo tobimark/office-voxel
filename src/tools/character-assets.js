@@ -1,14 +1,14 @@
 // Character asset exporter (dev tool). It builds every character with the very same
-// code the pages use — ../character.js plus ../appearance.js — and hands the caller a
+// code the pages use — ../assets/characters/model.js plus ../assets/characters/appearance.js — and hands the caller a
 // portrait PNG, a labelled turnaround sheet PNG and a glTF binary model for each one.
 // Node drives it through tools/character-assets.html; nothing here runs at runtime.
 import * as THREE from 'three';
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js';
-import { createCharacter } from '../character.js';
-import { drawPortrait } from '../appearance.js';
-import { characterRoster } from '../shared/character-roster.js';
-import { acquireArtResources } from '../art.js';
-import { disposeSceneResources } from '../shared/scene-resources.js';
+import { createCharacter } from '../assets/characters/model.js';
+import { drawPortrait } from '../assets/characters/appearance.js';
+import { characterRoster } from './character-roster.js';
+import { acquireArtResources } from '../assets/materials/art.js';
+import { disposeSceneResources } from '../engine/resources.js';
 
 const VIEW = { width: 341, height: 384, frame: { width: 1024, height: 768 } };
 const SHEET = { width: 1024, height: 1024, caption: 256 };

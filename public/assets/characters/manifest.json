@@ -2,7 +2,7 @@
   "name": "pixoffice-voxel-characters",
   "version": 2,
   "generator": "scripts/export-characters.mjs",
-  "source": "src/characters/catalog.js + src/character.js + src/appearance.js",
+  "source": "src/assets/characters/catalog.js + src/assets/characters/model.js + src/assets/characters/appearance.js",
   "exportedAt": "2026-10-17T12:06:53.961Z",
   "kinds": [
     "portrait",

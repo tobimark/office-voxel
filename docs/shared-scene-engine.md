@@ -1,20 +1,21 @@
 # 共享场景引擎
 
-后续人物目录、家具复用、共享 GPU 资源租约与导出管线升级见 [素材管理](material-management.md)。场景资源清理由 `scene-resources.js` 执行，共享资源由 `art.js` 的最后一个租约释放，不能对共享缓存直接调用 `dispose()`。
+当前模块边界和新增布局流程见 [项目架构](architecture.md)，人物目录、共享 GPU 资源租约与导出管线见 [素材管理](material-management.md)。场景资源清理由 `src/engine/resources.js` 执行，共享资源由美术缓存的最后一个租约释放，不能直接释放其他场景仍在使用的缓存。
 
-三人、九人、长桌、套间、大平层现在使用同一个 `createScene()`。各页面入口只选择布局、家具构建器、样式和文案；镜头、人物控制、渲染循环与销毁逻辑均由共享引擎维护。
+三人、九人、长桌、套间、大平层共用 `app/main.js` 和 `createScene()`。页面按注册表选择布局及文案；`assembleOffice()` 负责实例组装，镜头、人物控制、渲染循环与销毁逻辑由引擎维护。
 
 ## 模块边界
 
 | 模块 | 职责 |
 | --- | --- |
-| `src/shared/scene.js` | WebGL 渲染、灯光、镜头、拾取、动作、寻路与生命周期；只接收容器，不查找页面控制元素 |
-| `src/shared/scene-contract.js` | 启动前校验布局、归一化安全出入口、检查家具构建器输出 |
-| `src/shared/scene-controls.js` | 创建人物头像，连接页面按钮，接收引擎事件更新 DOM |
-| `src/shared/scene-page.js` | 组合引擎、控制面板、任务 UI 和可选兼容桥；处理页面启动失败和热更新 |
-| `src/shared/task-displays.js` | 任务纹理、看板翻页、日志和人物菜单；查询限定在传入的 `root` 内 |
-| `src/shared/embed-bridge.js` | 注册 `window.PixOfficeVoxel`，校验同源父窗口消息；销毁时退订并清理兼容接口 |
-| `src/shared/lifetime.js` | 按资源获得顺序的逆序清理；重复销毁安全，单项清理失败仍继续清理其他资源 |
+| `src/engine/scene.js` | WebGL 渲染、灯光、镜头、拾取、动作、寻路与生命周期；只接收容器，不查找页面控制元素 |
+| `src/world/scene-contract.js` | 启动前校验布局、归一化安全出入口、检查家具构建器输出 |
+| `src/world/compile-layout.js` / `assemble-office.js` | 编译家具和墙体契约，组装素材、碰撞和显示器挂点 |
+| `src/app/scene-controls.js` | 创建人物头像，连接页面按钮，接收引擎事件更新 DOM |
+| `src/app/scene-page.js` | 组合引擎、控制面板、任务 UI 和可选兼容桥；处理页面启动失败和热更新 |
+| `src/integrations/tasks/task-displays.js` | 任务纹理、看板翻页、日志和人物菜单；查询限定在传入的 `root` 内 |
+| `src/integrations/embed-bridge.js` | 注册 `window.PixOfficeVoxel`，校验同源父窗口消息；销毁时退订并清理兼容接口 |
+| `src/engine/lifetime.js` | 按资源获得顺序的逆序清理；重复销毁安全，单项清理失败仍继续清理其他资源 |
 
 ## 布局契约
 
@@ -23,7 +24,8 @@
 - `id`、`capacity`：场景标识和人物数量。
 - `actors`：人物外形、初始位置；当前演示约定首位人物站立，其余人物坐在所属工位。
 - `seats`：人物座位锚点数组，`{ x, z, yaw, exit? }`。`yaw` 表示人物坐下后的面向。
-- `stations`：家具构建坐标，与 `seats` 按索引对应。三人和九人版仍保留原始桌子坐标，避免改变家具位置。
+- `stations`：保留供旧工具使用的构建坐标；运行时以 `seats` 为摆放基准，统一派生桌子、碰撞及显示器挂点。
+- `environment`、`furniture`：环境素材参数及具有显式 ID、素材 ID 和工位索引的家具实例。
 - `stationFor`：人物索引到工位索引的一对一映射，继续作为 Agent / 显示器绑定的依据。三人版仍为 `[1, 0, 2]`。
 - `seating.exitDistance`：未指定 `seat.exit` 时，沿座位朝向的反方向计算安全出入口，默认 1.05。
 - `bounds`、`patrol`：寻路边界与巡游路线。
@@ -37,16 +39,15 @@
 ## 新增一种办公室
 
 1. 定义满足上述契约的布局，明确人物座位和安全出入口。
-2. 实现家具构建器，提供障碍物和显示器注册信息。
-3. 页面准备现有控制面板结构，入口导入样式并调用：
+2. 选择已有环境和家具素材，在注册表中加入预设；新增素材形态时再添加构建器。
+3. 页面准备现有控制面板结构，由应用组合层默认使用 `assembleOffice()`：
 
 ```js
-import { bootScene } from '../shared/scene-page.js';
+import { bootScene } from './src/app/scene-page.js';
 
 const office = bootScene({
   root: document.querySelector('#app'),
   layout: myLayout,
-  createOffice: createMyOffice,
   labels: { blocked: '请沿走道移动。' },
 });
 
@@ -61,9 +62,10 @@ office?.dispose();
 核心引擎不要求现有页面骨架，不会自动创建全局 API 或控制面板：
 
 ```js
-import { createScene } from './shared/scene.js';
+import { createScene } from './src/engine/scene.js';
+import { assembleOffice } from './src/world/assemble-office.js';
 
-const office = createScene({ viewport, layout, createOffice });
+const office = createScene({ viewport, layout, createOffice: assembleOffice });
 const unsubscribe = office.subscribe(event => {
   if (event.type === 'state') updateControls(event.state);
 });

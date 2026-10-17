@@ -7,9 +7,9 @@ try {
  await page.route('**/__resources__',route=>route.fulfill({contentType:'text/html',body:'<!doctype html><title>Scene resource lifecycle</title>'}));
  await page.goto(new URL('__resources__',process.env.DEMO_URL||'http://127.0.0.1:5196/').href);
  const result=await page.evaluate(async()=>{
-  const {createScene}=await import('/src/shared/scene.js');
-  const {createOffice}=await import('/src/office.js');
-  const {smallOffice:layout}=await import('/src/layouts.js');
+  const {createScene}=await import('/src/engine/scene.js');
+  const {assembleOffice:createOffice}=await import('/src/world/assemble-office.js');
+  const {smallOffice:layout}=await import('/src/layouts/index.js');
   const view=()=>{const el=document.createElement('div');el.style.cssText='width:240px;height:160px';document.body.append(el);return el;};
   const aView=view(),bView=view();let sharedGeometry,sharedMaterial,sharedTexture,privateCount=0,geometryCount=0,materialCount=0,textureCount=0;
   const a=createScene({viewport:aView,layout,createOffice(scene,data){

@@ -49,7 +49,7 @@ npm run preview --workspaces=false
 
 ### 多 Agent 动态任务演示
 
-五种布局的显示器共用 `src/shared/workstation.js` 的工位距离规范：座位锚点沿朝向到屏幕正面的水平距离为 1.42 场景单位。电脑特写通过空间布局避开人物，不隐藏角色。调查与回归记录见 [统一工位距离修复](docs/workstation-focus-fix.md)。
+五种布局的显示器共用 `src/world/workstation.js` 的工位距离规范：座位锚点沿朝向到屏幕正面的水平距离为 1.42 场景单位。电脑特写通过空间布局避开人物，不隐藏角色。调查与回归记录见 [统一工位距离修复](docs/workstation-focus-fix.md)。
 
 五种布局均已接入相同的任务展示功能：三人 `/`、九人 `/nine.html`、长桌 `/loft.html`、套间 `/suite.html`、大平层 `/floor.html`。
 
@@ -91,7 +91,7 @@ const source = {
 window.PixOfficeVoxel.tasks.setSource(source);
 ```
 
-快照结构和数据校验见 `src/shared/task-runtime.js`；动态 mock 见 `src/shared/mock-task-source.js`。增量事件格式为 `{ runId, seq, type, payload }`，`seq` 在同一轮单调递增，重复或旧事件会被忽略。支持：
+快照结构和数据校验见 `src/integrations/tasks/task-runtime.js`；动态 mock 见 `src/integrations/tasks/mock-task-source.js`。增量事件格式为 `{ runId, seq, type, payload }`，`seq` 在同一轮单调递增，重复或旧事件会被忽略。支持：
 
 | type | payload |
 | --- | --- |
@@ -167,27 +167,21 @@ window.addEventListener('message', event => {
 - 有自己的 `package.json`、`package-lock.json`、`node_modules/`、Vite 配置、端口和 `dist/`。
 - 不导入 `packages/*` 或 `@pixoffice/*`，Vite 插件会拒绝这两类依赖。
 - 不请求正式业务 API，不读写正式办公数据，不注册全局 Service Worker。
-- 根工程 `example/*` workspace 通配符会发现此目录，因此本示例始终显式使用 `--workspaces=false`。若未来在仓库根执行安装，npm 仍可能将其纳入工作区；这不等于运行时已经接入主应用。
+- 本目录拥有独立 Git 和锁文件，安装、构建与运行均在本仓库根目录进行，不依赖原 PixOffice workspace。
 
 ## 代码结构
 
-| 文件 | 用途 |
+| 目录 | 职责 |
 | --- | --- |
-| `src/main.js`、`src/loft/main.js`、`src/suite/main.js`、`src/floor/main.js` | 选择布局、家具构建器、样式与文案的轻量入口 |
-| `src/shared/scene.js` | 五种布局共用的场景生命周期、灯光、镜头、人物控制、拾取与渲染循环 |
-| `src/shared/scene-contract.js` | 校验布局，统一人物座位、朝向与安全离座点 |
-| `src/shared/scene-page.js` / `scene-controls.js` | 组合现有页面、控制面板与任务展示，DOM 查询限定在页面根容器内 |
-| `src/shared/embed-bridge.js` / `lifetime.js` | 可选的全局 API / iframe 兼容桥，以及幂等销毁、失败清理 |
-| `src/office.js` | 办公室、家具、障碍物与工位布局 |
-| `src/layouts.js` | 两个页面的空间尺寸、角色、工位归属、镜头与巡游路径 |
-| `src/character.js` | 方块角色、肩肘髋膝关节、平滑动作混合、表情纹理 |
-| `src/appearance.js` | 发型、帽子、耳机、服装、配饰与匹配的像素头像 |
-| `src/art.js` | 可复用图元、像素材质、静态家具实例化批处理 |
-| `src/navigation.js` | 带人物半径的网格寻路，禁止斜向切角 |
-| `src/style.css` / `src/tokens.css` | 响应式控制界面与设计变量 |
-| `embed.html` | 可操作的 iframe 宿主示例 |
+| `src/app/` | 五页面共用入口、控制面板、样式与文案 |
+| `src/engine/` | 渲染、镜头、人物控制、寻路和生命周期 |
+| `src/world/` | 布局编译、实例组装、碰撞与交互挂点 |
+| `src/assets/` | 人物、家具、环境、材质及字体素材 |
+| `src/layouts/` | 五种布局的预设和统一注册表 |
+| `src/integrations/` | 任务数据与展示、iframe 兼容桥 |
+| `src/tools/`、`scripts/` | 导出工具、构建辅助与浏览器验证 |
 
-五种布局已统一使用共享场景引擎。新增布局与独立挂载方法见 [共享场景引擎](docs/shared-scene-engine.md)。原有页面地址、`window.PixOfficeVoxel`、同源 iframe 消息和 `tasks.setSource()` 接口继续可用；现在还可以调用 `dispose()` 主动销毁场景。
+职责边界与新增办公室流程见 [项目架构](docs/architecture.md)。原有页面地址、`window.PixOfficeVoxel`、同源 iframe 消息和 `tasks.setSource()` 接口继续可用。
 
 ## 验证
 

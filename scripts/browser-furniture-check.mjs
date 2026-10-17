@@ -11,13 +11,14 @@ try {
  await page.goto(new URL('__asset-check__',process.env.DEMO_URL||'http://127.0.0.1:5196/').href);
  const prefix='/src';
  const snapshots=await page.evaluate(async prefix=>{
-  const art=await import(`${prefix}/art.js`), release=art.acquireArtResources?.();
-  const scenes=[['studio','/office.js','/layouts.js','smallOffice','createOffice'],['team','/office.js','/layouts.js','teamOffice','createOffice'],['loft','/loft/office.js','/loft/layout.js','loftOffice','createLoftOffice'],['suite','/suite/office.js','/suite/layout.js','suiteOffice','createSuiteOffice'],['floor','/floor/office.js','/floor/layout.js','floorOffice','createFloorOffice']];
+  const art=await import(`${prefix}/assets/materials/art.js`), release=art.acquireArtResources?.();
+  const { layouts } = await import(`${prefix}/layouts/registry.js`);
+  const { assembleOffice } = await import(`${prefix}/world/assemble-office.js`);
   const results=[], materials=new Map();
   const rounded=n=>Math.round(n*1e6)/1e6;
-  for(const [id,b,l,key,build] of scenes){
-   const scene=art.group({add(){}}), layout=(await import(prefix+l))[key];
-   (await import(prefix+b))[build](scene,layout);scene.updateMatrixWorld(true);
+  for(const [id,layout] of Object.entries(layouts)){
+   const scene=art.group({add(){}});
+   assembleOffice(scene,layout);scene.updateMatrixWorld(true);
    const records=[];
    const signature=material=>{
     if(materials.has(material))return materials.get(material);

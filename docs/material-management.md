@@ -1,5 +1,7 @@
 # 素材管理与独立工程（2026-10-17）
 
+本文记录素材管理阶段。后续目录归位、统一布局注册表、场景组装和墙体契约见 [项目架构](architecture.md)；本轮测试结果以该文末尾记录为准。
+
 ## 迁移基线
 
 工作目录为 `D:\kunlunmeta\office-voxel`。首次检查时，源码、依赖和导出产物已复制到此处，但没有 `.git`，包名与 README 仍沿用原 PixOffice 示例。现已在本目录建立独立 `main` 仓库；原始迁移基线提交为 `10c42fc`。没有配置远程，也没有修改原 PixOffice 仓库。原路径受当前环境访问限制，未能复核其工作区状态；不据此声称完成了两目录的逐文件同步核对。
@@ -12,10 +14,10 @@
 
 | 概念 | 定义位置 | 稳定标识与用途 |
 | --- | --- | --- |
-| 人物身份 | `src/characters/catalog.js` 的 `characters` | `xiaomai` 等作者指定 ID；姓名、职业可改，不用于查找身份 |
+| 人物身份 | `src/assets/characters/catalog.js` 的 `characters` | `xiaomai` 等作者指定 ID；姓名、职业可改，不用于查找身份 |
 | 外观方案 | 同文件的 `appearances` | 保留 `studio-00`、`team-00`、`floor-01` 等已有 ID；历史前缀不表示当前所有权或座位编号 |
-| 场景实例 | `src/characters/casts.js` | 明确写出 `studio:actor:0` 等 `instanceId`，排序时随实例移动；同一人物可以在多个场景出现 |
-| 业务 Agent | `src/shared/task-runtime.js` | `createBindings()` 接受实例的 `agentId`；未提供时使用既有 `${scene}:agent:${index}` 演示编号。真实后端应显式绑定，不能用姓名或外观 ID 充当 Agent ID |
+| 场景实例 | `src/assets/characters/casts.js` | 明确写出 `studio:actor:0` 等 `instanceId`，排序时随实例移动；同一人物可以在多个场景出现 |
+| 业务 Agent | `src/integrations/tasks/task-runtime.js` | `createBindings()` 接受实例的 `agentId`；未提供时使用既有 `${scene}:agent:${index}` 演示编号。真实后端应显式绑定，不能用姓名或外观 ID 充当 Agent ID |
 
 布局负责实例摆放，通过 `instantiateCharacter()` 从身份和外观组装既有扁平配置；渲染器与头像无需改外观接口。核心 `getState().actors` 也返回 `instanceId`、`characterId`、`appearanceId`。人物目录不依赖布局。使用清单反向遍历全部五布局，发布 `usedBy` 兼容字段及结构化 `usages`（场景、实例、人物索引、工位 ID），共 54 条。三人版 `[1, 0, 2]` 工位映射保留。
 
@@ -23,7 +25,7 @@
 
 ## 阶段二：重复家具
 
-`src/shared/furniture.js` 提供桌面、办公椅、显示器、键盘、绿植、杯子的共享构建器，以及座位坐标到前/侧方向坐标的转换。场景家具文件保留房间、墙体、特殊装饰和摆放逻辑；旧三人/九人、套间、对坐长桌的显示器尺寸作为明确变体保留，未强行统一外观。
+`src/assets/furniture/primitives.js` 提供桌面、办公椅、显示器、键盘、绿植、杯子的共享构建器，以及座位坐标到前/侧方向坐标的转换。场景家具文件保留房间、墙体、特殊装饰和摆放逻辑；旧三人/九人、套间、对坐长桌的显示器尺寸作为明确变体保留，未强行统一外观。
 
 导航预留尺寸放在不依赖 Three.js 的 `furniture-spec.js`，供五布局和构建器共用。
 
@@ -39,7 +41,7 @@
 
 `art.js` 的共享缓存有显式租约：`acquireArtResources()` 返回可重复调用的释放函数。共享单位盒几何体、按颜色/类型缓存的材质和它们的贴图属于缓存；同页全部租约结束时统一释放并清空，后续挂载创建新资源。共享材质和贴图应视为只读，个别屏幕换材质时必须创建私有资源。
 
-每个 `createScene()` 在创建资源前获得租约。`scene-resources.js` 遍历释放场景私有平面、脸部纹理、非缓存材质、实例化网格和阴影目标，跳过缓存所有的资源。初始化失败同样执行这套清理；单个释放抛错后继续释放其他资源。任务展示层先恢复原屏幕材质并释放自己的动态纹理，再由场景处理其余资源。
+每个 `createScene()` 在创建资源前获得租约。`src/engine/resources.js` 遍历释放场景私有平面、脸部纹理、非缓存材质、实例化网格和阴影目标，跳过缓存所有的资源。初始化失败同样执行这套清理；单个释放抛错后继续释放其他资源。任务展示层先恢复原屏幕材质并释放自己的动态纹理，再由场景处理其余资源。
 
 人物导出每次捕获同样获取租约，最终在 `finally` 释放全部私有资源和共享租约。直接调用底层 `createCharacter()` / 家具构建器的自定义宿主也必须持有租约，并在移除根对象之前调用 `disposeSceneResources(root)`，最后释放租约；只调用 `scene.remove()` 不会释放 GPU 资源。缓存可跨场景共享，直到最后一个活跃使用者退出；它不做逐材质淘汰。
 

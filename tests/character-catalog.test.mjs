@@ -1,13 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { smallOffice, teamOffice } from '../src/layouts.js';
-import { loftOffice } from '../src/loft/layout.js';
-import { suiteOffice } from '../src/suite/layout.js';
-import { floorOffice } from '../src/floor/layout.js';
-import { appearances } from '../src/characters/catalog.js';
-import { instantiateCharacter } from '../src/characters/instances.js';
-import { characterRoster } from '../src/shared/character-roster.js';
-import { createBindings } from '../src/shared/task-runtime.js';
+import { smallOffice, teamOffice } from '../src/layouts/index.js';
+import { loftOffice } from '../src/layouts/loft.js';
+import { suiteOffice } from '../src/layouts/suite.js';
+import { floorOffice } from '../src/layouts/floor.js';
+import { appearances } from '../src/assets/characters/catalog.js';
+import { instantiateCharacter } from '../src/assets/characters/instances.js';
+import { characterRoster } from '../src/tools/character-roster.js';
+import { createBindings } from '../src/integrations/tasks/task-runtime.js';
 
 test('all 54 instances reference stable identities and appearances with complete usages', () => {
   const usages = characterRoster().flatMap(entry => entry.usages);

@@ -1,5 +1,7 @@
 # 多 Agent 动态任务显示实施计划
 
+> 历史设计记录：当前模块路径与扩展流程以 [项目架构](architecture.md) 为准。
+
 本文件为原始实施计划。2026-10-16 已按后续执行请求完成实现，结果见 [实现与验收记录](./agent-task-displays-validation.md)。范围限定为 `example/office-voxel/`，沿用现有 Three.js、原生 JavaScript、Vite 和像素场景。
 
 后续更新：五种布局现已迁移到统一场景引擎，当前模块边界见 [共享场景引擎](./shared-scene-engine.md)。下文入口现状记录的是任务显示功能实施前的状态。
@@ -21,11 +23,11 @@
 
 | 位置 | 当前情况 | 实施影响 |
 | --- | --- | --- |
-| `src/art.js` | 已有 `canvasMaterial`、`panel`、NearestFilter；`batchStaticBoxes` 将方块实例化 | 可复用 Canvas 纹理方式；动态内容平面独立保留，不依赖被合批移除的方块对象 |
+| `src/assets/materials/art.js` | 已有 `canvasMaterial`、`panel`、NearestFilter；`batchStaticBoxes` 将方块实例化 | 可复用 Canvas 纹理方式；动态内容平面独立保留，不依赖被合批移除的方块对象 |
 | 四套 `office.js` | 返回 `office / obstacles / stations / screens`；每套布局的电脑共用 `screenMat` | 每个有独立内容的电脑需要独立纹理和材质；新增显示面注册信息 |
-| `src/main.js` | 驱动三人、九人布局 | 接入共享显示功能 |
-| `src/loft/main.js`、`src/suite/main.js` | 各自维护完整场景生命周期 | 不能只改共享引擎；避免复制多套新业务逻辑 |
-| `src/shared/scene.js` | 当前 Floor 使用的共享引擎 | 增加共享控制器挂接点 |
+| `src/app/main.js` | 驱动三人、九人布局 | 接入共享显示功能 |
+| `src/app/main.js`、`src/app/main.js` | 各自维护完整场景生命周期 | 不能只改共享引擎；避免复制多套新业务逻辑 |
+| `src/engine/scene.js` | 当前 Floor 使用的共享引擎 | 增加共享控制器挂接点 |
 | 现有镜头 | 正交相机，仅 room / person / top 预设；OrbitControls 有缩放及极角限制 | 面板特写需根据尺寸、朝向和视口计算，不能直接套人物镜头 |
 | 头像 | `.people` 中已有可点击角色按钮和像素头像 | 扩展菜单，保留原有角色选择行为 |
 | 字体 | 使用系统中文字体及 monospace，未找到本地字体资源 | 需引入可分发、支持中文的像素字体，并验证实际字形 |
@@ -65,7 +67,7 @@
 
 ## 4. 视觉约束
 
-复用 `src/art.js` 和 `src/tokens.css` 的木色、纸白、墨绿、橙色、灰蓝：`#c9a477`、`#f8f9f5`、`#293635`、`#d57645`、`#708fa5`，状态绿沿用 `#79917a`。
+复用 `src/assets/materials/art.js` 和 `src/app/styles/tokens.css` 的木色、纸白、墨绿、橙色、灰蓝：`#c9a477`、`#f8f9f5`、`#293635`、`#d57645`、`#708fa5`，状态绿沿用 `#79917a`。
 
 显示面的标题、正文、日志及新增菜单采用本地中文像素字体，英文日志优先使用该字体或匹配的像素等宽字体。实施时核验字体来源、许可证、中文覆盖范围和发布体积，保留许可说明。不得以系统中文字体悄悄回退冒充像素字体，也不以强制全英文回避中文需求。
 
