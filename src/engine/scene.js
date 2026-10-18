@@ -8,7 +8,7 @@ import { acquireArtResources } from '../assets/materials/art.js';
 import { disposeSceneResources } from './resources.js';
 
 export const ACTIONS = { idle: '自在站立', wave: '挥手招呼', work: '坐下工作', walk: '散步走走', celebrate: '开心庆祝', think: '想点事情' };
-export const EXPRESSIONS = { happy: '开心', focus: '专注', surprise: '惊讶', sleepy: '困倦' };
+export const EXPRESSIONS = { happy: '开心', focus: '专注', surprise: '惊讶', sleepy: '困倦', drool: '呆萌流口水' };
 
 export const defaultLabels = {
   loading: '正在搭建办公室…',

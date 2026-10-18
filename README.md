@@ -2,6 +2,8 @@
 
 独立工程迁移基线与人物、家具、资源生命周期、事务导出的约定见 [素材管理](docs/material-management.md)。
 
+后续批量制作人物与物品时，可参考 [批量素材制作经验与验收规范](docs/batch-asset-guide.md)。
+
 一个独立的浏览器 3D MVP，探索 **Minecraft 启发的方块空间 + 更灵活的人物关节与表情**。使用 Three.js / WebGL 2，全部模型与像素贴图由本示例生成，不依赖 Unity、Minecraft 素材或远程 CDN。不是 Minecraft 资源移植。
 
 ## 运行
@@ -16,6 +18,9 @@ npm run dev --workspaces=false
 
 - 完整实验室：<http://127.0.0.1:5196/>
 - 九人办公室：<http://127.0.0.1:5196/nine.html>
+- 人物素材（动作与表情）：<http://127.0.0.1:5196/characters.html>
+- 物品素材：<http://127.0.0.1:5196/objects.html>
+- 素材目录发现、扩展和更新方式见 [动态素材工作室](docs/asset-library.md)。
 - 实际 iframe 嵌入示例：<http://127.0.0.1:5196/embed.html>
 - 纯场景模式：<http://127.0.0.1:5196/?embed=1>
 - 九人纯场景模式：<http://127.0.0.1:5196/nine.html?embed=1>
@@ -159,11 +164,11 @@ window.addEventListener('message', event => {
 });
 ```
 
-三人版的 `person` 为 0–2，九人版为 0–8；`action`: idle / wave / work / walk / celebrate / think；`expression`: happy / focus / surprise / sleepy；`camera`: room / person / top；`paused`: 布尔值。消息必须来自同源父窗口，跨域页面可以嵌入观看，但当前不接受跨域控制消息。直接在场景页面里也可使用 `window.PixOfficeVoxel` 的同名方法及 `getState()`。状态中的 `scene` 为 `studio` / `team`，`capacity` 为 3 / 9。参见 `embed.html` 的完整宿主示例；嵌入九人版时将 iframe 的地址改为 `nine.html?embed=1` 即可。
+三人版的 `person` 为 0–2，九人版为 0–8；`action`: idle / wave / work / walk / celebrate / think；`expression`: happy / focus / surprise / sleepy / drool；`camera`: room / person / top；`paused`: 布尔值。消息必须来自同源父窗口，跨域页面可以嵌入观看，但当前不接受跨域控制消息。直接在场景页面里也可使用 `window.PixOfficeVoxel` 的同名方法及 `getState()`。状态中的 `scene` 为 `studio` / `team`，`capacity` 为 3 / 9。参见 `embed.html` 的完整宿主示例；嵌入九人版时将 iframe 的地址改为 `nine.html?embed=1` 即可。
 
 ## 隔离边界
 
-- 只新增 `example/office-voxel/`，不更改主入口、根依赖、2D 运行时、其他 3D 实验或 Unity 工程。
+- 本仓库只包含 Office Voxel 前端，不包含原 PixOffice 的 2D 运行时、其他 3D 实验或 Unity 工程。
 - 有自己的 `package.json`、`package-lock.json`、`node_modules/`、Vite 配置、端口和 `dist/`。
 - 不导入 `packages/*` 或 `@pixoffice/*`，Vite 插件会拒绝这两类依赖。
 - 不请求正式业务 API，不读写正式办公数据，不注册全局 Service Worker。
@@ -200,6 +205,12 @@ npm run test:browser:appearance --workspaces=false
 ```
 
 `DEMO_URL` 可指定待测服务（需以 `/` 结尾），`PLAYWRIGHT_BROWSERS_PATH` 可指定已有浏览器缓存。浏览器脚本覆盖 WebGL 渲染、动作、表情、灵活度、回工位、走动、暂停、选择人物、光线、像素模式、手机/平板布局、真实 iframe 控制、减少动态效果和控制台错误。截图写入忽略的 `.artifacts/`。
+
+## 本地文件清理
+
+`dist/`、`dist-loft/`、`dist-suite/`、`dist-floor/` 是可重新构建的产物；`.artifacts/` 保存测试截图、报告与临时排查文件，确认不再需要后可删除。未解决故障的日志应保留到问题关闭。上述目录均不提交 Git。
+
+保留 `package-lock.json`、测试基线、字体许可证和 `public/assets/characters/`：人物 PNG/GLB 虽不参与运行时加载，仍是独立导出交付物。`node_modules/` 可通过 `npm ci` 重建，日常清理无需移除。
 
 ## MVP 的边界
 

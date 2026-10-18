@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { box, group, panel, palette as c } from '../materials/art.js';
-import { addHair, addHeadAccessory, addOutfit, decorateArm } from './appearance.js';
+import { addHair, addHeadAccessory, addOutfit, decorateArm, decorateLeg } from './appearance.js';
 
 const damp = (a, b, dt) => THREE.MathUtils.damp(a, b, 11, dt);
 export function createCharacter(scene, config) {
@@ -49,10 +49,12 @@ export function createCharacter(scene, config) {
     return { shoulder, elbow };
   }
   function leg(side) {
+    const legColor = config.outfit === 'dress' ? skin : config.pants;
     const thigh = group(hips, side * .145, -.06, 0);
-    box(thigh, 0, -.15, 0, .21, .33, .26, config.pants);
+    box(thigh, 0, -.15, 0, .21, .33, .26, legColor);
+    decorateLeg(thigh, config);
     const knee = group(thigh, 0, -.32, 0);
-    box(knee, 0, -.14, 0, .20, .31, .24, config.pants);
+    box(knee, 0, -.14, 0, .20, .31, .24, legColor);
     box(knee, 0, -.30, .055, .23, .13, .36, config.shoes || '#f0eedf');
     box(knee, 0, -.35, .055, .24, .04, .37, '#64716d');
     return { thigh, knee };
@@ -69,14 +71,21 @@ export function createCharacter(scene, config) {
   function drawFace(time) {
     const blink = (time + actor.phase) % 4.7 > 4.52;
     const talking = time < actor.talkingUntil && Math.sin(time * 17) > -.1;
-    const faceKey = `${actor.expression}:${blink}:${talking}`;
+    const e = actor.expression;
+    const droolFrame = e === 'drool' ? Math.floor((time + actor.phase) * 2) % 2 : 0;
+    const faceKey = `${e}:${blink}:${talking}:${droolFrame}`;
     if (faceKey === lastFace) return;
     lastFace = faceKey;
     const ctx = faceCanvas.getContext('2d'); ctx.clearRect(0, 0, 32, 32);
     ctx.fillStyle = '#d58e74'; ctx.fillRect(4, 19, 5, 2); ctx.fillRect(24, 19, 5, 2);
     ctx.fillStyle = c.ink;
-    const e = actor.expression;
     if (blink || e === 'sleepy') { ctx.fillRect(7, 15, 6, 1); ctx.fillRect(21, 15, 6, 1); }
+    else if (e === 'drool') {
+      // Small, slightly mismatched pupils leave an unfocused, vacant stare.
+      ctx.fillStyle = c.white; ctx.fillRect(7, 12, 7, 6); ctx.fillRect(20, 12, 7, 6);
+      ctx.fillStyle = c.ink; ctx.fillRect(10, 15, 2, 2); ctx.fillRect(22, 14, 2, 2);
+      ctx.fillRect(6, 11, 8, 1); ctx.fillRect(20, 11, 8, 1);
+    }
     else {
       const eyeH = e === 'surprise' ? 7 : { bright: 6, relaxed: 3, almond: 4, narrow: 3, round: 6 }[config.eyes] || 5;
       const eyeW = config.eyes === 'round' ? 5 : 4;
@@ -96,7 +105,14 @@ export function createCharacter(scene, config) {
       ctx.fillStyle = config.hair;ctx.fillRect(9, 25, 17, 5);ctx.fillRect(9, 22, 3, 5);ctx.fillRect(23, 22, 3, 5);ctx.fillRect(13, 21, 10, 2);
     }
     ctx.fillStyle = '#8e4a39';
-    if (talking || e === 'surprise') { ctx.fillRect(14, 22, 5, 5);ctx.fillStyle = '#e3a18a';ctx.fillRect(15, 25, 3, 1); }
+    if (e === 'drool') {
+      ctx.fillRect(13, 22, 9, 5);
+      ctx.fillStyle = '#e3a18a'; ctx.fillRect(14, 25, 5, 2);
+      ctx.fillStyle = '#76cbe1'; ctx.fillRect(20, 25, 2, 4); ctx.fillRect(21, 28, 2, 2);
+      ctx.fillRect(21, 30 + droolFrame, 2, 1);
+      ctx.fillStyle = '#ddf7ff'; ctx.fillRect(20, 25, 1, 3); ctx.fillRect(21, 30 + droolFrame, 1, 1);
+    }
+    else if (talking || e === 'surprise') { ctx.fillRect(14, 22, 5, 5);ctx.fillStyle = '#e3a18a';ctx.fillRect(15, 25, 3, 1); }
     else if (e === 'happy') {ctx.fillRect(12, 22, 2, 2);ctx.fillRect(14, 24, 6, 2);ctx.fillRect(20, 22, 2, 2);}
     else ctx.fillRect(14, 23, 7, 1);
     if (config.glasses) {

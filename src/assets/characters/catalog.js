@@ -1,5 +1,10 @@
 // Stable authored IDs. Historical appearance IDs are retained for exported paths.
 export const characters = Object.freeze({
+  'doubao': {
+    id: 'doubao',
+    name: '豆包',
+    role: 'AI 助手'
+  },
   "xiaomai": {
     "id": "xiaomai",
     "name": "小麦",
@@ -563,6 +568,24 @@ export const appearances = Object.freeze({
     "freckles": true,
     "height": 0.94,
     "build": 0.92
+  },
+  'doubao-00': {
+    id: 'doubao-00',
+    characterId: 'doubao',
+    signature: '齐肩深棕短发 · 黑色连衣裙 · 红色围巾',
+    shirt: '#25252b',
+    trim: '#d7393f',
+    pants: '#25252b',
+    hair: '#352a28',
+    skin: '#f0c9b3',
+    shoes: '#29272e',
+    hairStyle: 'shoulder-bob',
+    outfit: 'dress',
+    accessory: 'scarf',
+    eyes: 'round',
+    lashes: true,
+    height: .97,
+    build: .94
   }
 });
 for (const entry of [...Object.values(characters), ...Object.values(appearances)]) Object.freeze(entry);

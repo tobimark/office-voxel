@@ -38,7 +38,7 @@
 
 已打开并检查桌面主题板、子任务白板、电脑特写，以及手机主题板/电脑特写和夜间像素模式截图。修正了低帧率镜头未及时到位、Loft 白板过矮、窄屏字体过小及 Canvas 尺寸变化后的 GPU 纹理残影。
 
-27 张专项截图位于忽略目录 `.artifacts/task-displays/`，包括：
+当时生成的 27 张专项截图已在 2026-10-17 清理本地产物时移除；重新运行 `npm run test:browser:tasks` 可生成当前版本截图至 `.artifacts/task-displays/`，包括：
 
 - `loft-mission.png`、`loft-tasks.png`、`loft-computer.png`
 - `studio-*`、`team-*`、`suite-*`、`floor-*`

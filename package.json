@@ -12,6 +12,7 @@
     "test:browser:engine": "node scripts/browser-engine-check.mjs",
     "test:browser:team": "node scripts/browser-team-check.mjs",
     "test:browser:appearance": "node scripts/browser-appearance-check.mjs",
+    "test:browser:doubao": "node scripts/browser-doubao-check.mjs",
     "test:browser:tasks": "node scripts/browser-task-displays-check.mjs",
     "test:browser:computers": "node scripts/browser-computer-focus-check.mjs",
     "test:geometry:workstations": "node scripts/check-workstation-geometry.mjs",
@@ -21,7 +22,8 @@
     "export:characters": "node scripts/export-characters.mjs",
     "test:browser:furniture": "node scripts/browser-furniture-check.mjs",
     "test:browser:resources": "node scripts/browser-resource-check.mjs",
-    "test:browser:composition": "node scripts/browser-composition-check.mjs"
+    "test:browser:composition": "node scripts/browser-composition-check.mjs",
+    "test:browser:assets": "node scripts/browser-asset-library-check.mjs"
   },
   "dependencies": {
     "three": "0.180.0"

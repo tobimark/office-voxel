@@ -1,20 +1,20 @@
 # Floor Office（大平层 · 24 人分区）
 
-新增的第五个页面，也是目前最大的一张平面：46 × 22 m 的大平层，24 个工位分成六间办公室，中间一条走廊，
+目前最大的一张平面：46 × 22 m 的大平层，24 个工位分成六间办公室，中间一条走廊，
 西端是会议室、东端是茶水休息区。
 
 ## 运行
 
 ```powershell
-cd example/office-voxel
-npm run dev --workspaces=false
+cd D:\kunlunmeta\office-voxel
+npm run dev
 ```
 
 - 页面：<http://127.0.0.1:5196/floor.html>
 - 纯场景（嵌入）模式：<http://127.0.0.1:5196/floor.html?embed=1>
-- 可选独立构建（不影响原 `vite.config.js`）：`npx vite build --config vite.floor.config.js` → `dist-floor/`
+- 独立构建：`npm run build:floor` → `dist-floor/`
 
-顶部导航现在有五个入口（三人 / 九人 / 长桌 / 分间 / 平层）；原页面未修改，所以反向入口需要直接访问上面的地址。
+顶部导航可在五种布局之间切换（三人 / 九人 / 长桌 / 分间 / 平层）。
 
 ## 格局
 
@@ -46,33 +46,16 @@ npm run dev --workspaces=false
 - **隔墙**：下段 0.9 m 实墙 + 上段透明玻璃 + 木框，总高 2.4 m；每间一扇 1.2 m 门（会议室 1.4 m），门扇画成开启状态，并按开启方向占碰撞盒。
 - **南侧**外墙做成玻璃幕墙（下半实墙 + 上半玻璃），北侧房间沿用后墙采光窗。
 
-## 架构：入场逻辑抽成了公共引擎
+## 架构
 
-大平层的 [src/app/main.js](../src/app/main.js) 通过 `scene-page.js` 将布局、家具构建器和文案交给
-共享场景引擎。目前三人、九人、长桌、套间、大平层都已完成同样的迁移。渲染、镜头、拾取和坐姿由 `scene.js` 负责，
-控制面板和嵌入协议由页面适配层负责。新增布局和主动销毁接口见 [共享场景引擎](shared-scene-engine.md)。
-
-## 新增文件（回退时删除）
-
-| 文件 | 用途 |
-| --- | --- |
-| `floor.html` | 页面骨架，注入 `/src/app/main.js` |
-| `src/engine/scene.js` | 五种布局共用的场景引擎；其他布局同样依赖，不能作为大平层专用文件删除 |
-| `src/layouts/floor.js` | 大平层尺寸、6 间房、门、24 席、24 人外观、家具碰撞盒、镜头、巡游路线 |
-| `src/assets/environments/corridor-campus.js` | 地面/外墙/隔墙与门扇/采光窗/6 间房家具/会议室/走廊/茶水区渲染 |
-| `src/app/main.js` | 20 行配置入口 |
-| `src/app/styles/floor.css` | 本页样式微调（五入口导航、24 人名单更紧凑） |
-| `vite.floor.config.js` | 可选的独立构建配置，只打包 `floor.html` |
-| `tests/floor-layout.test.mjs` | 布局/门/寻路/姿势的自动化检查 |
-| `scripts/browser-floor-check.mjs` | 浏览器端交互检查 |
-| `docs/floor-office.md` | 本文件 |
-
-原有的 `index.html`、`nine.html`、`embed.html`、`src/*`、`vite.config.js`、`package.json`、`tests/*`、`scripts/browser-*.mjs` 全部未修改（可用文件哈希核对）。
+五种布局共用 [src/app/main.js](../src/app/main.js)，由布局注册表选择预设，经 `src/world/` 编译与组装素材。
+渲染、镜头、拾取和坐姿由 `src/engine/` 负责，控制面板与任务、iframe 接入分别位于 `src/app/` 和 `src/integrations/`。
+职责边界见[项目架构](architecture.md)，主动销毁接口见[共享场景引擎](shared-scene-engine.md)。
 
 ## 验证
 
 ```powershell
-node --experimental-test-isolation=none --test tests/*.test.mjs   # 24 个用例（含原有 2 个测试文件）
+npm test
 node scripts/browser-floor-check.mjs                              # 需先保持 dev 服务运行
 ```
 
@@ -85,7 +68,6 @@ node scripts/browser-floor-check.mjs                              # 需先保持
 24 人各自走门回到自己座位、房间里的人**走门出到走廊**、三种镜头、走廊特写、手机与平板无横向溢出、`?embed=1`、
 原三人页与原九人页仍可用、控制台无错误/警告，并对比绘制开销。
 
-绘制开销：**1048 draw calls / 52088 三角形**（原九人页 413 / 18126）。24 个人物由 `character.js` 逐个网格绘制、无法批处理，
-所以这个页面的开销约为原九人页的 2.5 倍——桌面浏览器流畅，低端设备会偏重。家具本身仍按材质实例化批处理。
+人物数量和房间规模使本页绘制开销高于九人布局。家具按材质实例化批处理，人物仍由多个关节网格组成；性能应以目标设备实测为准。
 
 自动化检查在 Chromium（headless + SwiftShader）完成，仍需目标设备实测。

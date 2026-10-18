@@ -9,11 +9,11 @@ import { drawPortrait } from '../assets/characters/appearance.js';
 import { characterRoster } from './character-roster.js';
 import { acquireArtResources } from '../assets/materials/art.js';
 import { disposeSceneResources } from '../engine/resources.js';
+import { characterExpressions } from '../assets/characters/motions.js';
 
 const VIEW = { width: 341, height: 384, frame: { width: 1024, height: 768 } };
 const SHEET = { width: 1024, height: 1024, caption: 256 };
 const PORTRAIT_SCALE = 4;
-const EXPRESSIONS = [['happy', '开心'], ['focus', '专注'], ['surprise', '惊讶'], ['sleepy', '困倦']];
 // A fixed time keeps every render — and therefore every exported pixel — deterministic.
 const SAMPLE_TIME = 1;
 
@@ -116,7 +116,7 @@ function caption(ctx, entry) {
   ctx.fillStyle = '#73817f';
   ctx.fillText(`ID ${entry.id}   ${parts}   身高 ${look.height ?? 1} / 体型 ${look.build ?? 1}`, 40, 870);
   ctx.fillText(`配色 衣 ${look.shirt}  饰 ${look.trim}  裤 ${look.pants}  发 ${look.hair}`, 40, 896);
-  ctx.fillText(`用于 ${entry.usedBy.join(', ')}`, 40, 922);
+  ctx.fillText(`用于 ${entry.usedBy.length ? entry.usedBy.join(', ') : '独立素材 · 待布局选用'}`, 40, 922);
   ctx.font = '15px "Microsoft YaHei",sans-serif';
   ctx.fillStyle = '#9aa5a2';
   ctx.fillText('PIX OFFICE · 方块办公室实验室 / 人物资产', 40, 978);
@@ -145,17 +145,19 @@ function composeSheet(entry, actor, scene) {
   }
   // Expression strip: the same face texture the 3D character wears, drawn large in
   // the empty half of the close-up row so it never overlaps the caption text.
-  const faces = EXPRESSIONS.map(([expression, label]) => ({ label, canvas: captureFace(actor, expression) }));
+  const faces = characterExpressions.map(({ id, name }) => ({ label: name, canvas: captureFace(actor, id) }));
   actor.expression = 'happy'; actor.update(SAMPLE_TIME, 1, .85);
   ctx.fillStyle = '#52666a'; ctx.font = '16px "Microsoft YaHei",sans-serif';
   ctx.fillText('表情纹理（同一张脸部贴图）', 400, 420);
+  const faceStep = Math.min(152, Math.floor(608 / faces.length));
+  const faceSize = Math.min(128, faceStep - 16);
   faces.forEach((face, i) => {
-    const x = 400 + i * 152, y = 440;
+    const x = 400 + i * faceStep, y = 440;
     ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(face.canvas, x, y, 128, 128);
-    ctx.strokeStyle = '#dfe4dd'; ctx.strokeRect(x + .5, y + .5, 127, 127);
+    ctx.drawImage(face.canvas, x, y, faceSize, faceSize);
+    ctx.strokeStyle = '#dfe4dd'; ctx.strokeRect(x + .5, y + .5, faceSize - 1, faceSize - 1);
     ctx.fillStyle = '#73817f'; ctx.font = '14px "Microsoft YaHei",sans-serif';
-    ctx.fillText(face.label, x + 2, y + 146);
+    ctx.fillText(face.label, x + 2, y + faceSize + 18);
   });
   caption(ctx, entry);
   return sheet.toDataURL('image/png');
@@ -167,7 +169,8 @@ async function capture(entry, kinds) {
   const scene = new THREE.Scene();
   try {
     const { actor } = buildCharacter(entry, scene);
-    await new Promise(resolve => renderer.compileAsync?.(scene, bodyCamera).then(resolve, resolve));
+    if (renderer.extensions.has('KHR_parallel_shader_compile')) await renderer.compileAsync(scene, bodyCamera);
+    else renderer.compile(scene, bodyCamera);
     const model = kinds.includes('model') ? await new GLTFExporter().parseAsync(actor.root, { binary: true, onlyVisible: true }) : new ArrayBuffer(0);
     const bytes = new Uint8Array(model);
     let binary = '';

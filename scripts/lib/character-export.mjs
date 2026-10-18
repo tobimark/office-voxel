@@ -2,6 +2,7 @@ import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { inflateSync } from 'node:zlib';
+import { publishDirectory } from './publish-directory.mjs';
 
 export const ASSET_KINDS = ['portrait', 'sheet', 'model'];
 const fileName = kind => kind === 'model' ? 'model.glb' : `${kind}.png`;
@@ -15,7 +16,6 @@ const crc32 = bytes => {
   for(const byte of bytes) crc=crcTable[(crc^byte)&255]^(crc>>>8);
   return (crc^0xffffffff)>>>0;
 };
-const exists = async p => { try { await fs.access(p); return true; } catch (e) { if (e.code === 'ENOENT') return false; throw e; } };
 
 export function validateAsset(kind, buffer) {
   if (!Buffer.isBuffer(buffer)) throw new Error(`Missing ${kind} buffer`);
@@ -74,7 +74,7 @@ export async function exportCharacterAssets({ outRoot, roster, kinds = ASSET_KIN
   const parent=path.dirname(outRoot), base=path.basename(outRoot), lock=`${outRoot}.lock`;
   await fs.mkdir(parent,{recursive:true});
   await fs.mkdir(lock); // An existing lock refuses concurrent writers.
-  let stage, backup, committed=false;
+  let stage, committed=false;
   try {
     const partial=kinds.length !== ASSET_KINDS.length || ids.length !== roster.length;
     let previous;
@@ -114,19 +114,19 @@ export async function exportCharacterAssets({ outRoot, roster, kinds = ASSET_KIN
     await fs.writeFile(path.join(stage,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
     await fs.writeFile(path.join(stage,'README.md'),readme(manifest));
     await validateManifest(stage,manifest);
-    if(await exists(outRoot)) { backup=`${stage}-previous`; await rename(outRoot,backup); }
-    try { await rename(stage,outRoot); committed=true; }
-    catch(error) {
-      if(backup) {
-        try { await rename(backup,outRoot); backup=undefined; }
-        catch(rollback) { throw new AggregateError([error,rollback],`Publication and rollback failed; previous export remains at ${backup}`); }
-      }
-      throw error;
-    }
-    if(backup) { try { await fs.rm(backup,{recursive:true,force:true}); } catch(error) { onWarning(`Export published; could not remove backup ${backup}: ${error.message}`); } }
+    await publishDirectory({stage,outRoot,rename,onWarning});
+    committed=true;
     return manifest;
   } finally {
-    try { if(stage && !committed) await fs.rm(stage,{recursive:true,force:true}); }
+    try {
+      if(stage) {
+        try { await fs.rm(stage,{recursive:true,force:true,maxRetries:3,retryDelay:100}); }
+        catch(error) {
+          if(!committed) throw error;
+          onWarning(`Export published; could not remove staging directory ${stage}: ${error.message}`);
+        }
+      }
+    }
     finally { await fs.rmdir(lock); }
   }
 }

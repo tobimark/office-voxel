@@ -3,16 +3,16 @@
   "version": 2,
   "generator": "scripts/export-characters.mjs",
   "source": "src/assets/characters/catalog.js + src/assets/characters/model.js + src/assets/characters/appearance.js",
-  "exportedAt": "2026-10-17T12:06:53.961Z",
+  "exportedAt": "2026-10-17T17:22:49.070Z",
   "kinds": [
     "portrait",
     "sheet",
     "model"
   ],
   "counts": {
-    "characters": 27,
-    "files": 81,
-    "bytes": 4262523
+    "characters": 28,
+    "files": 84,
+    "bytes": 4442515
   },
   "characters": [
     {
@@ -51,8 +51,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 118086,
-          "sha256": "fed34007ddca0abbe877554a712e1f73257f743ca06269fdec2108380efb52b5"
+          "bytes": 119387,
+          "sha256": "3719eda4a0937145b5d150a95eb4d9b3a9627f3fab7e08d432a40cd88ff063d5"
         },
         "model": {
           "file": "model.glb",
@@ -98,8 +98,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 120951,
-          "sha256": "d09bccec64bf6451c973aaddd847f4baff52dca39ee28ab6ddbff5339ec1e508"
+          "bytes": 121776,
+          "sha256": "0599073d823ba14f84319537fd94908bbf9d7f511d3b704770e1d8ba1ee050fe"
         },
         "model": {
           "file": "model.glb",
@@ -144,8 +144,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 118921,
-          "sha256": "a51f9c005a118f6297c4b72f6fb174989153ca440efbb06b75145b9d4e871509"
+          "bytes": 119971,
+          "sha256": "3936e13e05f60f346683fd4875673478b9096545df76835e195484c61b46562c"
         },
         "model": {
           "file": "model.glb",
@@ -219,8 +219,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 126343,
-          "sha256": "eaaa774c9ea5334b6a8f2796a9d07217eb6434da764cd7923680af5a663fc322"
+          "bytes": 127680,
+          "sha256": "a6f6656803ef370e67351c412d13b52bb92d2bd481a69695560fb469c84271ea"
         },
         "model": {
           "file": "model.glb",
@@ -294,8 +294,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 153133,
-          "sha256": "946eb2f901bcd0d5ccbdfff8f7c9f421f984268b8a9f56dfac7aaca0e388db99"
+          "bytes": 154254,
+          "sha256": "6612475a989ae15543c9436334f4ab362c1b23ad2dabf744079a89a6f6038f22"
         },
         "model": {
           "file": "model.glb",
@@ -369,8 +369,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 134109,
-          "sha256": "7a3516cb83a9a16d22880b8e0ef817c36be957d4a431a8058b622fbd9901a4b7"
+          "bytes": 135100,
+          "sha256": "395b310a9039810691584565d57e40a12ef6529f53b1008d724b1a0817ffb0cf"
         },
         "model": {
           "file": "model.glb",
@@ -445,8 +445,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 145266,
-          "sha256": "6efa4469ed4b8aa9dc8f52ad0f47d92831e73521d45c9a4594d761585e866487"
+          "bytes": 146530,
+          "sha256": "90b2970ba4bfe5740a76e648fcaa883156d9a4675939dfe9bcdc9c12c4bd7869"
         },
         "model": {
           "file": "model.glb",
@@ -520,8 +520,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 140639,
-          "sha256": "5e9035553071a125a865fc8f6aacc834363b8fdf33ed2670874126900ec9fbbe"
+          "bytes": 142080,
+          "sha256": "00aac87637f831beaa9aaec145b6099767da0cce09dc430c571de0672e1352a6"
         },
         "model": {
           "file": "model.glb",
@@ -596,8 +596,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 134000,
-          "sha256": "13fc161f0eaadd74ca68f82e022d3e87ff5359dfcd19e89059fc9f777570e784"
+          "bytes": 135332,
+          "sha256": "7c07f18104ca4d0ee43a4590c97d737b14cb11d88bc7b7e9bff7fe6a6d661842"
         },
         "model": {
           "file": "model.glb",
@@ -672,8 +672,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 131420,
-          "sha256": "ee8d0369faf676afb7aa246e27715285e1c02e6cc25b475f34f62fb9f881be19"
+          "bytes": 132592,
+          "sha256": "7ba72cc8a82edb588d518124cf319127128f6747910ef6cb8c005aa3753ff7a5"
         },
         "model": {
           "file": "model.glb",
@@ -748,8 +748,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 138666,
-          "sha256": "9333d961998336b616f32b54c67131d6abdc663a86bcf5d0efc4f612882c4958"
+          "bytes": 140041,
+          "sha256": "4b5b12573ff082c09d313d1d7f5a5f99a1f83ad8ecb54a5bd567cd4d0951547d"
         },
         "model": {
           "file": "model.glb",
@@ -823,8 +823,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 146256,
-          "sha256": "544ee2710463f87ba4aaa36c7e112a2bfe096a4630bea538f4d2d9e47410b10c"
+          "bytes": 147203,
+          "sha256": "816b1047917656cb3ff1e3ed7e2c96b07623992d0ae8361f4c4248a7be9e9027"
         },
         "model": {
           "file": "model.glb",
@@ -877,8 +877,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 132136,
-          "sha256": "6af8958871aed364db7c223bd92733ba6bb98c95921dcd6fb072b12945235c3b"
+          "bytes": 133356,
+          "sha256": "bc851f457247a7bfb213e5d333f085142c3b029c288508f6c267241c62e371ff"
         },
         "model": {
           "file": "model.glb",
@@ -932,13 +932,13 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 138486,
-          "sha256": "b9e435e66c14f6262a4ec9bb0e98e0af8e5aabd383a65f12daf6cbdc265a5544"
+          "bytes": 139788,
+          "sha256": "099f3d211890deb11b34218b88702466000c9964ce12a44cac19fffd0d12f69f"
         },
         "model": {
           "file": "model.glb",
           "bytes": 22496,
-          "sha256": "5a4047b4b213d08c3de299b6caf388fd5437257adeec6c87fb9b774078c1865f"
+          "sha256": "4952cdf5d3664ca8872ccea7026ab2d5654bf6208fc36cd8f2633a94e2038792"
         }
       }
     },
@@ -985,13 +985,13 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 130421,
-          "sha256": "3000cf45ba1224691274c4adf6192f43fc92b8cbc3b9651065eb5b240b564420"
+          "bytes": 131714,
+          "sha256": "afd2866f8fe58c2ae31b181cf63fa001e3c09a787e156759c1fb49460ff47f37"
         },
         "model": {
           "file": "model.glb",
           "bytes": 24080,
-          "sha256": "d967d0b88bf12413f4a158decd8af2ed6cc8fe1880ae6563cec4897614a5d4b0"
+          "sha256": "e30ed71b2fe1b86c7f2b36000adbe66431722121255fdeed81119d8bf11055cb"
         }
       }
     },
@@ -1038,8 +1038,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 128144,
-          "sha256": "76177117c2e41ce0528d0eabc62aa521c995b5fd6d0e4c939d8a0e36714c33be"
+          "bytes": 129198,
+          "sha256": "576d190408913839155a9f7bde2a4b9b4be17f9a77d248e2110ca08a7454d216"
         },
         "model": {
           "file": "model.glb",
@@ -1093,13 +1093,13 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 126272,
-          "sha256": "6bae60adbfe64f3347fd30404bd969af69ded54eb52146fd5634949e269e6e4b"
+          "bytes": 127429,
+          "sha256": "f50060c2ee4eb0c9f9f517075d38678d80c09402164eb40cbb08611fd4e40b3e"
         },
         "model": {
           "file": "model.glb",
           "bytes": 23352,
-          "sha256": "5ddaa5d4c0ecf2bd414de7fa956a20032dba18c42e74c5117245b5483919cb43"
+          "sha256": "b7a47ba090204e20afe19602904a01cb3265b3dd866c7b106b445ad46852a248"
         }
       }
     },
@@ -1147,8 +1147,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 144011,
-          "sha256": "5df4741631e3d4dd38a03af6e6d453359d92797eddb0d2d448324617a2a13586"
+          "bytes": 145230,
+          "sha256": "8b71130f5e4bf6e4bfce2d537f1245847b3da11975ef7a68a24f57bc45a520e5"
         },
         "model": {
           "file": "model.glb",
@@ -1201,8 +1201,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 136969,
-          "sha256": "99de2a46c6072d9dbdb1d37625614a2c895bcfd03cfb601b1cdb916f79440b5d"
+          "bytes": 138179,
+          "sha256": "0f3857ec1d0fb6d6d31b87cfdec074d1541838963b52792cf9883607e35b9a1f"
         },
         "model": {
           "file": "model.glb",
@@ -1254,8 +1254,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 140599,
-          "sha256": "365f9ad791a706014a39b79042197cfbb894aadf243a5d44d9bd4a6486b706a5"
+          "bytes": 141788,
+          "sha256": "94193d84beaac300bb378480169142ce520974209796b9148350ef4ddf738a26"
         },
         "model": {
           "file": "model.glb",
@@ -1309,8 +1309,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 131011,
-          "sha256": "7c03d1d0350ee5e2fa8a88d724b2fc94f80c558cb837af23f4e750566c770987"
+          "bytes": 132210,
+          "sha256": "aa381347b8349dddc1c594e127355f1d8a94ff0c5b8f2f18f256d1e1c82cc6f0"
         },
         "model": {
           "file": "model.glb",
@@ -1364,8 +1364,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 142444,
-          "sha256": "7fbee65c222dfdfefec7722952b4bf3ebc706eeb4d54f35b890f36edac9e7f45"
+          "bytes": 143797,
+          "sha256": "26c6c11fa4d8ce17c3d8bde00c605aecdad916ef6bc3b533a230cd80bc7551ac"
         },
         "model": {
           "file": "model.glb",
@@ -1418,8 +1418,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 130872,
-          "sha256": "4e16ced379ef8a515cd2630fbddf96aec128ab471cd58a72efe40eeb332c3775"
+          "bytes": 132222,
+          "sha256": "f9561999fcc559fcf131901085a6c892a3d9421a411de29daa42a1ab853bf5bc"
         },
         "model": {
           "file": "model.glb",
@@ -1472,8 +1472,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 145234,
-          "sha256": "6258f6070f82a8828a6c47734bcb354f705dacb3fccc0f239934dfe05c5db4c4"
+          "bytes": 146562,
+          "sha256": "2be2bb4575a1dceb735b36589a5e34784325e876245e237dbf2e440c6cc27961"
         },
         "model": {
           "file": "model.glb",
@@ -1526,8 +1526,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 129893,
-          "sha256": "19b8d233b7f99d762e235c0da49385a466388701f14e9744fdc9444bb1d12fa5"
+          "bytes": 131280,
+          "sha256": "a32ccadb4a66510baaa28abfb81fb3001b0a66d087d58ab3ffa83327f2f8e62c"
         },
         "model": {
           "file": "model.glb",
@@ -1580,8 +1580,8 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 131727,
-          "sha256": "348a8fa336f1280cd18fccc1f9de0394c1a66542484a057910bb96fc55654b27"
+          "bytes": 133216,
+          "sha256": "40bd7b7a6cf1ac8b4a75fca42d333bca5f3ec08459dca0a8f213879104ac1617"
         },
         "model": {
           "file": "model.glb",
@@ -1634,13 +1634,59 @@
         },
         "sheet": {
           "file": "sheet.png",
-          "bytes": 126862,
-          "sha256": "66aed8b20e5200a4dc46622710f0188098160cd23d948330affc744b35dabc22"
+          "bytes": 128207,
+          "sha256": "5f14c17ee96e63541d5ec0f3f17b29c658ef5d8ea3f45500c4ca69c6cf0e5a24"
         },
         "model": {
           "file": "model.glb",
           "bytes": 21304,
           "sha256": "ab74d96cf0e0df9ef9de9d5dfd2fbc5add1aa5f73ac3b91363f0f36cba1cff26"
+        }
+      }
+    },
+    {
+      "id": "doubao-00",
+      "characterId": "doubao",
+      "scene": "doubao",
+      "index": 0,
+      "name": "豆包",
+      "role": "AI 助手",
+      "signature": "齐肩深棕短发 · 黑色连衣裙 · 红色围巾",
+      "look": {
+        "name": "豆包",
+        "role": "AI 助手",
+        "signature": "齐肩深棕短发 · 黑色连衣裙 · 红色围巾",
+        "shirt": "#25252b",
+        "trim": "#d7393f",
+        "pants": "#25252b",
+        "hair": "#352a28",
+        "skin": "#f0c9b3",
+        "shoes": "#29272e",
+        "hairStyle": "shoulder-bob",
+        "outfit": "dress",
+        "accessory": "scarf",
+        "eyes": "round",
+        "lashes": true,
+        "height": 0.97,
+        "build": 0.94
+      },
+      "usedBy": [],
+      "usages": [],
+      "files": {
+        "portrait": {
+          "file": "portrait.png",
+          "bytes": 1323,
+          "sha256": "3fef4cbdd26942f7e3bbef672432a994836bce977df4b05b6607499085e9fe97"
+        },
+        "sheet": {
+          "file": "sheet.png",
+          "bytes": 126214,
+          "sha256": "c65c67ec4ced4d481ca769342987bcd71e01e657fbe7b3b3ab6a92871034bab1"
+        },
+        "model": {
+          "file": "model.glb",
+          "bytes": 19204,
+          "sha256": "d4f930a8654050b65ae54fbc059f60d64c1c1e3ab998438f9ca09f89c21d04ea"
         }
       }
     }

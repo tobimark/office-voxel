@@ -13,7 +13,7 @@ const pngSize = buffer => ({ width: buffer.readUInt32BE(16), height: buffer.read
 
 test('the manifest lists every distinct character look in the example', async () => {
   const data = await manifest(), roster = characterRoster();
-  assert.deepEqual(rosterSummary(), { total: 27, studio: 3, team: 9, floor: 15 });
+  assert.deepEqual(rosterSummary(), { total: 28, studio: 3, team: 9, floor: 15 });
   assert.equal(data.name, 'pixoffice-voxel-characters');
   assert.equal(data.counts.characters, roster.length);
   assert.deepEqual(data.characters.map(entry => entry.id), roster.map(entry => entry.id));
@@ -65,7 +65,7 @@ test('every asset is on disk, hashed, and of the declared format', async () => {
 
 test('the models carry the character meshes, materials and embedded face texture', async () => {
   const data = await manifest();
-  for (const id of ['studio-00', 'team-04', 'floor-23']) {
+  for (const id of ['studio-00', 'team-04', 'floor-23', 'doubao-00']) {
     const entry = data.characters.find(item => item.id === id);
     const buffer = await readFile(new URL(`${entry.id}/${entry.files.model.file}`, root));
     const jsonLength = buffer.readUInt32LE(12);

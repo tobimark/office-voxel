@@ -2,7 +2,7 @@
 
 由 scripts/export-characters.mjs 生成；manifest.json 记录稳定外观 ID、人物身份和五布局使用关系。
 
-27 个外观 / 81 个 PNG/GLB 文件。
+28 个外观 / 84 个 PNG/GLB 文件。
 
 - portrait.png：144 × 160 像素头像。
 - sheet.png：1024 × 1024 正侧背视图与表情。

@@ -11,6 +11,16 @@ export function addHair(head, config) {
     hair(.04, .42, .264, .29, .1, .04);
   };
   switch (config.hairStyle) {
+    case 'shoulder-bob':
+      // Centre part, a closed back and inward-stepped ends at the shoulders.
+      hair(-.15, .41, .268, .24, .15, .045);
+      hair(.16, .44, .268, .22, .09, .045);
+      hair(0, .15, -.25, .56, .54, .12);
+      for (const side of [-1, 1]) {
+        hair(side * .285, .17, -.045, .10, .54, .44);
+        hair(side * .26, -.08, -.045, .13, .12, .43);
+      }
+      break;
     case 'bob':
       standardFringe();
       hair(-.27, .22, -.07, .09, .47, .43); hair(.27, .22, -.07, .09, .47, .43);
@@ -105,6 +115,10 @@ export function addOutfit(torso, config) {
   const g = group(torso); g.name = `outfit:${config.outfit}`;
   const add = (x, y, z, w, h, d, color = config.trim) => box(g, x, y, z, w, h, d, color);
   switch (config.outfit) {
+    case 'dress':
+      add(0, .055, 0, .55, .13, .34, config.shirt);
+      add(0, .11, .177, .53, .035, .025, '#34333b');
+      break;
     case 'utility':
       for (const side of [-1, 1]) { add(side * .18, .20, .18, .13, .17, .04, '#b66137'); add(side * .10, .51, .18, .12, .13, .04); }
       add(0, .31, .18, .035, .42, .03); add(0, .36, -.17, .4, .07, .025); break;
@@ -164,6 +178,24 @@ export function addOutfit(torso, config) {
       add(-.13, .16, .267, .13, .045, .018, '#c8cfad');
       add(.12, .39, -.23, .12, .24, .06, '#577c73'); break;
   }
+  if (config.accessory === 'scarf') {
+    const scarf = group(g); scarf.name = 'accessory:scarf';
+    box(scarf, 0, .54, .015, .48, .16, .42, config.trim);
+    box(scarf, -.115, .435, .235, .17, .16, .09, config.trim);
+    const tail = box(scarf, -.12, .27, .225, .14, .34, .07, config.trim);
+    tail.rotation.z = -.08;
+    box(scarf, -.132, .105, .267, .14, .045, .02, '#eb5654');
+    box(scarf, .12, .39, -.22, .12, .22, .06, config.trim);
+  }
+}
+
+export function decorateLeg(thigh, config) {
+  if (config.outfit !== 'dress') return;
+  // Two overlapping panels share the leg joints: the hem follows walking and
+  // folds onto the lap while seated instead of hanging through the chair.
+  const skirt = group(thigh); skirt.name = 'outfit:dress-skirt';
+  box(skirt, 0, -.115, 0, .30, .34, .36, config.shirt);
+  box(skirt, 0, -.265, .005, .32, .07, .39, config.shirt);
 }
 
 export function decorateArm(elbow, config, side) {
@@ -196,6 +228,15 @@ export function drawPortrait(canvas, config) {
   if (config.hairStyle === 'ponytail') fill(config.hair, 27, 13, 6, 20);
   if (config.hairStyle === 'braid') for (let i = 0; i < 4; i++) fill(config.hair, 4 + i % 2, 20 + i * 4, 5, 5);
   if (config.hairStyle === 'locs') { for (const x of [7, 13, 19, 25]) fill(config.hair, x, 2, 4, 8); fill(config.hair, 28, 17, 5, 15); }
+  if (config.hairStyle === 'shoulder-bob') {
+    fill(config.hair, 5, 12, 5, 19); fill(config.hair, 27, 12, 5, 19);
+    fill(config.hair, 7, 10, 9, 4); fill(config.hair, 22, 10, 7, 2);
+    fill(config.hair, 7, 29, 4, 3); fill(config.hair, 26, 29, 4, 3);
+  }
+  if (config.accessory === 'scarf') {
+    fill(config.trim, 10, 28, 17, 4); fill(config.trim, 11, 31, 6, 9);
+    fill('#eb5654', 11, 38, 6, 2);
+  }
   const eyeH = ['narrow', 'relaxed'].includes(config.eyes) ? 2 : 4;
   fill(c.ink, 13, 17, 3, eyeH); fill(c.ink, 23, 17, 3, eyeH); fill('#995940', 18, 25, 4, 1);
   if (config.freckles) { fill('#b87f59', 11, 23, 1, 1); fill('#b87f59', 26, 23, 1, 1); }

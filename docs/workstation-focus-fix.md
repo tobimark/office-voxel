@@ -32,4 +32,4 @@ Loft/Floor 的电脑特写可看到手部，部分角色还有黑线和局部“
 - 默认构建及 Loft、Suite、Floor 独立构建通过。
 - 已打开对比 Loft 与 Floor 的修复前后截图，确认手部遮挡和异常线条消失。
 
-截图及测量报告保存在忽略目录 `.artifacts/computer-focus/`。`*-before.png` 是调整距离前的截图，`*-after.png` 是统一距离后的截图；`geometry-after.json` 为实际模型测量与遮挡检查结果。
+当时的对比截图及测量报告已在 2026-10-17 清理本地产物时移除，以上保留历史验证结论。运行 `npm run test:browser:computers` 和 `npm run test:geometry:workstations` 可将当前版本截图与测量结果重新写入 `.artifacts/computer-focus/`；修复前的截图需使用修复前源码重现。

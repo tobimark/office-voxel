@@ -9,6 +9,20 @@ import { instantiateCharacter } from '../src/assets/characters/instances.js';
 import { characterRoster } from '../src/tools/character-roster.js';
 import { createBindings } from '../src/integrations/tasks/task-runtime.js';
 
+test('Doubao is an independent reusable character without claiming an office slot', () => {
+  const reference = { characterId: 'doubao', appearanceId: 'doubao-00', instanceId: 'custom:actor:doubao' };
+  const actor = instantiateCharacter(reference, { x: 0, z: 0, phase: 0 });
+  assert.equal(actor.name, '豆包');
+  assert.equal(actor.role, 'AI 助手');
+  assert.equal(actor.hairStyle, 'shoulder-bob');
+  assert.equal(actor.outfit, 'dress');
+  assert.equal(actor.accessory, 'scarf');
+  const entry = characterRoster().find(item => item.id === reference.appearanceId);
+  assert.equal(entry.characterId, reference.characterId);
+  assert.deepEqual(entry.usages, []);
+  assert.deepEqual(entry.usedBy, []);
+});
+
 test('all 54 instances reference stable identities and appearances with complete usages', () => {
   const usages = characterRoster().flatMap(entry => entry.usages);
   const ids = new Set();

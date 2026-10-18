@@ -28,9 +28,13 @@
       // Optional human preview: open this page with ?preview=1 to render the first
       // few sheets. The export run skips it so it does not do the work twice.
       const gallery = document.querySelector('#gallery');
-      if (new URLSearchParams(location.search).get('preview') === '1') {
-        for (let index = 0; index < Math.min(3, characterAssets.roster.length); index++) {
-          const entry = characterAssets.roster[index];
+      const preview = new URLSearchParams(location.search).get('preview');
+      if (preview) {
+        const entries = preview === '1' ? characterAssets.roster.slice(0, 3)
+          : characterAssets.roster.filter(entry => entry.id === preview);
+        if (!entries.length) document.querySelector('#status').textContent = '未找到该外观。';
+        for (const entry of entries) {
+          const index = characterAssets.roster.indexOf(entry);
           const assets = await characterAssets.get(index);
           const figure = document.createElement('figure');
           const image = document.createElement('img');
