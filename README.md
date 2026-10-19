@@ -1,224 +1,140 @@
-# Office Voxel · 3D 办公室
+# Office Voxel
 
-独立工程迁移基线与人物、家具、资源生命周期、事务导出的约定见 [素材管理](docs/material-management.md)。
+**把多 Agent 的协作过程，放进一间看得见的 3D 办公室。**
 
-后续批量制作人物与物品时，可参考 [批量素材制作经验与验收规范](docs/batch-asset-guide.md)。
+基于 Three.js、原生 JavaScript ES 模块和 Vite 的浏览器前端。角色在自己的工位工作，黑板展示任务目标，白板展示子任务，每台电脑显示对应 Agent 的操作与日志。模型、关节动画和像素贴图由代码生成，运行时无需外部模型服务或远程 CDN。
 
-一个独立的浏览器 3D MVP，探索 **Minecraft 启发的方块空间 + 更灵活的人物关节与表情**。使用 Three.js / WebGL 2，全部模型与像素贴图由本示例生成，不依赖 Unity、Minecraft 素材或远程 CDN。不是 Minecraft 资源移植。
+![九人办公室：三排独立工位、休息区与人物控制面板](docs/images/office-nine.png)
 
-## 运行
+> 当前提供可交互的前端演示和模拟任务数据；接入真实 Agent 服务需实现任务数据源接口。截图均由本仓库实际运行的页面截取。
 
-在仓库根目录执行：
+## 可以做什么
 
-```powershell
-cd D:\kunlunmeta\office-voxel
-npm ci --workspaces=false
-npm run dev --workspaces=false
+- **观察协作**：任务主题、子任务看板、独立电脑日志，以及运行、受阻、完成等状态。
+- **切换空间**：三人工作室、九人办公室、共享长桌、分间套间、24 人大平层，共用场景引擎。
+- **控制人物**：选择角色，切换待机、挥手、打字、走路、庆祝、思考等动作，组合五种表情；点击地面可避开静态家具移动。
+- **浏览素材**：人物与物品工作室支持搜索、筛选、旋转缩放、动作预览和素材直达链接。
+- **嵌入产品**：使用 iframe 纯场景模式，或通过 `window.PixOfficeVoxel` 控制人物、镜头与任务展示。
+- **复用资产**：仓库附带 28 套外观的头像、人物对照图与静态 GLB，支持按人物或文件类型事务更新。
+
+## 快速开始
+
+需要 **Node.js 22.12+** 和支持 **WebGL 2** 的浏览器。在克隆后的仓库根目录运行：
+
+```sh
+npm ci
+npm run dev
 ```
 
-- 完整实验室：<http://127.0.0.1:5196/>
-- 九人办公室：<http://127.0.0.1:5196/nine.html>
-- 人物素材（动作与表情）：<http://127.0.0.1:5196/characters.html>
-- 物品素材：<http://127.0.0.1:5196/objects.html>
-- 素材目录发现、扩展和更新方式见 [动态素材工作室](docs/asset-library.md)。
-- 实际 iframe 嵌入示例：<http://127.0.0.1:5196/embed.html>
-- 纯场景模式：<http://127.0.0.1:5196/?embed=1>
-- 九人纯场景模式：<http://127.0.0.1:5196/nine.html?embed=1>
+打开 [http://127.0.0.1:5196/](http://127.0.0.1:5196/)。拖拽旋转、滚轮缩放；右侧选择人物与动作，顶部切换办公室布局。触屏支持拖拽与双指缩放。
 
-页面顶部可在三人办公室与九人办公室之间切换。九人版采用更大的三排工位布局，提供九套独立电脑工位、九个可选择的角色、休息区、茶水柜、收纳柜和团队看板。每个人有独立动作、表情与固定工位，继承原有的镜头、光线、灵活度和地面移动控制。
+| 页面 | 路径 | 内容 |
+| --- | --- | --- |
+| 三人工作室 | `/` | 小型办公室与完整控制面板 |
+| 九人办公室 | `/nine.html` | 三排独立工位与团队看板 |
+| 共享长桌 | `/loft.html` | 九人双排对坐、环形走道 |
+| 分间套间 | `/suite.html` | 九人、三间办公室与会议室 |
+| 大平层 | `/floor.html` | 24 人、六间办公室、会议与休息区 |
+| 人物工作室 | `/characters.html` | 25 位人物、28 套外观、动作与表情 |
+| 物品工作室 | `/objects.html` | 12 件家具与工位素材预览 |
+| 嵌入示例 | `/embed.html` | 同源宿主控制 iframe |
 
-九人版的角色采用各自的发型、服装剪裁、配饰、五官和体型比例。衣服与配饰直接挂在人物关节上，会跟随挥手、走动、打字和庆祝动作；头像与侧栏说明也对应每个人的外形。三人版继续使用原有角色造型。
+## 五种办公室
 
-| 角色 | 主要外形特征 |
+下面四张使用 `?embed=1` 纯场景模式，九人版完整界面见首页大图。
+
+| 三人工作室 | 九人共享长桌 |
 | --- | --- |
-| 小麦 | 斜刘海短发、浅色发夹、橙色口袋工装、小雀斑 |
-| 阿森 | 蓬松卷发、大耳机、绿色连帽卫衣，体型较宽 |
-| 小蓝 | 高马尾、蓝色西装、浅色内搭和工作牌，身形修长 |
-| 阿洛 | 鸭舌帽、金色方框眼镜、白袖棒球夹克 |
-| 小禾 | 金色侧辫、紫色贝雷帽、带颜料斑点的围裙，身形小巧 |
-| 阿远 | 束起长辫、胡须、格纹衬衫和腕表，身形高大 |
-| 小桃 | 粉色短发、蝴蝶结、奶白背带裤和粉色鞋 |
-| 阿墨 | 银灰侧分、黑框眼镜、紫色马甲和口袋笔 |
-| 小米 | 针织帽、圆框眼镜、黄色开衫和绿色长围巾 |
+| ![三人工作室实机截图](docs/images/office-studio.png) | ![九人长桌办公室实机截图](docs/images/office-loft.png) |
+| **九人分间套间** | **24 人大平层** |
+| ![九人分间套间实机截图](docs/images/office-suite.png) | ![24 人大平层实机截图](docs/images/office-floor.png) |
 
-`--workspaces=false` 确保安装、锁文件与脚本运行限于本示例。已有本地依赖时直接运行第二条 npm 命令即可。需要 Node.js 22.12+，支持 WebGL 2 的浏览器。
+空间布局、工位摆放、碰撞与人物绑定独立于素材构建器。新增布局可复用现有角色、家具和任务展示，具体约定见 [项目架构](docs/architecture.md)。
 
-```powershell
-npm run build --workspaces=false
-npm run preview --workspaces=false
+## 查看 Agent 正在做什么
+
+点击「任务主题」查看目标与进度，点击「子任务看板」查看负责人和状态。点击人物头像，再选择「查看电脑屏幕」，镜头就会对准该 Agent 的固定工位；人物离开座位后，电脑归属保持不变。
+
+![Agent 电脑特写：当前任务、操作与独立输出日志](docs/images/task-computer.png)
+
+内置 74 秒模拟演示，支持暂停、重播和日志翻页。真实数据接入通过 `tasks.setSource(source)` 提供快照、订阅事件和释放方法；可将 SSE 或 WebSocket 消息转换为任务事件。完整接口、事件格式及绑定说明见 [使用与集成指南](docs/usage.md#后端数据接入)。
+
+## 人物与物品工作室
+
+人物身份、外观、场景实例与业务 Agent 使用独立 ID。工作室直接读取素材目录，用同一套构建器生成预览；新增符合目录约定的素材后，开发页面会更新，生产环境需重新构建。
+
+![人物素材工作室：目录、实时角色预览、动作与表情控制](docs/images/asset-characters.png)
+
+![物品素材工作室：家具分类与可旋转的 3D 工位预览](docs/images/asset-objects.png)
+
+人物导出位于 [`public/assets/characters/`](public/assets/characters/)，共 84 个 PNG/GLB 文件。GLB 是包含材质和脸部纹理的静态快照，动态行为由 JavaScript 提供。运行时继续由代码生成素材，保留 `publicDir: false`。
+
+```sh
+# 先保持开发服务运行，在另一个终端执行
+npm run export:characters
+# 只更新一位人物的头像，保留其他产物
+npm run export:characters -- --only=portrait --ids=team-00
 ```
 
-独立构建输出为本目录 `dist/`，可部署到普通静态网站子目录；preview 端口为 5197。不要直接用 `file://` 打开构建结果。
+更多说明：[动态素材工作室](docs/asset-library.md) · [人物导出](docs/character-assets.md) · [素材管理](docs/material-management.md)。
 
-## 如何体验
+## 嵌入与部署
 
-### 多 Agent 动态任务演示
-
-五种布局的显示器共用 `src/world/workstation.js` 的工位距离规范：座位锚点沿朝向到屏幕正面的水平距离为 1.42 场景单位。电脑特写通过空间布局避开人物，不隐藏角色。调查与回归记录见 [统一工位距离修复](docs/workstation-focus-fix.md)。
-
-五种布局均已接入相同的任务展示功能：三人 `/`、九人 `/nine.html`、长桌 `/loft.html`、套间 `/suite.html`、大平层 `/floor.html`。
-
-- 点击场景上方的「任务主题」，聚焦黑板上的任务主题、目标与完成进度。
-- 点击「子任务看板」，查看白板上的标题、任务说明、负责人和状态。下方支持翻页；套间和大平层可选择房间看板。
-- 点击右侧人物头像打开操作菜单，再点「查看电脑屏幕」。镜头会对准其固定工位，显示该 Agent 的当前任务、操作和独立日志。人物走动不会改变电脑归属。
-- embed 模式点击「人物电脑」展开紧凑头像栏，再使用相同的头像菜单。窄屏下使用更大的像素字和单任务分页，减少单屏信息密度。
-- 电脑特写下可查看「较早输出」「较新输出」，或回到「最新输出」。点击「返回全景」恢复房间镜头。
-- 演示持续 74 秒，模拟六个子任务、多个 Agent 并行输出、受阻后恢复和最终完成。多余工位显示待命。完成后保留结果，可手动「重新演示」。
-- 「暂停演示」冻结任务事件和屏幕更新；原有「暂停动画」控制人物动画，两者独立。
-
-内容绘制在实际 3D 板面和显示器纹理上。中文使用本地 Fusion Pixel 12px 字体（OFL 1.1），资源与许可证随每个独立构建打包；无需远程字体服务。字体加载失败时工具栏会显示提示。低分辨率像素模式下，显示器特写临时提高渲染分辨率，离开特写后恢复。
-
-#### 后端数据接入
-
-`window.PixOfficeVoxel.tasks` 提供 `getState()`、`focus(displayId)` 和 `setSource(source)`。`getState().bindings` 是人物、Agent、工位、显示器与房间的显式映射；三人版的人物顺序与工位顺序不同，请按绑定接入。
-
-真实数据源实现下列接口，即可替换默认 mock：
-
-```js
-const initial = window.PixOfficeVoxel.tasks.getState();
-// 实际接入时 initial 应由后端返回，agent.id 通过 bindings 映射。
-const source = {
-  kind: 'backend',
-  getSnapshot: () => ({
-    run: initial.run,
-    agents: initial.agents,
-    subtasks: initial.subtasks,
-    logs: initial.logs,
-    seq: initial.seq,
-  }),
-  subscribe(onEvent) {
-    // 将 SSE/WebSocket 消息转换为下面的事件格式后调用 onEvent。
-    // 返回退订函数，在切换数据源和销毁场景时调用。
-    return () => {};
-  },
-  dispose() {},
-};
-window.PixOfficeVoxel.tasks.setSource(source);
-```
-
-快照结构和数据校验见 `src/integrations/tasks/task-runtime.js`；动态 mock 见 `src/integrations/tasks/mock-task-source.js`。增量事件格式为 `{ runId, seq, type, payload }`，`seq` 在同一轮单调递增，重复或旧事件会被忽略。支持：
-
-| type | payload |
-| --- | --- |
-| `run.updated` | `status` |
-| `subtask.created` | `id, title, description, assigneeAgentId, status` |
-| `subtask.updated` | `subtaskId, status, summary?` |
-| `agent.updated` | `agentId, status, currentSubtaskId?, currentStep` |
-| `agent.output` | `id, agentId, subtaskId, timestamp, kind, text` |
-
-状态为 `waiting / running / blocked / completed / failed / idle`。`agent.output.timestamp` 为本轮开始后的毫秒数，`kind` 为 `info / tool / result / error`；日志保留最近 200 条，单条上限 2000 字符。真实后端应在传输层处理重连、缺失事件与新运行快照；此处仅提供显示状态适配接口。
-
-Mock 另提供 `tasks.pause(boolean)`、`tasks.replay()`、`tasks.seek(milliseconds)`，方便演示和确定性测试。`setSource` 后模拟控制会自动隐藏。
-
-任务展示专项验证：
-
-```powershell
-npm run test --workspaces=false
-# 可复用现有 dev 服务；或启动一个不会热重载中断测试的服务：
-node scripts/browser-serve.mjs
-# 第二个终端；Chromium 已安装时可按实际位置指定缓存：
-$env:PLAYWRIGHT_BROWSERS_PATH = "$env:LOCALAPPDATA/ms-playwright"
-$env:DEMO_URL = 'http://127.0.0.1:5206/'
-npm run test:browser:tasks --workspaces=false
-```
-
-专项浏览器检查涵盖五种布局、全部 54 个人物绑定、动态纹理更新、菜单、暂停/重播、资源稳定性、窄屏、embed、减少动态效果和夜间像素模式；截图写入 `.artifacts/task-displays/`。各布局的独立构建命令为 `node node_modules/vite/bin/vite.js build --config vite.loft.config.js`（另有 `vite.suite.config.js`、`vite.floor.config.js`）。
-
-1. 先观察全景：三组电脑工位、办公椅、沙发、茶几、咖啡柜、绿植、窗户、便签板、挂钟。
-2. 选择小麦，点击「人物特写」和「挥手招呼」，观察头部侧倾、肩膀、手肘和身体联动。
-3. 把「动作灵活度」从 85% 降到 0%，比较僵直摆动与多关节联动。0% 是同一角色骨架的简化动作，不是 Minecraft 的原版动画。
-4. 切换开心 / 专注 / 惊讶 / 困倦。人物会自动眨眼，出现对白时配合程序化口型。
-5. 点击「坐下工作」返回专属工位，或「散步走走」循环巡游。点击地面空处可以指定目的地，路径会绕开家具。
-6. 在「调节」中切换日光 / 午后 / 下班光线，或开启低分辨率像素画面。
-
-鼠标拖拽旋转、滚轮缩放；触屏拖拽旋转、双指缩放。键盘聚焦场景后用方向键旋转、`+` / `-` 缩放。可暂停动画；系统启用减少动态效果时默认暂停，主动选择动作后开始播放。
-
-## 嵌入
-
-构建产物可放入宿主网站的 `/voxel-office/` 子目录：
+在办公室页面地址后加 `?embed=1`，即可嵌入纯场景视图：
 
 ```html
 <iframe
-  id="office"
-  src="/voxel-office/index.html?embed=1"
-  title="像素 3D 办公室"
+  src="/voxel-office/nine.html?embed=1"
+  title="Office Voxel 九人办公室"
   style="width:100%;height:640px;border:0"
 ></iframe>
 ```
 
-同源宿主可监听 `pixoffice-voxel:ready`，然后发出有限的结构化命令：
+同源父页面可通过结构化 `postMessage` 控制人物、动作、表情和镜头。完整宿主示例见 [`embed.html`](embed.html)，消息格式见 [嵌入指南](docs/usage.md#嵌入)。
 
-```js
-const frame = document.querySelector('#office');
-window.addEventListener('message', event => {
-  if (event.source !== frame.contentWindow || event.origin !== location.origin) return;
-  if (event.data?.type === 'pixoffice-voxel:ready') {
-    frame.contentWindow.postMessage({
-      type: 'pixoffice-voxel:command',
-      person: 0,
-      action: 'wave',
-      expression: 'happy',
-      camera: 'person',
-    }, location.origin);
-  }
-});
+```sh
+npm run build
+npm run preview
 ```
 
-三人版的 `person` 为 0–2，九人版为 0–8；`action`: idle / wave / work / walk / celebrate / think；`expression`: happy / focus / surprise / sleepy / drool；`camera`: room / person / top；`paused`: 布尔值。消息必须来自同源父窗口，跨域页面可以嵌入观看，但当前不接受跨域控制消息。直接在场景页面里也可使用 `window.PixOfficeVoxel` 的同名方法及 `getState()`。状态中的 `scene` 为 `studio` / `team`，`capacity` 为 3 / 9。参见 `embed.html` 的完整宿主示例；嵌入九人版时将 iframe 的地址改为 `nine.html?embed=1` 即可。
+主构建输出到 `dist/`，包含三人、九人、人物、物品和嵌入页面；预览地址为 [http://127.0.0.1:5197/](http://127.0.0.1:5197/)。长桌、套间和大平层分别运行 `npm run build:loft`、`npm run build:suite`、`npm run build:floor`，输出到各自的 `dist-*` 目录。构建使用相对资源路径，可部署到静态网站子目录；请通过 HTTP 服务访问。
 
-## 隔离边界
-
-- 本仓库只包含 Office Voxel 前端，不包含原 PixOffice 的 2D 运行时、其他 3D 实验或 Unity 工程。
-- 有自己的 `package.json`、`package-lock.json`、`node_modules/`、Vite 配置、端口和 `dist/`。
-- 不导入 `packages/*` 或 `@pixoffice/*`，Vite 插件会拒绝这两类依赖。
-- 不请求正式业务 API，不读写正式办公数据，不注册全局 Service Worker。
-- 本目录拥有独立 Git 和锁文件，安装、构建与运行均在本仓库根目录进行，不依赖原 PixOffice workspace。
-
-## 代码结构
+## 开发与验证
 
 | 目录 | 职责 |
 | --- | --- |
-| `src/app/` | 五页面共用入口、控制面板、样式与文案 |
-| `src/engine/` | 渲染、镜头、人物控制、寻路和生命周期 |
-| `src/world/` | 布局编译、实例组装、碰撞与交互挂点 |
-| `src/assets/` | 人物、家具、环境、材质及字体素材 |
-| `src/layouts/` | 五种布局的预设和统一注册表 |
-| `src/integrations/` | 任务数据与展示、iframe 兼容桥 |
-| `src/tools/`、`scripts/` | 导出工具、构建辅助与浏览器验证 |
+| `src/app/` | 页面入口、控制面板与样式 |
+| `src/engine/` | 渲染、镜头、人物控制、寻路与生命周期 |
+| `src/world/`、`src/layouts/` | 场景组装、碰撞、工位契约与五种布局 |
+| `src/assets/` | 人物、家具、环境、材质与内置字体 |
+| `src/integrations/` | 任务数据、3D 展示与 iframe 适配 |
+| `src/tools/`、`scripts/`、`tests/` | 素材工作室、导出与自动化验证 |
 
-职责边界与新增办公室流程见 [项目架构](docs/architecture.md)。原有页面地址、`window.PixOfficeVoxel`、同源 iframe 消息和 `tasks.setSource()` 接口继续可用。
-
-## 验证
-
-```powershell
-npm run test --workspaces=false
-# 首次进行浏览器测试时安装 Chromium：
-npx --workspaces=false playwright install chromium
-# 保持 dev 服务运行，再在第二个终端执行：
-npm run test:browser --workspaces=false
-# 场景座位契约、独立挂载、失败清理、订阅与重复销毁/重挂载：
-npm run test:browser:engine --workspaces=false
-# 九人办公室专项浏览器检查：
-npm run test:browser:team --workspaces=false
-# 九位角色的正面/背面造型对照图与头像检查（使用 dev 服务）：
-npm run test:browser:appearance --workspaces=false
+```sh
+npm test
+npm run build
+npx playwright install chromium
+# 终端一：稳定浏览器测试服务
+node scripts/browser-serve.mjs
 ```
 
-`DEMO_URL` 可指定待测服务（需以 `/` 结尾），`PLAYWRIGHT_BROWSERS_PATH` 可指定已有浏览器缓存。浏览器脚本覆盖 WebGL 渲染、动作、表情、灵活度、回工位、走动、暂停、选择人物、光线、像素模式、手机/平板布局、真实 iframe 控制、减少动态效果和控制台错误。截图写入忽略的 `.artifacts/`。
+在另一个 PowerShell 终端执行：
 
-## 本地文件清理
+```powershell
+$env:DEMO_URL = 'http://127.0.0.1:5206/'
+npm run test:browser
+npm run test:browser:assets
+npm run test:browser:tasks
+```
 
-`dist/`、`dist-loft/`、`dist-suite/`、`dist-floor/` 是可重新构建的产物；`.artifacts/` 保存测试截图、报告与临时排查文件，确认不再需要后可删除。未解决故障的日志应保留到问题关闭。上述目录均不提交 Git。
+场景变更的完整回归要求见 [贡献指南](AGENTS.md)。测试截图与报告写入忽略的 `.artifacts/`。README 截图保存在 `docs/images/`，运行 `node scripts/capture-readme.mjs` 可重新拍摄；脚本会自行启动并关闭 5208 端口的临时服务。
 
-保留 `package-lock.json`、测试基线、字体许可证和 `public/assets/characters/`：人物 PNG/GLB 虽不参与运行时加载，仍是独立导出交付物。`node_modules/` 可通过 `npm ci` 重建，日常清理无需移除。
+## 当前边界
 
-## MVP 的边界
+这是多 Agent 协作可视化的前端原型。尚未包含真实 Agent 执行后端、身份认证或持久化。角色使用程序化关节动画，寻路处理静态家具避障，暂不处理人物之间的动态避让；性能与兼容性仍需在目标设备上验证。
 
-- 验证的是方块美术、多关节程序动画和浏览器嵌入的组合，尚不是完整游戏或正式渲染器。
-- 人物使用独立方块关节，没有蒙皮形变、布料、物理或 IK。对白口型是程序动画，未接语音或音素同步。
-- 寻路支持静态家具避障，暂不处理多人物互相避让；入座/离座在专属椅子区域使用简化位置切换。
-- 角色特写是镜头预设，不会持续跟随走动中的角色。房间没有前墙、右墙和天花板，便于观察；旋转到墙后会遮挡视线。
-- 性能计数为当前机器实时结果，不代表目标设备保证值。固定小场景对静态家具进行了材质分组实例化，尚未做大地图、多角色压力测试或移动设备实机基准。
-- 当前检查在 Chromium 自动化浏览器完成；仍需目标设备上的 Chrome、Edge、Safari 实测。
+## 许可证
 
-技术参考：[Three.js 像素纹理采样](https://threejs.org/manual/pages/textures.html)。Three.js、Vite、Playwright 保留各自 npm 包的许可信息。
+项目代码与本项目提供的程序化人物、家具、环境及 PNG/GLB 素材采用 [MIT License](LICENSE)。素材范围与第三方例外见 [素材许可](ASSET_LICENSE.md)。
+
+项目从 PixOffice 的 Office Voxel 示例迁出，保留原作者 teejoo 的 MIT 声明。Three.js、Fusion Pixel 字体与构建工具的原始版权和许可见 [第三方声明](THIRD_PARTY_NOTICES.md)；字体继续采用 OFL 1.1。生产构建及人物素材导出包均随附许可文件。
