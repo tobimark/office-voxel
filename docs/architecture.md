@@ -62,6 +62,26 @@ office.dispose();
 
 当前多页 HTML 保留各自的控制面板骨架，样式按页面类名限定；业务 Agent 与 `stationFor` 的兼容索引仍保留。这次没有引入编辑器、后端或通用 ECS 框架。
 
+## 网站导航与构建入口
+
+`src/app/site-pages.js` 维护网站分区、八个页面的名称、现有 URL 和场景人数；它属于应用层，不向素材或布局注册表加入页面信息。默认 Vite 构建从此清单生成全部页面入口。
+
+八个 HTML 均使用 `<header data-site-header></header>` 挂点。`config/site-navigation-plugin.js` 在 Vite HTML 转换阶段调用 `src/app/site-navigation.js`，生成统一的「场景体验 / 素材库 / 开发接入」主导航和当前分区的二级导航，同时接入共享样式及窄屏选择菜单脚本。链接在 HTML 响应中直接可用，不依赖 Three.js 初始化。暂停动画属于场景二级工具区，保留既有 `#pause` 控制契约。纯场景 `?embed=1` 隐藏整个网站导航。
+
+默认构建包含五种办公室、人物、物品和嵌入示例；原三个单页构建继续保留，导航只使用实际构建入口，避免指向未发布页面。开发服务仍可访问全部页面。导航使用相对链接，保持静态网站子目录部署和现有地址兼容。
+
+`npm run test:browser:navigation` 检查八页入口、分区高亮、全部布局切换、320–1440px 响应式、iframe 控制及禁用 JavaScript 后的桌面链接；通过 `DEMO_URL` 可针对开发服务或部署在子目录的生产预览执行。截图输出到 `.artifacts/navigation/`。
+
+2026-10-19 导航改造验证：
+
+- `npm test`：80/80 通过，包含新增网站入口、当前页面及独立构建导航契约。
+- 默认构建及三个独立构建通过；逐个检查产物中的导航链接，默认八页和独立单页均指向实际存在的 HTML。
+- 导航专项在生产包的 `/voxel-office/` 子目录预览通过：八页、320/390/768/1024/1440px、手机切换与后退状态、iframe 命令、纯场景模式、禁用 JavaScript 后的桌面链接；无浏览器错误或警告。
+- 新启动的 5240 稳定开发服务上，`test:browser:engine`、`test:browser:resources`、`test:browser:furniture`、`test:browser:composition`、`test:browser:tasks`、`test:geometry:workstations`、`test:browser:assets`、`test:browser` 全部通过。覆盖五布局 54 人、54 台电脑、8,193 个家具网格实例和素材工作室。几何脚本仍有已知的 Three.js 重复导入警告，几何断言通过。
+- 初次分开启动服务和浏览器时出现沙箱网络访问拒绝及连接超时，未计为通过；最终使用同一测试进程启动预览服务后重新完成验证。浏览器均为 Chromium/SwiftShader，未新增移动实机验证。
+
+本地日志为 `.artifacts/navigation-*.log`，导航截图为 `.artifacts/navigation/`，均不提交。
+
 ## 验证
 
 - `npm test`：布局、人物、依赖边界、组装、寻路和资源生命周期契约。

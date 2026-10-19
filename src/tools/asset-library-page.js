@@ -10,11 +10,6 @@ const restore = event => { if (event.persisted) location.reload(); };
 window.addEventListener('pageshow', restore);
 if (import.meta.hot) import.meta.hot.dispose(() => window.removeEventListener('pageshow', restore));
 root.innerHTML = `
-  <header class="library-header">
-    <a class="library-brand" href="./"><span class="brand-cube" aria-hidden="true"></span>PixOffice <span>素材工作室</span></a>
-    <nav aria-label="素材导航"><a href="./characters.html" ${isCharacter ? 'aria-current="page"' : ''}>人物素材</a><a href="./objects.html" ${!isCharacter ? 'aria-current="page"' : ''}>物品素材</a></nav>
-    <a class="office-link" href="./">返回办公室 ↗</a>
-  </header>
   <main class="library-main">
     <section class="catalog" aria-label="${title}目录">
       <div class="catalog-heading"><span class="eyebrow">PIXOFFICE / ASSET LIBRARY</span><h1>${title}<span class="title-dot">.</span></h1>

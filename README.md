@@ -26,7 +26,7 @@ npm ci
 npm run dev
 ```
 
-打开 [http://127.0.0.1:5196/](http://127.0.0.1:5196/)。拖拽旋转、滚轮缩放；右侧选择人物与动作，顶部切换办公室布局。触屏支持拖拽与双指缩放。
+打开 [http://127.0.0.1:5196/](http://127.0.0.1:5196/)。顶部统一提供「场景体验」「素材库」「开发接入」三个分区；场景体验下可切换全部五种办公室，窄屏使用选择菜单。拖拽旋转、滚轮缩放；右侧选择人物与动作，触屏支持拖拽与双指缩放。
 
 | 页面 | 路径 | 内容 |
 | --- | --- | --- |
@@ -97,7 +97,7 @@ npm run build
 npm run preview
 ```
 
-主构建输出到 `dist/`，包含三人、九人、人物、物品和嵌入页面；预览地址为 [http://127.0.0.1:5197/](http://127.0.0.1:5197/)。长桌、套间和大平层分别运行 `npm run build:loft`、`npm run build:suite`、`npm run build:floor`，输出到各自的 `dist-*` 目录。构建使用相对资源路径，可部署到静态网站子目录；请通过 HTTP 服务访问。
+主构建输出到 `dist/`，包含五种办公室、人物、物品和嵌入示例，共八个页面；预览地址为 [http://127.0.0.1:5197/](http://127.0.0.1:5197/)。长桌、套间和大平层仍可分别运行 `npm run build:loft`、`npm run build:suite`、`npm run build:floor`，输出到各自的 `dist-*` 目录；这些独立构建仅显示实际包含的页面入口。构建使用相对资源路径，可部署到静态网站子目录；请通过 HTTP 服务访问。
 
 ## 开发与验证
 
@@ -123,6 +123,7 @@ node scripts/browser-serve.mjs
 ```powershell
 $env:DEMO_URL = 'http://127.0.0.1:5206/'
 npm run test:browser
+npm run test:browser:navigation
 npm run test:browser:assets
 npm run test:browser:tasks
 ```

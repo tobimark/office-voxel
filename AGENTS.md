@@ -18,7 +18,7 @@
 
 - `npm ci`：按锁文件安装依赖。
 - `npm run dev`：启动开发服务，地址为 `http://127.0.0.1:5196/`。
-- `npm run build`：构建三人、九人及嵌入页面；`npm run preview`：在 5197 端口预览构建结果。
+- `npm run build`：构建五种办公室、人物、物品及嵌入示例，共八个页面；`npm run preview`：在 5197 端口预览构建结果。
 - `npm run build:loft`、`npm run build:suite`、`npm run build:floor`：分别构建长桌、套间和大平层页面。
 - `npm test`：运行全部 Node 测试。
 - `node scripts/browser-serve.mjs`：在 5206 端口启动稳定测试服务。在测试终端设置 `$env:DEMO_URL='http://127.0.0.1:5206/'`；修改源码后必须重启该服务。

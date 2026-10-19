@@ -1,6 +1,3 @@
-/* Floor page tweaks only. The shared studio styling comes from ../style.css, which
-   is imported first in ./main.js; nothing here changes the other pages. */
-.office-floor .office-switch a { padding: 8px 8px; }
 .office-floor .live-dot { background: var(--orange); }
 .office-floor .scene-caption { color: var(--green-dark); }
 
@@ -11,17 +8,9 @@
 .office-floor .person b { font-size: 10px; }
 .office-floor .person small { font-size: 7px; }
 
-/* Five navigation entries, so the topbar sheds its decorations earlier. */
-@media (max-width: 1240px) {
-  .office-floor .lab-name { display: none; }
-  .office-floor .office-switch a { padding: 8px 6px; font-size: 10px; }
-}
 @media (max-width: 900px) {
-  .office-floor .office-switch a { padding: 8px 5px; font-size: 10px; }
   .office-floor .person { min-height: 42px; }
 }
 @media (max-width: 560px) {
-  .office-floor .brand-divider { display: none; }
-  .office-floor .office-switch a { padding: 7px 4px; font-size: 9px; }
   .office-floor .people { grid-template-columns: repeat(2, 1fr); }
 }

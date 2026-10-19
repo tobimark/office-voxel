@@ -1,13 +1,14 @@
 import { defineConfig } from 'vite';
 import { fileURLToPath } from 'node:url';
 import { distributionLicenses } from '../scripts/distribution-licenses.mjs';
+import { siteNavigationPlugin } from './site-navigation-plugin.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 export function createOfficeConfig({ entries, outDir = 'dist' }) {
   return defineConfig({
     root, base: './', publicDir: false,
     server: { fs: { strict: true, allow: [root] } },
-    plugins: [distributionLicenses(), {
+    plugins: [siteNavigationPlugin(entries), distributionLicenses(), {
       name: 'standalone-office',
       resolveId(source) {
         if (source.startsWith('@pixoffice/') || /(?:^|[/\\])packages[/\\]/.test(source)) throw new Error(`Office must not import parent project code: ${source}`);
