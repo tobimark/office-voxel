@@ -16,11 +16,11 @@ try {
   const page = await browser.newPage({ viewport: { width: 1600, height: 1000 }, deviceScaleFactor: 1 });
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => { if (['error', 'warning'].includes(message.type())) errors.push(message.text()); });
-  async function capture(name) {
+  async function capture(name, { fullPage = false } = {}) {
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(1800);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
-    await page.screenshot({ path: `${output}${name}.png` });
+    await page.screenshot({ path: `${output}${name}.png`, fullPage });
     console.log(`Captured ${name}.png`);
   }
   async function office(path) {
@@ -33,7 +33,13 @@ try {
     });
     await page.locator('#loading').waitFor({ state: 'hidden' });
   }
+  async function navigation(section, href) {
+    assert.deepEqual(await page.locator('.site-primary a').allTextContents(), ['场景体验', '素材库', '开发接入']);
+    assert.equal(await page.locator('.site-primary [aria-current]').textContent(), section);
+    assert.equal(await page.locator('.site-secondary [aria-current="page"]').getAttribute('href'), href);
+  }
   await office('nine.html');
+  await navigation('场景体验', './nine.html');
   await capture('office-nine');
   await page.locator('[data-person="0"]').click();
   await page.getByRole('menuitem', { name: '查看电脑屏幕' }).click();
@@ -58,8 +64,31 @@ try {
     }
     await page.locator('#asset-list').evaluate(list => { list.scrollTop = 0; });
     await page.locator('#preview-message').waitFor({ state: 'hidden' });
-    await capture(`asset-${kind}`);
+    await navigation('素材库', `./${kind}.html`);
+    await capture(`asset-${kind}`, { fullPage: true });
   }
+  await page.setViewportSize({ width: 390, height: 844 });
+  await office('');
+  await navigation('场景体验', './');
+  assert.equal(await page.getByLabel('切换办公室', { exact: true }).isVisible(), true);
+  assert.equal(await page.locator('.site-secondary').isVisible(), false);
+  await capture('office-mobile');
+
+  await page.setViewportSize({ width: 1600, height: 1100 });
+  await page.goto('http://127.0.0.1:5208/embed.html');
+  await navigation('开发接入', './embed.html');
+  await page.getByRole('button', { name: '让小麦打个招呼', exact: true }).waitFor({ state: 'visible' });
+  await page.waitForFunction(() => !document.querySelector('[data-command]').disabled);
+  const embedded = page.frames().find(frame => frame.url().includes('embed=1'));
+  assert.ok(embedded);
+  await embedded.waitForFunction(() => window.PixOfficeVoxel?.tasks.getState().fontReady);
+  await embedded.evaluate(() => {
+    window.PixOfficeVoxel.pause(true);
+    window.PixOfficeVoxel.tasks.seek(12000);
+    window.PixOfficeVoxel.tasks.pause(true);
+  });
+  assert.equal(await embedded.locator('.site-header').isVisible(), false);
+  await capture('embed-example', { fullPage: true });
   assert.deepEqual(errors, [], 'Screenshot pages must have no browser errors or warnings');
   console.log(`Screenshots verified: ${output}`);
 } finally {
