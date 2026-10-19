@@ -2,7 +2,7 @@
 
 ## 项目结构与模块划分
 
-本项目是基于 Three.js、原生 JavaScript ES 模块和 Vite 的独立前端工程。
+本项目是一个 multi-agents 项目的前端，基于 Three.js、原生 JavaScript ES 模块和 Vite 构建。
 
 - `src/app/`：五页面共用入口、控制面板、文案与样式；`src/integrations/`：任务展示和 iframe 适配。
 - `src/engine/`：渲染、镜头、人物控制、寻路与资源生命周期；`src/world/`：布局编译、场景组装、碰撞与挂点契约。

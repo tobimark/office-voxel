@@ -87,4 +87,11 @@ test('the asset folder documents itself', async () => {
   assert.match(readme, /export-characters\.mjs/);
   assert.match(readme, /manifest\.json/);
   assert.match(readme, /publicDir/);
+  const data = await manifest();
+  assert.equal(data.license, 'MIT');
+  for (const field of ['licenseFile', 'assetLicenseFile', 'thirdPartyNoticesFile']) {
+    assert.ok((await readFile(new URL(data[field], root), 'utf8')).length > 0);
+  }
+  assert.match(await readFile(new URL('licenses/pixoffice/LICENSE', root), 'utf8'), /Copyright \(c\) 2026 teejoo/);
+  assert.match(await readFile(new URL('licenses/three/LICENSE', root), 'utf8'), /three\.js authors/);
 });

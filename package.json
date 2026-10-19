@@ -1,6 +1,7 @@
 {
   "name": "office-voxel",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "type": "module",
   "scripts": {
@@ -20,6 +21,7 @@
     "build:suite": "vite build --config vite.suite.config.js",
     "build:floor": "vite build --config vite.floor.config.js",
     "export:characters": "node scripts/export-characters.mjs",
+    "export:licenses": "node scripts/export-characters.mjs --licenses-only",
     "test:browser:furniture": "node scripts/browser-furniture-check.mjs",
     "test:browser:resources": "node scripts/browser-resource-check.mjs",
     "test:browser:composition": "node scripts/browser-composition-check.mjs",

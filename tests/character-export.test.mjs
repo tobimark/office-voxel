@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import * as fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { exportCharacterAssets } from '../scripts/lib/character-export.mjs';
+import { exportCharacterAssets, validateManifest } from '../scripts/lib/character-export.mjs';
+import { readDistributionLicenses } from '../scripts/lib/distribution-licenses.mjs';
 const assets=new URL('../public/assets/characters/studio-00/',import.meta.url);
 const roster=[{id:'studio-00',name:'test',look:{shirt:'orange'},usedBy:['studio-00']}];
 const readme=()=> 'test export';
@@ -74,4 +75,37 @@ test('truncated PNG data with a valid header never replaces the published set',a
  const buffers=await options.produce();const old=await fs.readFile(path.join(options.outRoot,'manifest.json'),'utf8');
  await assert.rejects(exportCharacterAssets({...options,produce:async()=>({...buffers,portrait:buffers.portrait.subarray(0,33)})}),/Incomplete/);
  assert.equal(await fs.readFile(path.join(options.outRoot,'manifest.json'),'utf8'),old);
+});
+
+test('licenses-only upgrades a legacy export without producing or changing any PNG/GLB',async t=>{
+ const options=await fixture(t), before=await exportCharacterAssets(options);
+ const original=await options.produce();
+ // A previous export had no project-license metadata or companion notices.
+ const legacy={...before};
+ for(const key of ['license','licenseFile','assetLicenseFile','thirdPartyNoticesFile']) delete legacy[key];
+ await fs.writeFile(path.join(options.outRoot,'manifest.json'),JSON.stringify(legacy));
+ await fs.unlink(path.join(options.outRoot,'LICENSE'));
+ const after=await exportCharacterAssets({...options,licensesOnly:true,produce:()=>{throw Error('Must not capture assets');}});
+ assert.equal(after.license,'MIT');
+ assert.deepEqual(after.counts,before.counts);
+ assert.deepEqual(after.characters,before.characters);
+ for(const [kind,buffer] of Object.entries(original)) {
+  const file=kind==='model'?'model.glb':`${kind}.png`;
+  assert.deepEqual(await fs.readFile(path.join(options.outRoot,'studio-00',file)),buffer);
+ }
+ for(const [name,content] of await readDistributionLicenses()) {
+  assert.deepEqual(await fs.readFile(path.join(options.outRoot,name)),content,`Missing or changed notice: ${name}`);
+ }
+ await fs.unlink(path.join(options.outRoot,'licenses/three/LICENSE'));
+ await assert.rejects(validateManifest(options.outRoot,after),{code:'ENOENT'});
+});
+
+test('licenses-only refuses changed appearances or a missing previous export',async t=>{
+ const options=await fixture(t);
+ await assert.rejects(exportCharacterAssets({...options,licensesOnly:true}),/full export first/);
+ await exportCharacterAssets(options);
+ const before=await fs.readFile(path.join(options.outRoot,'manifest.json'),'utf8');
+ await assert.rejects(exportCharacterAssets({...options,licensesOnly:true,roster:[{...roster[0],look:{shirt:'blue'}}]}),/Changed look/);
+ assert.equal(await fs.readFile(path.join(options.outRoot,'manifest.json'),'utf8'),before);
+ assert.deepEqual(await fs.readdir(path.dirname(options.outRoot)),['characters']);
 });

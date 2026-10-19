@@ -3,6 +3,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { inflateSync } from 'node:zlib';
 import { publishDirectory } from './publish-directory.mjs';
+import { readDistributionLicenses } from './distribution-licenses.mjs';
 
 export const ASSET_KINDS = ['portrait', 'sheet', 'model'];
 const fileName = kind => kind === 'model' ? 'model.glb' : `${kind}.png`;
@@ -63,11 +64,17 @@ export async function validateManifest(root, manifest) {
     }
   }
   if (manifest.counts.characters !== ids.size || manifest.counts.files !== files || manifest.counts.bytes !== bytes) throw new Error('Manifest counts mismatch');
+  if (manifest.license !== undefined) {
+    if (manifest.license !== 'MIT' || manifest.licenseFile !== 'LICENSE' || manifest.assetLicenseFile !== 'ASSET_LICENSE.md' || manifest.thirdPartyNoticesFile !== 'THIRD_PARTY_NOTICES.md') throw new Error('Invalid asset license metadata');
+    for (const name of ['LICENSE', 'ASSET_LICENSE.md', 'THIRD_PARTY_NOTICES.md', 'licenses/pixoffice/LICENSE', 'licenses/three/LICENSE']) {
+      if (!(await fs.readFile(path.join(root,name))).length) throw new Error(`Empty license file: ${name}`);
+    }
+  }
 }
 
 // Produce selected assets into a sibling staging directory; publication never
 // begins until every retained and generated file passes validation.
-export async function exportCharacterAssets({ outRoot, roster, kinds = ASSET_KINDS, ids = roster.map(e=>e.id), produce, readme, rename = fs.rename, onWarning = console.warn }) {
+export async function exportCharacterAssets({ outRoot, roster, kinds = ASSET_KINDS, ids = roster.map(e=>e.id), produce, readme, licensesOnly = false, rename = fs.rename, onWarning = console.warn }) {
   if (!kinds.length || kinds.some(k=>!ASSET_KINDS.includes(k)) || new Set(kinds).size !== kinds.length) throw new Error('Invalid asset kinds');
   if (!ids.length || ids.some(id=>!roster.some(e=>e.id===id)) || new Set(ids).size !== ids.length) throw new Error('Invalid character IDs');
   outRoot=path.resolve(outRoot);
@@ -76,7 +83,7 @@ export async function exportCharacterAssets({ outRoot, roster, kinds = ASSET_KIN
   await fs.mkdir(lock); // An existing lock refuses concurrent writers.
   let stage, committed=false;
   try {
-    const partial=kinds.length !== ASSET_KINDS.length || ids.length !== roster.length;
+    const partial=licensesOnly || kinds.length !== ASSET_KINDS.length || ids.length !== roster.length;
     let previous;
     if(partial) {
       try { previous=JSON.parse(await fs.readFile(path.join(outRoot,'manifest.json'),'utf8')); }
@@ -85,7 +92,7 @@ export async function exportCharacterAssets({ outRoot, roster, kinds = ASSET_KIN
       if (JSON.stringify(previous.characters.map(e=>e.id)) !== JSON.stringify(roster.map(e=>e.id))) throw new Error('Roster changed; run a full export');
       for(const entry of roster) {
         const old=previous.characters.find(e=>e.id===entry.id);
-        if(JSON.stringify(old.look)!==JSON.stringify(entry.look) && !(ids.includes(entry.id) && kinds.length===ASSET_KINDS.length)) throw new Error(`Changed look ${entry.id}: export all kinds for this character`);
+        if(JSON.stringify(old.look)!==JSON.stringify(entry.look) && !(!licensesOnly && ids.includes(entry.id) && kinds.length===ASSET_KINDS.length)) throw new Error(`Changed look ${entry.id}: export all kinds for this character`);
       }
     }
     stage=await fs.mkdtemp(path.join(parent,`.${base}-stage-`));
@@ -95,7 +102,7 @@ export async function exportCharacterAssets({ outRoot, roster, kinds = ASSET_KIN
       const { fingerprint, ...metadata }=entry;
       const old=previous?.characters.find(e=>e.id===entry.id);
       const files={...old?.files};
-      if(ids.includes(entry.id)) {
+      if(!licensesOnly && ids.includes(entry.id)) {
         const buffers=await produce(entry,kinds);
         await fs.mkdir(path.join(stage,entry.id),{recursive:true});
         for(const kind of kinds) {
@@ -109,10 +116,16 @@ export async function exportCharacterAssets({ outRoot, roster, kinds = ASSET_KIN
     const allFiles=characters.flatMap(e=>Object.values(e.files));
     const manifest={name:'pixoffice-voxel-characters',version:2,generator:'scripts/export-characters.mjs',
       source:'src/assets/characters/catalog.js + src/assets/characters/model.js + src/assets/characters/appearance.js',
+      license:'MIT',licenseFile:'LICENSE',assetLicenseFile:'ASSET_LICENSE.md',thirdPartyNoticesFile:'THIRD_PARTY_NOTICES.md',
       exportedAt:new Date().toISOString(), kinds:ASSET_KINDS.filter(k=>characters.some(e=>e.files[k])),
       counts:{characters:characters.length,files:allFiles.length,bytes:allFiles.reduce((n,f)=>n+f.bytes,0)}, characters};
     await fs.writeFile(path.join(stage,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
     await fs.writeFile(path.join(stage,'README.md'),readme(manifest));
+    for (const [name, content] of await readDistributionLicenses()) {
+      const destination=path.join(stage,name);
+      await fs.mkdir(path.dirname(destination),{recursive:true});
+      await fs.writeFile(destination,content);
+    }
     await validateManifest(stage,manifest);
     await publishDirectory({stage,outRoot,rename,onWarning});
     committed=true;

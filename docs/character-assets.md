@@ -28,6 +28,14 @@ Windows 目录改名受阻时，使用复制并逐文件核对的退路，完整
 
 开发服务可访问 `/public/assets/characters/<appearanceId>/portrait.png`。生产构建默认不复制本目录。资源来自程序化人物代码，不含 Unity / Minecraft 外部素材。
 
+## 素材许可与交付
+
+本仓库提供的程序化人物与全部 PNG/GLB 导出素材（包括 `doubao-00`）采用与项目代码相同的 MIT License；素材范围和字体等第三方例外见根目录 [素材许可](../ASSET_LICENSE.md)。保留原 PixOffice 与 Three.js 的版权声明，字体继续适用 OFL 1.1。
+
+导出包附带 `LICENSE`、`ASSET_LICENSE.md`、`THIRD_PARTY_NOTICES.md` 及 `licenses/`，清单通过 `license: "MIT"` 和许可文件路径标明交付条款。清单中的文件数及字节数仍仅统计 PNG/GLB。
+
+已有完整素材只更新许可时运行 `npm run export:licenses`（等价于 `node scripts/export-characters.mjs --licenses-only`）。此命令不启动浏览器，复用并校验现有 PNG/GLB，先在临时目录更新许可与清单，再通过同一事务发布；人物目录或外观改变时拒绝更新，应先按正常流程导出对应素材。
+
 ## 豆包
 
 新增独立人物身份 `doubao`，外观 ID 为 `doubao-00`，职业为 AI 助手。深棕齐肩短发、黑色连衣裙、红围巾参考[豆包 App Store 头像](https://apps.apple.com/cn/app/id6459478672)，裙装按本项目方块风格制作；没有复制外部模型或贴图。
