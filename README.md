@@ -5,6 +5,9 @@
 基于 Three.js、原生 JavaScript ES 模块和 Vite 的浏览器前端。角色在自己的工位工作，黑板展示任务目标，白板展示子任务，每台电脑显示对应 Agent 的操作与日志。模型、关节动画和像素贴图由代码生成，运行时无需外部模型服务或远程 CDN。
 
 ![新版九人办公室：统一网站导航、五种布局入口、任务工具栏与人物控制面板](docs/images/office-nine.png)
+<img width="1920" height="928" alt="image" src="https://github.com/user-attachments/assets/90acd76c-d81f-4651-90a7-1198ee65de67" />
+<img width="1920" height="928" alt="image" src="https://github.com/user-attachments/assets/7177b54b-169e-47a2-b715-65fcf533cbbc" />
+
 
 > 当前提供可交互的前端演示和模拟任务数据；接入真实 Agent 服务需实现任务数据源接口。本文全部截图于 **2026-10-19** 从当前版本重新拍摄，包含统一导航、手机首屏和 iframe 宿主示例。
 
